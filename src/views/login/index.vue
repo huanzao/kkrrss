@@ -127,33 +127,38 @@ export default {
             platform: 1
           }).then(function(res) {
             console.log('登录数据',res.data);
+            let logoData=res.data.data
             if (res.data.status === 200) {
               that.axios.post('api/menu/method/get.menu.auth.list',{module:'admin'}).then(res=>{
-                console.log('登录玩立刻请求',res)
+                console.log('登录完请求过来的侧边栏的数据',res.data.data)
+                sessionStorage.SideArr=JSON.stringify(res.data.data)
+
+                that.$notify({
+                title: '登录成功',
+                  message: `欢迎回来${logoData.admin.nickname}`,
+                  type: 'success',
+                  duration:2000
+                })
+                localStorage.cf73b1=logoData.admin.admin_id //有用
+                window.sessionStorage.setItem(
+                  "username",
+                  logoData.admin.username
+                );
+                window.sessionStorage.setItem(
+                  "nickname",
+                  logoData.admin.nickname
+                );
+                window.sessionStorage.setItem(
+                  "group_id",
+                  logoData.admin.group_id
+                );
+                window.sessionStorage.token_expires = ("token_expires",logoData.token.token_expires)
+              
+                that.$router.push({ path: "/main" })
+
               })
 
-              that.$notify({
-                title: '登录成功',
-                message: `欢迎回来${res.data.data.admin.nickname}`,
-                type: 'success',
-                duration:2000
-              })
-              localStorage.cf73b1=res.data.data.admin.admin_id //有用
-              window.sessionStorage.setItem(
-                "username",
-                res.data.data.admin.username
-              );
-              window.sessionStorage.setItem(
-                "nickname",
-                res.data.data.admin.nickname
-              );
-              window.sessionStorage.setItem(
-                "group_id",
-                res.data.data.admin.group_id
-              );
-              window.sessionStorage.token_expires = ("token_expires",res.data.data.token.token_expires)
               
-              that.$router.push({ path: "/main" })
             } else if (res.data.status === 401) {
               that.$router.push({ path: "/login" });
             } else if (res.data.status === 500) {

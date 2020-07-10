@@ -26,18 +26,19 @@
         :unique-opened="true"
         :collapse-transition="true"
       >
-          <el-menu-item index="index">
-            <i class="fa fa-home"></i>
-            <span slot="title">主页</span>
-          </el-menu-item>
+          
           <template v-for="(sItem,s) in sideMenu" >
-            <el-submenu  v-if="sItem.children.length>0" :key="s" :index="s+''">
+            <el-menu-item v-if='sItem.children.length==0' :index="sItem.url" :key="s" >
+              <i :class="sItem.icon"></i>
+              <span slot="title">{{ sItem.name }}</span>
+            </el-menu-item>
+            <el-submenu v-if='sItem.children.length>0' :key="s" :index="s+''">
                 <template slot="title">
                   <i :class="sItem.icon"></i>
                   <span>{{ sItem.name }}</span>
                 </template>
                 <el-menu-item-group v-for="(st,stk) in sItem.children" :key="stk">
-                  <el-menu-item :index="st.path"><i :class="st.icon"></i> <span>{{ st.name }}</span></el-menu-item>
+                  <el-menu-item :index="st.url"><i :class="st.icon"></i> <span>{{ st.name }}</span></el-menu-item>
                 </el-menu-item-group>
               </el-submenu>
           </template>
@@ -111,52 +112,40 @@ export default {
     }
   },
   created: function() {
-    let routerArr=pageRouter.options.routes[2].children
+    // let routerArr=pageRouter.options.routes[2].children
  
-    for(var  item of  routerArr){
-      let smObj={ icon:item.iconCls,
-                  name:item.title,
-                  path:item.path,
-                }
-      if(item.chinise=='选品'){
-          this.sideMenu[1].children.push(smObj)
-      }else if(item.chinise=='设计'){
-          this.sideMenu[2].children.push(smObj)
-      }else if(item.chinise=='素材'){
-          this.sideMenu[3].children.push(smObj)
-      }else if(item.chinise=='优化师'){
-          this.sideMenu[4].children.push(smObj)
-      }else if(item.chinise=='客服'){
-          this.sideMenu[5].children.push(smObj)
-      }else if(item.chinise=='供应链'){
-          this.sideMenu[6].children.push(smObj)
-      }else if(item.chinise=='SH物流'){
-          this.sideMenu[7].children.push(smObj)
-      }else if(item.chinise=='系统设置'){
-          this.sideMenu[8].children.push(smObj)
-      }
-    }
+    // for(var  item of  routerArr){
+    //   let smObj={ icon:item.iconCls,
+    //               name:item.title,
+    //               path:item.path,
+    //             }
+    //   if(item.chinise=='选品'){
+    //       this.sideMenu[1].children.push(smObj)
+    //   }else if(item.chinise=='设计'){
+    //       this.sideMenu[2].children.push(smObj)
+    //   }else if(item.chinise=='素材'){
+    //       this.sideMenu[3].children.push(smObj)
+    //   }else if(item.chinise=='优化师'){
+    //       this.sideMenu[4].children.push(smObj)
+    //   }else if(item.chinise=='客服'){
+    //       this.sideMenu[5].children.push(smObj)
+    //   }else if(item.chinise=='供应链'){
+    //       this.sideMenu[6].children.push(smObj)
+    //   }else if(item.chinise=='SH物流'){
+    //       this.sideMenu[7].children.push(smObj)
+    //   }else if(item.chinise=='系统设置'){
+    //       this.sideMenu[8].children.push(smObj)
+    //   }
+    // }
+
+    this.sideMenu=JSON.parse(sessionStorage.SideArr)
+    console.log('新侧边栏的数据',JSON.parse(sessionStorage.SideArr))
 
 
 
 
-    console.log('侧边栏数据aaaaaa',this.sideMenu)
-    // let that = this;
-    // this.axios
-    //   .post("menu/method/get.menu.list", {
-    //     module: "admin"
-    //   })
-    //   .then(function(res) {
-    //     if (res.data.status === 200) {
-    //       // console.log(res.data.data);
-    //       let result = res.data.data;
-    //       that.dataList = result;
-    //       // console.log('zheshisha',that.dataList)
-    //     }
-    //   })
-    //   .catch(function(error) {
-    //     console.log(error);
-    //   });
+    // console.log('侧边栏数据aaaaaa',this.sideMenu)
+
   },
   methods: {
     selectmenu(key) {
