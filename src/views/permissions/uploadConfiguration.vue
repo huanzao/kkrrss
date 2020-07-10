@@ -179,7 +179,7 @@ export default {
     AxiosReturn,
      // 设置配置数据
     getFormData() {
-      this.AxiosReturn("setting/method/get.setting.list/",{module:'upload'}).then(res=>{
+      this.AxiosReturn("api/setting/method/get.setting.list/",{module:'upload'}).then(res=>{
             console.log('请求数据',res) 
             this.form.default = res.data.default.value;
             this.form.oss = res.data.oss.value;
@@ -248,7 +248,7 @@ export default {
         //   console.log(res)
         // })
 
-        this.AxiosReturn("setting/method/set.upload.list/",obj).then(res=>{
+        this.AxiosReturn("api/setting/method/set.upload.list/",obj).then(res=>{
              console.log(res)
         })
 

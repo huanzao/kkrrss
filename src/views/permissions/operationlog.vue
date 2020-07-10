@@ -122,7 +122,7 @@ export default {
       }
       
       let that = this;
-      this.axios.post("action_log?method=get.action.log.list",myParams).then(function(res) {
+      this.axios.post("api/action_log?method=get.action.log.list",myParams).then(function(res) {
           if (res.data.status === 200) {
             let result = res.data.data.items;
             that.dataList = result;
