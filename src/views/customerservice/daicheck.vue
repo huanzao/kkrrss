@@ -411,7 +411,7 @@ export default {
               status:this.audit_status
           }
       }
-      this.AxiosReturn('order/method/get.order.list/',myParams).then(res=>{
+      this.AxiosReturn('api/order/method/get.order.list/',myParams).then(res=>{
         that.tableData=res.data.items
         that.total=res.data.total_result
         console.log(res)
@@ -467,7 +467,7 @@ export default {
         type: "warning"
       })
         .then(() => {
-          this.AxiosReturn("order/method/recycle.order.item/", {
+          this.AxiosReturn("api/order/method/recycle.order.item/", {
             order_no: val,
             is_recycle: 1
           }).then(res => {
@@ -517,7 +517,7 @@ export default {
       this.form.remarks = row.sellers_remark;
     },
     passExamine() {
-      this.AxiosReturn("order/method/audit.order.item/", {
+      this.AxiosReturn("api/order/method/audit.order.item/", {
         order_no: this.form.orderNum,
         trade_status: 1
       }).then(res => {
@@ -539,7 +539,7 @@ export default {
       });
     },
     problemOrder() {
-      this.AxiosReturn("order/method/audit.order.item/", {
+      this.AxiosReturn("api/order/method/audit.order.item/", {
         order_no: this.form.orderNum,
         trade_status: 5
       }).then(res => {
@@ -567,7 +567,7 @@ export default {
         cancelButtonText: "取消",
         type: "warning"
       }).then(() => {
-          this.AxiosReturn("order/method/recycle.order.item/", {
+          this.AxiosReturn("api/order/method/recycle.order.item/", {
             order_no: this.form.orderNum,
             is_recycle: 1
           }).then(res => {

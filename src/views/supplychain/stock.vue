@@ -71,7 +71,7 @@ export default {
             page_no:this.pagenum
           }
         }
-        this.AxiosReturn('productSku/method/get.sku.list',myparams).then(res=>{
+        this.AxiosReturn('api/productSku/method/get.sku.list',myparams).then(res=>{
             console.log(res)
             if (res.status === 200) {
               let result = res.data.items;

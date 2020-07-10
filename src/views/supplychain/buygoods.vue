@@ -275,7 +275,7 @@ export default {
       }
       let that = this;
       this.axios
-        .post("stock_purchase/method/get.stock.admin.list/",myParams).then(function(res) {
+        .post("api/stock_purchase/method/get.stock.admin.list/",myParams).then(function(res) {
           if (res.data.status === 200) {
             // console.log(res.data.data);
             let result = res.data.data.items;

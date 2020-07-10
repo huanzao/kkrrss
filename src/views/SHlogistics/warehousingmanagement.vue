@@ -153,7 +153,7 @@ export default {
         params.po_no=null
       }
       let that = this
-      this.AxiosReturn("warehousing/method/get.warehousing.admin.list", params).then(res => {
+      this.AxiosReturn("api/warehousing/method/get.warehousing.admin.list", params).then(res => {
         that.detailsTableData = res.data.items;
         that.total = res.data.total_result;
       });

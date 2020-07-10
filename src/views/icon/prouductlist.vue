@@ -712,7 +712,7 @@ export default {
       }
 
       let that = this;
-      this.axios.post("goods/method/get.goods.admin.list",myParams).then(function(res) {
+      this.axios.post("api/goods/method/get.goods.admin.list",myParams).then(function(res) {
           if (res.data.status === 200) {
             that.tableData = res.data.data.items;
             that.total = res.data.data.total_result;
@@ -741,7 +741,7 @@ export default {
     serachrenling() {},
     isShelf(e, row, index) {
       this.axios
-        .post("goods/method/set.shelves.goods.list", {
+        .post("api/goods/method/set.shelves.goods.list", {
           goods_id: row.goods_id,
           status: e ? 1 : 0
         })
@@ -784,7 +784,7 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.AxiosReturn(
-            "goods_comment/method/add.goods.comment.item/",
+            "api/goods_comment/method/add.goods.comment.item/",
             this.commentRuleForm
           ).then(res => {
             // console.log(res);
@@ -830,7 +830,7 @@ export default {
     submitEdit() {
       let that = this;
       this.axios
-        .post("goods/method/set.goods.item/", {
+        .post("api/goods/method/set.goods.item/", {
           goods_id: that.ruleForm.goods_id, //商品ID
           name: that.ruleForm.name, //商品名称
           domain: that.ruleForm.domains, //域名
@@ -880,7 +880,7 @@ export default {
     submitCopy(){
       let that = this;
       this.axios
-        .post("/goods/method/copy.goods.item/", {
+        .post("api/goods/method/copy.goods.item/", {
           goods_id: that.ruleForm.goods_id, //商品ID
           domain: that.ruleForm.domains, //域名
         })

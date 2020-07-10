@@ -181,7 +181,7 @@ export default {
         params.po_no=null
       }
       let that = this
-      this.AxiosReturn("warehousing/method/get.warehousing.admin.list", params).then(res => {
+      this.AxiosReturn("api/warehousing/method/get.warehousing.admin.list", params).then(res => {
         // console.log(res, 9999999);
         that.detailsTableData = res.data.items;
         that.total = res.data.total_result;
@@ -236,7 +236,7 @@ export default {
       params.supplier_name = this.form.supplier_no;
       params.warehousing_remarks = this.form.warehousing_remarks;
       params.warehousing_id = this.form.warehousing_id;
-      this.AxiosReturn("warehousing/method/set.warehousing.item",params).then(res=>{
+      this.AxiosReturn("api/warehousing/method/set.warehousing.item",params).then(res=>{
         // console.log(res)
           if (res.status === 200) {
               console.log(res.data);
@@ -272,7 +272,7 @@ export default {
       params.supplier_name = this.form.supplier_no;
       params.warehousing_remarks = this.form.warehousing_remarks;
       params.warehousing_id = this.form.warehousing_id;
-      this.AxiosReturn("warehousing/method/set.warehousing.item",params).then(res=>{
+      this.AxiosReturn("api/warehousing/method/set.warehousing.item",params).then(res=>{
         // console.log(res)
           if (res.status === 200) {
               console.log(res.data);

@@ -1037,7 +1037,7 @@ export default {
               audit_status : this.queryinfo.audit_status=1
           }
       }
-      this.axios.post("goods/method/get.goods.admin.list",myParams).then(function(res) {
+      this.axios.post("api/goods/method/get.goods.admin.list",myParams).then(function(res) {
           if (res.data.status === 200) {
             console.log(res.data.data);
             that.tableData = res.data.data.items;
@@ -1057,7 +1057,7 @@ export default {
       console.log(row, index);
       //e表示el-switch的状态（true，false）
       this.axios
-        .post("goods/method/set.shelves.goods.list", {
+        .post("api/goods/method/set.shelves.goods.list", {
           goods_id: row.goods_id,
           status: row.status
         })
@@ -1100,7 +1100,7 @@ export default {
             cancelButtonText: "取消",
             type: "warning"
           }).then(() => {
-            this.AxiosReturn("goods/method/set.goods.itemop/", RenlingObj).then(res => {
+            this.AxiosReturn("api/goods/method/set.goods.itemop/", RenlingObj).then(res => {
                 if (res.status == 200) {
                   this.$message.success("认领成功");
                   this.getList();
@@ -1160,7 +1160,7 @@ export default {
           console.log(this.commentRuleForm);
 
           this.AxiosReturn(
-            "goods_comment/method/add.goods.comment.item/",
+            "api/goods_comment/method/add.goods.comment.item/",
             this.commentRuleForm
           ).then(res => {
             console.log(res);
@@ -1263,7 +1263,7 @@ export default {
     submitEdit() {
       let that = this;
       this.axios
-        .post("goods/method/set.goods.item/", {
+        .post("api/goods/method/set.goods.item/", {
           goods_id: that.ruleForm.goods_id, //商品ID
           name: that.ruleForm.name, //商品名称
           domain: that.ruleForm.domains, //域名

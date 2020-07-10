@@ -114,8 +114,8 @@
           <!-- 分页 -->
           <el-pagination
             style="margin-top:15px;"
-            @size-change="pageSizeChange($event,'order/method/get.order.list/',{page_size:pagesize,page_no:pagenum,status:audit_status},'items')"
-            @current-change="pageNumberChange($event,'order/method/get.order.list/',{page_size:pagesize,page_no:pagenum,status:audit_status},'items')"
+            @size-change="pageSizeChange($event,'api/order/method/get.order.list/',{page_size:pagesize,page_no:pagenum,status:audit_status},'items')"
+            @current-change="pageNumberChange($event,'api/order/method/get.order.list/',{page_size:pagesize,page_no:pagenum,status:audit_status},'items')"
             :current-page="pagenum"
             :page-sizes="[10, 30, 50, 100]"
             :page-size="pagesize"
@@ -494,7 +494,7 @@ export default {
               status:this.audit_status
           }
       }
-      this.AxiosReturn('order/method/get.order.list/',myParams).then(res=>{
+      this.AxiosReturn('api/order/method/get.order.list/',myParams).then(res=>{
         that.tableData=res.data.items
         that.total=res.data.total_result
         console.log(res)

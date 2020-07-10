@@ -200,7 +200,7 @@ export default {
         params.name=null
       }
       let that = this;
-      this.axios.post("delivery_item/method/get.delivery.company.list/",params).then(function(res) {
+      this.axios.post("api/delivery_item/method/get.delivery.company.list/",params).then(function(res) {
           console.log(res);
           if (res.data.status === 200) {
             let result = res.data.data.items;
@@ -217,7 +217,7 @@ export default {
         if (valid) {
           let that = this;
           this.axios
-            .post("delivery_item/method/add.delivery.company.item/", {
+            .post("api/delivery_item/method/add.delivery.company.item/", {
               name : that.ruleForm.name,
               code : that.ruleForm.code,
               wl_code :that.ruleForm.wl_code,
@@ -252,7 +252,7 @@ export default {
         type: "warning"
       })
         .then(() => {
-          this.AxiosReturn("delivery_item/method/del.delivery.company.list/", {
+          this.AxiosReturn("api/delivery_item/method/del.delivery.company.list/", {
             delivery_item_id :arr
           }).then(res => {
               console.log(res)
@@ -299,7 +299,7 @@ export default {
         if (valid) {
           let that = this;
           this.axios
-            .post("delivery_item/method/set.delivery.company.item/", {
+            .post("api/delivery_item/method/set.delivery.company.item/", {
               delivery_item_id: that.ruleFormEdit.delivery_item_id,
               name: that.ruleFormEdit.name,
               code: that.ruleFormEdit.code,

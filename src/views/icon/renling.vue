@@ -630,7 +630,7 @@ export default {
           }
       }
       let that = this;
-      this.axios.post("product/method/get.product.admin.list/",myParams).then(function(res) {
+      this.axios.post("api/product/method/get.product.admin.list/",myParams).then(function(res) {
           // console.log(res);
           if (res.data.status === 200) {
             console.log(res.data.data);
@@ -645,7 +645,7 @@ export default {
     getSelect() {
       let that = this;
       this.axios
-        .post("goods_type/method/get.goods.type.select", {})
+        .post("api/goods_type/method/get.goods.type.select", {})
         .then(function(res) {
           if (res.data.status === 200) {
             that.addRuleFormExamine.typeNameListSearch = res.data.data;
@@ -659,7 +659,7 @@ export default {
     getSelectionList() {
       let that = this;
       this.axios
-        .post("admin/method/get.admin.list/", {
+        .post("api/admin/method/get.admin.list/", {
           group_id: 13,
           status: 1
         })
@@ -704,7 +704,7 @@ export default {
       this.addRuleFormExamine.materialgroup = val.material;
       this.addRuleFormExamine.shelltextarea = val.keywords;
       //shelltextarea
-      this.AxiosReturn("product/method/get.products.item", {
+      this.AxiosReturn("api/product/method/get.products.item", {
         product_id: val.product_id
       }).then(res => {
         this.addRuleFormExamine.spec_combo = res.data.getspec_goods;
@@ -735,7 +735,7 @@ export default {
         type: "warning"
       })
         .then(() => {
-          this.AxiosReturn("product/method/set.products.item", RenlingObj).then(
+          this.AxiosReturn("api/product/method/set.products.item", RenlingObj).then(
             res => {
               if (res.status == 200) {
                 this.$message.success("认领成功");

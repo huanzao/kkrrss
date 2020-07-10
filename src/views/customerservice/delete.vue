@@ -294,7 +294,7 @@ export default {
               status:this.audit_status
           }
       }
-      this.AxiosReturn('order/method/get.order.list/',myParams).then(res=>{
+      this.AxiosReturn('api/order/method/get.order.list/',myParams).then(res=>{
         that.tableData=res.data.items
         that.total=res.data.total_result
         console.log(res)
@@ -328,7 +328,7 @@ export default {
     },
     //转问题订单
     toProblemOrder(row) {
-       this.AxiosReturn("order/method/audit.order.item/", {
+       this.AxiosReturn("api/order/method/audit.order.item/", {
         order_no: row.order_no,
         trade_status: 5,
         is_delete:0,
@@ -357,7 +357,7 @@ export default {
         type: "warning"
       })
         .then(() => {
-          this.AxiosReturn("order/method/recycle.order.item/", {
+          this.AxiosReturn("api/order/method/recycle.order.item/", {
             order_no: val.order_no,
             is_recycle: 2
           }).then(res => {

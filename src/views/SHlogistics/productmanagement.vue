@@ -348,7 +348,7 @@ export default {
           }
       }
 
-      this.axios.post("product/method/get.product.admin.list/",myParams).then(function(res) {
+      this.axios.post("api/product/method/get.product.admin.list/",myParams).then(function(res) {
           // console.log(res);
           if (res.data.status === 200) {
             let result = res.data.data.items;
@@ -374,7 +374,7 @@ export default {
     getSelectionList() {
       let that = this;
       this.axios
-        .post("admin/method/get.admin.list/", {
+        .post("api/admin/method/get.admin.list/", {
           group_id: 13,
           status: 1
         })
@@ -391,7 +391,7 @@ export default {
     // 获取类别
     getSelect() {
       let that = this;
-      this.axios.post("goods_type/method/get.goods.type.select", {}).then(function(res) {
+      this.axios.post("api/goods_type/method/get.goods.type.select", {}).then(function(res) {
           if (res.data.status === 200) {
             that.typeNameListSearch = res.data.data;
             that.typeNameListSearchEdit = res.data.data;
@@ -416,7 +416,7 @@ export default {
       this.addRuleForm.keywords = row.keywords; //关键词 -- > 产品卖点
       this.addRuleForm.product_remarks = row.product_remarks; //备注
       //获取 一条数据 cao
-      this.AxiosReturn("product/method/get.products.item", {
+      this.AxiosReturn("api/product/method/get.products.item", {
         product_id: row.product_id
       }).then(res => {
         that.addRuleForm.spec_combo = res.data.getspec_goods;
@@ -449,7 +449,7 @@ export default {
     getSpecList() {
       let that = this;
       this.axios
-        .post("spec?method=get.goods.spec.list", {
+        .post("api/spec?method=get.goods.spec.list", {
           goods_type_id: that.addRuleForm.goods_type_id
         })
         .then(function(res) {

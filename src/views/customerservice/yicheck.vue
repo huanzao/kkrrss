@@ -84,8 +84,8 @@
           <!-- 分页 -->
           <el-pagination
             style="margin-top:15px;"
-            @size-change="pageSizeChange($event,'order/method/get.order.list/',{page_size:pagesize,page_no:pagenum,status:audit_status},'items')"
-            @current-change="pageNumberChange($event,'order/method/get.order.list/',{page_size:pagesize,page_no:pagenum,status:audit_status},'items')"
+            @size-change="pageSizeChange($event,'api/order/method/get.order.list/',{page_size:pagesize,page_no:pagenum,status:audit_status},'items')"
+            @current-change="pageNumberChange($event,'api/order/method/get.order.list/',{page_size:pagesize,page_no:pagenum,status:audit_status},'items')"
             :current-page="pagenum"
             :page-sizes="[10, 30, 50, 100]"
             :page-size="pagesize"
@@ -293,7 +293,7 @@ export default {
               status:this.audit_status
           }
       }
-      this.AxiosReturn('order/method/get.order.list/',myParams).then(res=>{
+      this.AxiosReturn('api/order/method/get.order.list/',myParams).then(res=>{
         that.tableData=res.data.items
         that.total=res.data.total_result
         console.log(res)
@@ -327,7 +327,7 @@ export default {
     },
     //转问题订单
     toProblemOrder(row) {
-       this.AxiosReturn("order/method/audit.order.item/", {
+       this.AxiosReturn("api/order/method/audit.order.item/", {
         order_no: row.order_no,
         trade_status: 5,
         is_delete:0,
@@ -356,7 +356,7 @@ export default {
         type: "warning"
       })
         .then(() => {
-          this.AxiosReturn("order/method/recycle.order.item/", {
+          this.AxiosReturn("api/order/method/recycle.order.item/", {
             order_no: val.order_no,
             is_recycle: 2
           }).then(res => {

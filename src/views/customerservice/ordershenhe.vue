@@ -100,8 +100,8 @@
           <!-- 分页 -->
           <el-pagination
             style="margin-top:15px;"
-            @size-change="pageSizeChange($event,'order/method/get.order.list/',{page_size:pagesize,page_no:pagenum,status:audit_status},'items')"
-            @current-change="pageNumberChange($event,'order/method/get.order.list/',{page_size:pagesize,page_no:pagenum,status:audit_status},'items')"
+            @size-change="pageSizeChange($event,'api/order/method/get.order.list/',{page_size:pagesize,page_no:pagenum,status:audit_status},'items')"
+            @current-change="pageNumberChange($event,'api/order/method/get.order.list/',{page_size:pagesize,page_no:pagenum,status:audit_status},'items')"
             :current-page="pagenum"
             :page-sizes="[10, 30, 50, 100]"
             :page-size="pagesize"
@@ -542,7 +542,7 @@ export default {
               page_no:this.pagenum, //翻页页数
           }
       }
-      this.AxiosReturn('order/method/get.order.list/',myParams).then(res=>{
+      this.AxiosReturn('api/order/method/get.order.list/',myParams).then(res=>{
         that.tableData=res.data.items
         that.total=res.data.total_result
         console.log(res)
@@ -551,7 +551,7 @@ export default {
     //物流公司
     getCompany() {
       this.AxiosReturn(
-        "delivery_item/method/get.delivery.company.select/",
+        "api/delivery_item/method/get.delivery.company.select/",
         {}
       ).then(res => {
         // console.log(res.data);
@@ -633,7 +633,7 @@ export default {
       console.log(this.form.formOrderNo);
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.AxiosReturn("order/method/set.order.item/", {
+          this.AxiosReturn("api/order/method/set.order.item/", {
             order_no: this.form.formOrderNo,
             consignee: this.form.name,
             mobile: this.form.iphone,
@@ -676,7 +676,7 @@ export default {
     },
      // 更改应付金额
     setPrice() {
-      this.AxiosReturn("order/method/change.price.order.item/", {
+      this.AxiosReturn("api/order/method/change.price.order.item/", {
         order_no: this.form.formOrderNo,
         total_amount: this.form.total_amount
       }).then(res => {
@@ -712,7 +712,7 @@ export default {
     // 待审核
     toBeDelivered() {
       console.log(this.toBeExamineNo, "待审核");
-      this.AxiosReturn("order/method/audit.order.item/", {
+      this.AxiosReturn("api/order/method/audit.order.item/", {
         order_no: this.toBeExamineNo,
         trade_status: 1
       }).then(res => {
@@ -735,7 +735,7 @@ export default {
     // 问题订单
     problemOrder() {
       // console.log(this.toBeExamineNo, "problemOrder");
-      this.AxiosReturn("order/method/audit.order.item/", {
+      this.AxiosReturn("api/order/method/audit.order.item/", {
         order_no: this.toBeExamineNo,
         trade_status: 5
       }).then(res => {
@@ -761,7 +761,7 @@ export default {
     },
      // 待审核
     setExamine() {
-      this.AxiosReturn("order/method/audit.order.item/", {
+      this.AxiosReturn("api/order/method/audit.order.item/", {
         order_no: this.toBeExamineNo,
         trade_status: 0
       }).then(res => {
@@ -783,7 +783,7 @@ export default {
     },
      // 待发货
     setToBeDelivered() {
-      this.AxiosReturn("order/method/audit.order.item/", {
+      this.AxiosReturn("api/order/method/audit.order.item/", {
         order_no: this.toBeExamineNo,
         trade_status: 1
       }).then(res => {
@@ -842,7 +842,7 @@ export default {
         type: "warning"
       })
         .then(() => {
-          this.AxiosReturn("order/method/recycle.order.item/", {
+          this.AxiosReturn("api/order/method/recycle.order.item/", {
             order_no: orderNo,
             is_recycle: 1
           }).then(res => {
@@ -883,7 +883,7 @@ export default {
               faHuo.order_goods_id.push(goods.order_goods_id)
           }
           // console.log('滴滴滴，发货啦',faHuo)
-          this.AxiosReturn("order/method/delivery.order.item",faHuo).then(res => {
+          this.AxiosReturn("api/order/method/delivery.order.item",faHuo).then(res => {
             if (res.status === 200) {
               this.$message({
                 message: res.message,

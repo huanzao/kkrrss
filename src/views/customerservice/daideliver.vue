@@ -342,7 +342,7 @@ export default {
               status:this.audit_status
           }
       }
-      this.AxiosReturn('order/method/get.order.list/',myParams).then(res=>{
+      this.AxiosReturn('api/order/method/get.order.list/',myParams).then(res=>{
         that.tableData=res.data.items
         that.total=res.data.total_result
         console.log(res)
@@ -350,8 +350,7 @@ export default {
     },
     //物流公司
     getCompany() {
-      this.AxiosReturn(
-        "delivery_item/method/get.delivery.company.select/",
+      this.AxiosReturn("api/delivery_item/method/get.delivery.company.select/",
         {}
       ).then(res => {
         // console.log(res.data);
@@ -386,7 +385,7 @@ export default {
     },
     //转问题订单
     toProblemOrder(row) {
-       this.AxiosReturn("order/method/audit.order.item/", {
+       this.AxiosReturn("api/order/method/audit.order.item/", {
         order_no: row.order_no,
         trade_status: 5,
         is_delete:0,
@@ -448,7 +447,7 @@ export default {
               faHuo.order_goods_id.push(goods.order_goods_id)
           }
           // console.log('滴滴滴，发货啦',faHuo)
-          this.AxiosReturn("order/method/delivery.order.item",faHuo).then(res => {
+          this.AxiosReturn("api/order/method/delivery.order.item",faHuo).then(res => {
             if (res.status === 200) {
               this.$message({
                 message: res.message,
@@ -480,7 +479,7 @@ export default {
         type: "warning"
       })
         .then(() => {
-          this.AxiosReturn("order/method/recycle.order.item/", {
+          this.AxiosReturn("api/order/method/recycle.order.item/", {
             order_no: orderNo,
             is_recycle: 1
           }).then(res => {
