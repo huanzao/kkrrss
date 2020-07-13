@@ -1,7 +1,6 @@
 <template>
    <el-card>
        <el-form ref="form" :model="form" label-width="150px" class="demo-ruleForm" size="mini">
-
             <el-divider>基础设置</el-divider>
             <el-form-item label="商城名称">
                 <el-input v-model="form.name[0]" clearable placeholder="商城名称"></el-input>
@@ -114,9 +113,12 @@
             <el-form-item label="第三方统计代码">
                 <el-input  v-model="form.third_count[0]" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" placeholder="第三方统计代码"></el-input>
             </el-form-item>
-            <el-form-item>
-                 <el-button type="primary" :loading="loading" @click="handleFormSubmit">保存</el-button>
-            </el-form-item>
+
+            <div style="text-align: center;">
+              <el-button style="width:300px"  size="small" type="primary"  @click="handleFormSubmit">保存</el-button>
+            </div>
+
+         
         </el-form>
    </el-card>
 </template>
@@ -165,7 +167,7 @@ export default {
   methods: {
     AxiosReturn,
      // 设置配置数据
-    getFormData(val) {
+    getFormData(val) {  
       this.AxiosReturn("api/setting/method/get.setting.list/",{module:'system_info'}).then(res=>{
         console.log(res)
             let result = res.data;

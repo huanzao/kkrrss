@@ -88,9 +88,9 @@
 
 
 
-          <el-form-item>
-              <el-button type="primary"  @click="handleFormSubmit">保存</el-button>
-          </el-form-item>
+          <div style="text-align: center;">
+            <el-button style="width:300px"  size="small" type="primary"  @click="handleFormSubmit">保存</el-button>
+          </div>
 
 
 
@@ -215,42 +215,46 @@ export default {
         console.log(value);
     },
     handleFormSubmit(){
-        // this.form.image_ext = this.dynamicTags.join(",")
-        // this.form.file_ext = this.dynamicTagsTag.join(",")
+        this.form.image_ext = this.dynamicTags.join(",")
+        this.form.file_ext = this.dynamicTagsTag.join(",")
         
-        // // console.log(this.form.image_ext)
-        // this.AxiosReturn("setting/method/set.upload.list/",this.form).then(res=>{
-        //      console.log(res)
-             
-        // })
-
-        var obj={
-          aliyun_access_key:["LTAIiZASEnhdoDWO1111111111111111111"],
-          aliyun_bucket:"careyshop",
-          aliyun_endpoint: "oss-cn-hangzhou.aliyuncs.com",
-          aliyun_rolearn: "acs:ram::1763866338345155:role/aliyunosstokengeneratorrole",
-          aliyun_secret_key: "wpEQBBZRHVRgTy87AAYy7bFTKBWgXA",
-          aliyun_url: "aliyun.oss.careyshop.cn",
-          careyshop_url: "",
-          default: "careyshop",
-          file_ext: "doc,docx,xls,xlsx,ppt,pptx,pdf,wps,txt,rar,zip,gz,bz2,7z,pem,mp4,ogg,webm,ico",
-          file_size: "1M",
-          image_ext: "jpg,png,svg,gif,bmp,tiff,webp",
-          oss: "careyshop.cn/oss?url=",
-          qiniu_access_key: "-eibVM1dkuOQU9vbF9oMRbiMtw4t_-QUMQJgPPDJ",
-          qiniu_bucket: "careyshop",
-          qiniu_secret_key: "pcDGWPh8eOvnvcWBKbBhAod0R6MiC3_OU-V4hayZ",
-          qiniu_url: "poask1ml1.bkt.clouddn.com",
-          token_expires: 300,
-        }
-
-        // axios.post('http://www.mmkashop.com/api/v1/setting/method/set.upload.list',obj).then(res=>{
-        //   console.log(res)
-        // })
-
-        this.AxiosReturn("api/setting/method/set.upload.list/",obj).then(res=>{
+        // console.log(this.form.image_ext)
+        this.AxiosReturn("api/setting/method/set.upload.list/",this.form).then(res=>{
              console.log(res)
+             if(res.status==200){
+               this.$message.success('上传成功')
+             }else{
+               this.$message.warning(res.message)
+             }
         })
+
+        // var obj={
+        //   aliyun_access_key:["LTAIiZASEnhdoDWO1111111111111111111"],
+        //   aliyun_bucket:"careyshop",
+        //   aliyun_endpoint: "oss-cn-hangzhou.aliyuncs.com",
+        //   aliyun_rolearn: "acs:ram::1763866338345155:role/aliyunosstokengeneratorrole",
+        //   aliyun_secret_key: "wpEQBBZRHVRgTy87AAYy7bFTKBWgXA",
+        //   aliyun_url: "aliyun.oss.careyshop.cn",
+        //   careyshop_url: "",
+        //   default: "careyshop",
+        //   file_ext: "doc,docx,xls,xlsx,ppt,pptx,pdf,wps,txt,rar,zip,gz,bz2,7z,pem,mp4,ogg,webm,ico",
+        //   file_size: "1M",
+        //   image_ext: "jpg,png,svg,gif,bmp,tiff,webp",
+        //   oss: "careyshop.cn/oss?url=",
+        //   qiniu_access_key: "-eibVM1dkuOQU9vbF9oMRbiMtw4t_-QUMQJgPPDJ",
+        //   qiniu_bucket: "careyshop",
+        //   qiniu_secret_key: "pcDGWPh8eOvnvcWBKbBhAod0R6MiC3_OU-V4hayZ",
+        //   qiniu_url: "poask1ml1.bkt.clouddn.com",
+        //   token_expires: 300,
+        // }
+
+        // // axios.post('http://www.mmkashop.com/api/v1/setting/method/set.upload.list',obj).then(res=>{
+        // //   console.log(res)
+        // // })
+
+        // this.AxiosReturn("setting/method/set.upload.list/",obj).then(res=>{
+        //      console.log(res)
+        // })
 
 
 

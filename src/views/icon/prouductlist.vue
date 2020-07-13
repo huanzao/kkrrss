@@ -70,7 +70,7 @@
             </el-table-column>-->
 
             <!-- status integer 是 1 上下架状态 0=下架 1=上架 -->
-            <el-table-column prop="status" label="是否上架" width="80">
+            <el-table-column prop="status" label="是否上架" width="120">
               <template slot-scope="scope">
                 <div v-if="scope.row.is_delete ==0">
                   <el-switch

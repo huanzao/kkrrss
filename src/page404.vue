@@ -22,7 +22,7 @@
         </div>
         <div class="hat"></div>
         <div class="bubble">
-          <a href="/">返回主页?</a>
+          <a @click="back">返回上级</a>
         </div>
       </div>
       <p>PAGE NOT FOUND</p>
@@ -39,6 +39,11 @@ export default {
   },
   mounted () {
   },
+  methods:{
+    back(){
+      history.go(-1)
+    }
+  }
   
 }
 </script>

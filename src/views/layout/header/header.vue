@@ -30,7 +30,6 @@
         </li>
       </ul>
     </el-header>
-    <!-- <tabNav></tabNav> -->
     <el-dialog  title="修改密码" width="700px" :visible.sync="visible" destroy-on-close  @close="closeCallback">
       <div >
         <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
@@ -56,11 +55,10 @@
 <script>
 import Cookies from "js-cookie";
 import langSelect from "../../../components/lang/langSelect";
-import tabNav from "./tabNav";
 import {AxiosReturn} from '../../../assets/axios'
 export default {
   name: "Header",
-  components: { tabNav, langSelect },
+  components: {langSelect },
   data() {
     return {
       isfullScreen: true,
@@ -128,6 +126,7 @@ export default {
         sessionStorage.username=null
         sessionStorage.nickname=null
         sessionStorage.token=null
+        sessionStorage.defActive=null
         this.$router.push('/login')
       }
       if (command === "rePassward") {
