@@ -63,6 +63,21 @@ export default {
     }else{
       this.defaultActive=sessionStorage.defActive
     }
+
+    // console.log(this.sideMenu)
+    let auth_m=[]
+    for(var m of this.sideMenu){
+      if(m.children.length===0){
+        auth_m.push(m.url)
+      }else{
+        for (const ind of m.children) {
+          auth_m.push(ind.url)
+        }
+      }
+    }
+    // console.log('auth_m',auth_m)
+    sessionStorage.auth_m=JSON.stringify(auth_m)
+
   },
   methods: {
     selectmenu(key) {

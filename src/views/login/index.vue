@@ -121,6 +121,13 @@ export default {
         return false;
       } else {
         
+        const loading = this.$loading({
+          lock: true,
+          text: '登录中，请稍后。。。',
+          spinner: 'el-icon-loading',
+          background: 'rgba(0, 0, 0, 0.7)'
+        })
+
         this.axios.post("api/admin/method/login.admin.user", {
             username: that.loginForm.username,
             password: that.loginForm.password,
@@ -129,10 +136,10 @@ export default {
             console.log('登录数据',res.data);
             let logoData=res.data.data
             if (res.data.status === 200) {
-              that.axios.post('api/menu/method/get.menu.auth.list',{module:'admin'}).then(res=>{
+              that.axios.post('api/menu/method/get.menu.auth.list',{module:'admin',status:1}).then(res=>{
                 console.log('登录完请求过来的侧边栏的数据',res.data.data)
                 sessionStorage.SideArr=JSON.stringify(res.data.data)
-
+                loading.close()
                 that.$notify({
                 title: '登录成功',
                   message: `欢迎回来${logoData.admin.nickname}`,

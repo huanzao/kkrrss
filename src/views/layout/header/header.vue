@@ -127,6 +127,7 @@ export default {
         sessionStorage.nickname=null
         sessionStorage.token=null
         sessionStorage.defActive=null
+        sessionStorage.auth_m=null
         this.$router.push('/login')
       }
       if (command === "rePassward") {
