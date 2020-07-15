@@ -274,18 +274,16 @@ export default {
           }
       }
       let that = this;
-      this.axios
-        .post("api/stock_purchase/method/get.stock.admin.list/",myParams).then(function(res) {
-          if (res.data.status === 200) {
+      this.AxiosReturn("stock_purchase/method/get.stock.admin.list/",myParams).then(function(res) {
+          if (res.status === 200) {
             // console.log(res.data.data);
-            let result = res.data.data.items;
+            let result = res.data.items;
             that.buyTableData = result;
-            that.total = res.data.data.total_result;
+            that.total = res.data.total_result;
+          }else{
+            this.$message.warning(res.message)
           }
         })
-        .catch(function(error) {
-          console.log(error);
-        });
     },
     // 修正明细
     correctiondetails() {

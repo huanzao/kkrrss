@@ -83,6 +83,7 @@
 // import httpService from "../../http/http.js";
 // import { URL } from "../../http/httpsService.js";
 import axios from "axios";
+import {AxiosReturn} from '../../assets/axios/index'
 export default {
   data() {
     return {
@@ -110,6 +111,7 @@ export default {
     sessionStorage.token='f33ff2af33dfa9f7dc32b458c55f3aef'
   },
   methods: {
+    AxiosReturn,
     submitForm() {
       let that = this;
       if (that.loginForm.username === "" || that.loginForm.password === "") {
@@ -125,20 +127,20 @@ export default {
           lock: true,
           text: '登录中，请稍后。。。',
           spinner: 'el-icon-loading',
-          background: 'rgba(0, 0, 0, 0.7)'
+          background: 'rgba(0, 0, 0, 0.5)'
         })
 
-        this.axios.post("api/admin/method/login.admin.user", {
+        this.AxiosReturn("admin/method/login.admin.user",{
             username: that.loginForm.username,
             password: that.loginForm.password,
             platform: 1
           }).then(function(res) {
-            console.log('登录数据',res.data);
-            let logoData=res.data.data
-            if (res.data.status === 200) {
-              that.axios.post('api/menu/method/get.menu.auth.list',{module:'admin',status:1}).then(res=>{
-                console.log('登录完请求过来的侧边栏的数据',res.data.data)
-                sessionStorage.SideArr=JSON.stringify(res.data.data)
+            console.log('登录数据',res);
+            let logoData=res.data
+            if (res.status === 200) {
+              that.AxiosReturn('menu/method/get.menu.auth.list',{module:'admin',status:1}).then(res=>{
+                console.log('登录完请求过来的侧边栏的数据',res.data)
+                sessionStorage.SideArr=JSON.stringify(res.data)
                 loading.close()
                 that.$notify({
                 title: '登录成功',
@@ -166,12 +168,14 @@ export default {
               })
 
               
-            } else if (res.data.status === 401) {
+            } else if (res.status === 401) {
+              loading.close()
               that.$router.push({ path: "/login" });
-            } else if (res.data.status === 500) {
+            } else if (res.status === 500) {
+              loading.close()
               that.$message({
                 showClose: true,
-                message: res.data.message,
+                message: res.message,
                 type: "error"
               });
             }
@@ -179,11 +183,9 @@ export default {
           .catch(function(error) {
             console.log(error);
           });
-       
       }
     }
   },
-  
 };
 </script>
 <style lang="scss">

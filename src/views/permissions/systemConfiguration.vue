@@ -168,7 +168,7 @@ export default {
     AxiosReturn,
      // 设置配置数据
     getFormData(val) {  
-      this.AxiosReturn("api/setting/method/get.setting.list/",{module:'system_info'}).then(res=>{
+      this.AxiosReturn("setting/method/get.setting.list/",{module:'system_info'}).then(res=>{
         console.log(res)
             let result = res.data;
             this.form.allow_origin=result.allow_origin.value
@@ -222,7 +222,7 @@ export default {
           background: 'rgba(0, 0, 0, 0.7)'
         });
 
-        this.AxiosReturn('api/setting/method/set.system.list',this.form).then(res=>{
+        this.AxiosReturn('setting/method/set.system.list',this.form).then(res=>{
           loading.close()
           console.log(res)
           if(res.status==200){

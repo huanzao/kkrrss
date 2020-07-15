@@ -200,31 +200,30 @@ export default {
         params.name=null
       }
       let that = this;
-      this.axios.post("api/delivery_item/method/get.delivery.company.list/",params).then(function(res) {
+      this.AxiosReturn("delivery_item/method/get.delivery.company.list/",params).then(function(res) {
           console.log(res);
-          if (res.data.status === 200) {
-            let result = res.data.data.items;
+          if (res.status === 200) {
+            let result = res.data.items;
             that.categoryData = result;
-            that.total = res.data.data.total_result;
+            that.total = res.data.total_result;
+          }else{
+            this.$message.warning(res.message)
           }
-        }).catch(function(error) {
-          console.log(error);
-        });
+        })
     },
 
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
           let that = this;
-          this.axios
-            .post("api/delivery_item/method/add.delivery.company.item/", {
+          this.AxiosReturn("delivery_item/method/add.delivery.company.item/", {
               name : that.ruleForm.name,
               code : that.ruleForm.code,
               wl_code :that.ruleForm.wl_code,
               type :that.ruleForm.type,
             })
             .then(function(res) {
-              if (res.data.status === 200) {
+              if (res.status === 200) {
                 // console.log(res);
                 that.centerDialogVisible = false;
                 that.getCompanyList();
@@ -232,11 +231,10 @@ export default {
                 that.ruleForm.code = "";
                 that.ruleForm.wl_code = "";
                 that.resetFun.type = '';
+              }else{
+                this.$message.warning(res.message)
               }
             })
-            .catch(function(error) {
-              console.log(error);
-            });
         } else {
           return false;
         }
@@ -252,7 +250,7 @@ export default {
         type: "warning"
       })
         .then(() => {
-          this.AxiosReturn("api/delivery_item/method/del.delivery.company.list/", {
+          this.AxiosReturn("delivery_item/method/del.delivery.company.list/", {
             delivery_item_id :arr
           }).then(res => {
               console.log(res)
@@ -298,41 +296,26 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           let that = this;
-          this.axios
-            .post("api/delivery_item/method/set.delivery.company.item/", {
+          this.AxiosReturn("delivery_item/method/set.delivery.company.item/", {
               delivery_item_id: that.ruleFormEdit.delivery_item_id,
               name: that.ruleFormEdit.name,
               code: that.ruleFormEdit.code,
               wl_code :that.ruleFormEdit.wl_code ,
               type :that.ruleFormEdit.type ,
-
-            })
-            .then(function(res) {
-              if (res.data.status === 200) {
+            }).then(function(res) {
+              if (res.status === 200) {
                 // console.log(res);
                 that.$message({
-                  message: res.data.message,
+                  message: res.message,
                   type: "success"
                 });
                 that.dialogVisibleEdit = false;
                 that.getCompanyList();
                 
-              }else if(res.data.status === 500){
-                   that.$message({
-                    message: res.data.message,
-                    type: "warnig"
-                  });
-
               }else{
-                  that.$message({
-                    message: '提交失败',
-                    type: "error"
-                  });
+                   that.$message .warning(res.message);
               }
             })
-            .catch(function(error) {
-              console.log(error);
-            });
         } else {
           return false;
         }

@@ -26,12 +26,6 @@ Vue.config.productionTip = false
 Vue.use(ElementUI)
 
 
-//数据转换称json
-import Qs from "qs";
-import axios from 'axios'
-Vue.prototype.axios = axios;
-
-import { Message } from 'element-ui';
 
 //  获取角色信息，根据用户权限动态加载路由
 
@@ -39,7 +33,7 @@ router.beforeEach((to, from, next) => {
   if(to.name=='login'||to.name=='index'){
     next()
   }else{
-    if(sessionStorage.auth_m==null||sessionStorage.auth_m==undefined){
+    if(sessionStorage.auth_m=='null'||sessionStorage.auth_m==null||sessionStorage.auth_m==undefined){
       ElementUI.Message.error('请先登录')
       next('/login')
     }else if(JSON.parse(sessionStorage.auth_m).includes(to.name)){

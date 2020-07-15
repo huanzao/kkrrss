@@ -138,7 +138,7 @@ export default {
               status:this.status
           }
       }
-      this.AxiosReturn('api/order/method/get.order.list/',myParams).then(res=>{
+      this.AxiosReturn('order/method/get.order.list/',myParams).then(res=>{
         that.tableData=res.data.items
         that.total=res.data.total_result
         console.log(res)

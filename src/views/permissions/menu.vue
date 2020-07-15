@@ -140,7 +140,7 @@ export default {
             this.isTodo=false
         }
         console.log(e,index,row)
-        this.AxiosReturn('api/menu/method/set.menu.status',{menu_id:row.menu_id,status:e}).then(res=>{
+        this.AxiosReturn('menu/method/set.menu.status',{menu_id:row.menu_id,status:e}).then(res=>{
             console.log(res)
             if(res.status==200){
                 if(e==1){
@@ -157,7 +157,7 @@ export default {
         })
     },
     load(tree, treeNode, resolve){
-      this.AxiosReturn('api/menu/method/get.parent.item',{module:this.tobMadel,parent_id:tree.menu_id},true).then(res=>{
+      this.AxiosReturn('menu/method/get.parent.item',{module:this.tobMadel,parent_id:tree.menu_id},true).then(res=>{
           if(res.data){
             resolve(res.data.map(itm=>{
               itm.status=itm.status.toString()
@@ -225,7 +225,7 @@ export default {
               cancelButtonText: '取消',
               type: 'warning'
             }).then(() => {
-                this.AxiosReturn('api/menu/method/del.menu.item/',{menu_id:row.menu_id}).then(res=>{
+                this.AxiosReturn('menu/method/del.menu.item/',{menu_id:row.menu_id}).then(res=>{
                   if(res.status==200){
                     this.$message.success('删除成功')
                     this.tableData.splice(index,1)
@@ -241,7 +241,7 @@ export default {
             });
         }else{
             this.isTodo=false
-            this.AxiosReturn('api/menu/method/del.menu.item/',{menu_id:row.menu_id}).then(res=>{
+            this.AxiosReturn('menu/method/del.menu.item/',{menu_id:row.menu_id}).then(res=>{
               console.log(res)
               if(res.status==200){
                 this.$message.success('删除成功')
@@ -256,7 +256,7 @@ export default {
       this.getList()
     },
     getList(){
-      this.AxiosReturn('api/menu/method/get.parent.item',{module:this.tobMadel,parent_id:0}).then(res=>{
+      this.AxiosReturn('menu/method/get.parent.item',{module:this.tobMadel,parent_id:0}).then(res=>{
         console.log(res)
         this.MenuSelectArr=res.data
         this.tableData=res.data.map(item=>{
@@ -277,7 +277,7 @@ export default {
           let that=this
           this.isTodo=false
           if(this.dialogTitle=='添加子菜单'||this.dialogTitle=='添加一级菜单'){
-              this.AxiosReturn('api/menu/method/add.menu.item',this.form).then(res=>{
+              this.AxiosReturn('menu/method/add.menu.item',this.form).then(res=>{
                 console.log(res)
                 if(res.status==200){
                   this.$message.success('添加成功')
@@ -290,7 +290,7 @@ export default {
                 }
               })
           }else{
-              this.AxiosReturn('api/menu/method/set.menu.item',this.form).then(res=>{
+              this.AxiosReturn('menu/method/set.menu.item',this.form).then(res=>{
                 console.log(res)
                 if(res.status==200){
                   this.$message.success('修改成功')

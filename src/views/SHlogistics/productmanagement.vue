@@ -348,17 +348,16 @@ export default {
           }
       }
 
-      this.axios.post("api/product/method/get.product.admin.list/",myParams).then(function(res) {
+      this.AxiosReturn("product/method/get.product.admin.list/",myParams).then(function(res) {
           // console.log(res);
-          if (res.data.status === 200) {
-            let result = res.data.data.items;
+          if (res.status === 200) {
+            let result = res.data.items;
             that.dataList = result;
-            that.total = res.data.data.total_result;
+            that.total = res.data.total_result;
+          }else{
+            this.$message.warning(res.message)
           }
         })
-        .catch(function(error) {
-          console.log(error);
-        });
     },
     // 监听pagesize改变的事件
     handleSizeChange: function(newSize) {
@@ -373,32 +372,26 @@ export default {
     // 获取选品下拉数据
     getSelectionList() {
       let that = this;
-      this.axios
-        .post("api/admin/method/get.admin.list/", {
-          group_id: 13,
-          status: 1
-        })
-        .then(function(res) {
-          if (res.data.status === 200) {
-            that.xuanpindata = res.data.data.items;
-            that.selectionpersondata = res.data.data.items;
+      this.AxiosReturn("admin/method/get.admin.list/", {group_id:13,status:1}).then(function(res) {
+          if (res.status === 200) {
+            that.xuanpindata = res.data.items;
+            that.selectionpersondata = res.data.items;
+          }else{
+            this.$message.warning(res.message)
           }
         })
-        .catch(function(error) {
-          console.log(error);
-        });
     },
     // 获取类别
     getSelect() {
       let that = this;
-      this.axios.post("api/goods_type/method/get.goods.type.select", {}).then(function(res) {
-          if (res.data.status === 200) {
-            that.typeNameListSearch = res.data.data;
-            that.typeNameListSearchEdit = res.data.data;
+      this.AxiosReturn("goods_type/method/get.goods.type.select", {}).then(function(res) {
+          if (res.status === 200) {
+            that.typeNameListSearch = res.data;
+            that.typeNameListSearchEdit = res.data;
+          }else{
+            this.$message.warning(res.message)
           }
-        }).catch(function(error) {
-          console.log(error);
-        });
+        })
     },
     // 编辑btn
     showAreasCateDialog(row) {
@@ -416,7 +409,7 @@ export default {
       this.addRuleForm.keywords = row.keywords; //关键词 -- > 产品卖点
       this.addRuleForm.product_remarks = row.product_remarks; //备注
       //获取 一条数据 cao
-      this.AxiosReturn("api/product/method/get.products.item", {
+      this.AxiosReturn("product/method/get.products.item", {
         product_id: row.product_id
       }).then(res => {
         that.addRuleForm.spec_combo = res.data.getspec_goods;
@@ -448,16 +441,15 @@ export default {
     // 获取产品分类规格列表
     getSpecList() {
       let that = this;
-      this.axios
-        .post("api/spec?method=get.goods.spec.list", {
+      this.AxiosReturn("spec?method=get.goods.spec.list", {
           goods_type_id: that.addRuleForm.goods_type_id
         })
         .then(function(res) {
-          if (res.data.status === 200) {
+          if (res.status === 200) {
             that.skuTitle = [];
             that.UpLoadqaq = [];
             // console.log("--------", res.data);
-            that.specTypeName = res.data.data.spec_config;
+            that.specTypeName = res.data.spec_config;
             // console.log("--- 循环数据 ----", that.specTypeName);
             if (that.specTypeName.length == 0) {
               that.$message("该分类下暂无，规格，如果需要请去产品分类中添加");

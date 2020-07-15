@@ -18,13 +18,13 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      "/api":{
-       target:"http://www.mmkashop.com/api/v1/",
-       changeOrigin:true,
-       pathRewrite:{
-        "^/api":""
-       }
-      }
+      // "/api":{
+      //  target:"http://www.mmkashop.com/api/v1/",
+      //  changeOrigin:true,
+      //  pathRewrite:{
+      //   "^/api":""
+      //  }
+      // }
      },
     // Various Dev Server settings
     host: '192.168.0.3', // can be overwritten by process.env.HOST

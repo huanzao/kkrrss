@@ -455,12 +455,12 @@ export default {
       }
       
       let that = this;
-      this.axios.post("api/product/method/get.product.admin.list",myParams).then(function(res) {
+      this.AxiosReturn("product/method/get.product.admin.list",myParams).then(function(res) {
           console.log(res)
-          if (res.data.status === 200) {
-            let result = res.data.data.items;
+          if (res.status === 200) {
+            let result = res.data.items;
             that.dataList = result;
-            that.total = res.data.data.total_result;
+            that.total = res.data.total_result;
           }else{
             this.$message.warning(res.message)
           }
@@ -481,13 +481,13 @@ export default {
     // 获取选品下拉数据
     getSelectionList() {
       let that = this;
-      this.axios.post("api/admin/method/get.admin.list/", {
+      this.AxiosReturn("admin/method/get.admin.list/", {
           group_id: 13,
           status: 1
         }).then(function(res) {
-          if (res.data.status === 200) {
-            that.xuanpindata = res.data.data.items;
-            that.selectionpersondata = res.data.data.items;
+          if (res.status === 200) {
+            that.xuanpindata = res.data.items;
+            that.selectionpersondata = res.data.items;
           }
         }).catch(function(error) {
           console.log(error);
@@ -496,13 +496,12 @@ export default {
     // 获取类别
     getSelect() {
       let that = this;
-      this.axios
-        .post("api/goods_type/method/get.goods.type.select", {})
+      this.AxiosReturn("goods_type/method/get.goods.type.select", {})
         .then(function(res) {
-          if (res.data.status === 200) {
+          if (res.status === 200) {
             // console.log(res);
-            that.typeNameListSearch = res.data.data;
-            that.typeNameListSearchEdit = res.data.data;
+            that.typeNameListSearch = res.data;
+            that.typeNameListSearchEdit = res.data;
           }
         })
         .catch(function(error) {
@@ -551,7 +550,7 @@ export default {
       //   console.log(res)
       // })
       //获取 一条数据 cao
-      this.AxiosReturn("api/product/method/get.products.item",{product_id:row.product_id}).then(res=>{
+      this.AxiosReturn("product/method/get.products.item",{product_id:row.product_id}).then(res=>{
         that.addRuleForm.spec_combo=res.data.getspec_goods
         console.log('///SKU--JSOn ',that.addRuleForm.spec_combo)
         that.centerDialogVisible = true;
@@ -587,12 +586,12 @@ export default {
         program={goods_type_id: that.addRuleForm.goods_type_id}
       }
       let that = this;
-      this.axios.post("api/spec?method=get.goods.spec.list",program).then(function(res) {
-          if (res.data.status === 200) {
+      this.AxiosReturn("spec?method=get.goods.spec.list",program).then(function(res) {
+          if (res.status === 200) {
             that.skuTitle = [];
             that.UpLoadqaq = [];
             console.log("--------", res.data);
-            that.specTypeName = res.data.data.spec_config;
+            that.specTypeName = res.data.spec_config;
             console.log("--- 循环数据 ----", that.specTypeName);
             if(that.specTypeName.length==0){
                 that.$message('该分类下暂无，规格，如果需要请去产品分类中添加')
@@ -623,7 +622,7 @@ export default {
         });
     },
     // 单选
-    handleCheckedCitiesChange(value) {
+    handleCheckedCitiesChange(value){
       if (this.isCreated) {
         console.log("qwqsaas", JSON.parse(localStorage.sku));
         this.UpLoadqaq = JSON.parse(localStorage.sku);
@@ -763,18 +762,17 @@ export default {
               return
             }
 
-            this.axios.post("api/goods/method/add.products.item/", that.addRuleForm).then(function(res){
+            this.AxiosReturn("goods/method/add.products.item/",that.addRuleForm).then(function(res){
                 console.log(res)
-                if (res.data.status === 200) {
-                  
+                if (res.status === 200) {
                   that.$message({
-                    message: res.data.message,
+                    message: res.message,
                     type: "success"
                   });
                   that.centerDialogVisible = false;
                   that.getAllList();
                 }else{
-                  that.$message.warning(res.data.message)
+                  that.$message.warning(res.message)
                 }
               })
               .catch(function(error) {
@@ -807,17 +805,17 @@ export default {
               this.$message.warning(`SKU ${msg}重复出现，(sku不能重复)`)
               return
             }
-            this.axios.post("api/product/method/set.product.item", that.addRuleForm).then(function(res) {
-                if (res.data.status === 200) {
+            this.AxiosReturn("product/method/set.product.item", that.addRuleForm).then(function(res) {
+                if (res.status === 200) {
                   console.log(res);
                   that.$message({
-                    message: res.data.message,
+                    message: res.message,
                     type: "success"
                   });
                   that.centerDialogVisible = false;
                   that.getAllList();
                 }else{
-                  that.$message.warning(res.data.message)
+                  that.$message.warning(res.message)
                 }
               })
               .catch(function(error) {
@@ -867,23 +865,22 @@ export default {
       })
         .then(() => {
           let that = this;
-          this.axios
-            .post("api/product/method/del.products.list/", {
+          this.AxiosReturn("product/method/del.products.list/", {
               product_id: row.product_id,
               is_delete: 1
             })
             .then(function(res) {
               // console.log(res);
-              if (res.data.status === 200) {
+              if (res.status === 200) {
                 that.getAllList();
                 that.$message({
-                  message: res.data.message,
+                  message: res.message,
                   type: "success",
                   duration: 3000
                 });
-              } else if (res.data.status === 500) {
+              } else if (res.status === 500) {
                 that.$message({
-                  message: res.data.message,
+                  message: res.message,
                   type: "warning",
                   duration: 3000
                 });

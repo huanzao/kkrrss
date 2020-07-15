@@ -129,13 +129,13 @@ export default {
         params.type_name=null
       }
       let that = this;
-      this.axios.post("api/goods_type/method/get.goods.type.list/",params).then(function(res) {
+      this.AxiosReturn("goods_type/method/get.goods.type.list/",params).then(function(res) {
           console.log(res);
-          if (res.data.status === 200) {
+          if (res.status === 200) {
             // console.log(res.data.data.items);
-            let result = res.data.data.items;
+            let result = res.data.items;
             that.categoryData = result;
-            that.total = res.data.data.total_result;
+            that.total = res.data.total_result;
           }
         }).catch(function(error) {
           console.log(error);
@@ -146,8 +146,7 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           let that = this;
-          this.axios
-            .post("api/goods_type/method/add.goods.type.item", {
+          this.AxiosReturn("goods_type/method/add.goods.type.item", {
               type_name: that.ruleForm.type_name,
               type_code: that.ruleForm.type_code
             })
@@ -176,7 +175,7 @@ export default {
         type: "warning"
       })
         .then(() => {
-          this.AxiosReturn("api/goods_type/method/del.goods.type.list", {
+          this.AxiosReturn("goods_type/method/del.goods.type.list", {
             goods_type_id: index.goods_type_id
           }).then(res => {
             // console.log(res,1111111111111)
@@ -214,17 +213,16 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           let that = this;
-          this.axios
-            .post("api/goods_type/method/set.goods.type.item/", {
+          this.AxiosReturn("goods_type/method/set.goods.type.item/", {
               goods_type_id: that.ruleFormEdit.goods_type_id,
               type_name: that.ruleFormEdit.type_name,
               type_code: that.ruleFormEdit.category
             })
             .then(function(res) {
-              if (res.data.status === 200) {
+              if (res.status === 200) {
                 // console.log(res);
                 that.$message({
-                  message: res.data.message,
+                  message: res.message,
                   type: "success"
                 });
                 that.dialogVisibleEdit = false;

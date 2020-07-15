@@ -228,8 +228,6 @@ export default {
       let myParams={}
       if(this.isSearch){
           myParams=this.queryinfo
-        
-
       }else{
           myParams={
               page_size : this.queryinfo.page_size, //每页条数
@@ -237,12 +235,12 @@ export default {
           }
       }
       let that = this;
-      this.axios.post("api/goods_comment/method/get.goods.comment.list",myParams).then(function(res) {
+      this.AxiosReturn("goods_comment/method/get.goods.comment.list",myParams).then(function(res) {
           console.log(res)
-          if (res.data.status === 200) {
-            that.total = res.data.data.total_result;
-            if(res.data.data.items){
-                let response = res.data.data.items;
+          if (res.status === 200) {
+            that.total = res.data.total_result;
+            if(res.data.items){
+                let response = res.data.items;
                 that.commentData = response.map(item=>{
                   item.is_show=item.is_show.toString()
                   return item
@@ -274,7 +272,7 @@ export default {
         let that=this
         var idarr=[]
         idarr.push(row.goods_comment_id)
-        this.AxiosReturn('api/goods_comment/method/set.goods.comment.show',{goods_comment_id:idarr,is_show:row.is_show}).then(res=>{
+        this.AxiosReturn('goods_comment/method/set.goods.comment.show',{goods_comment_id:idarr,is_show:row.is_show}).then(res=>{
           if(res.status==200){
             this.$message.success('设置成功')
           }else{
@@ -306,7 +304,7 @@ export default {
         this.editCommentVisible = true;
     },
     editUploadFunc(){
-        this.AxiosReturn('api/goods_comment/method/set.goods.comment',this.editForm).then(res=>{
+        this.AxiosReturn('goods_comment/method/set.goods.comment',this.editForm).then(res=>{
           if(res.status==200){
             this.$message.success('编辑成功')
             this.editCommentVisible = false
@@ -323,7 +321,7 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this.AxiosReturn('api/goods_comment/method/del.goods.comment.item',{goods_comment_id:id}).then(res=>{
+          this.AxiosReturn('goods_comment/method/del.goods.comment.item',{goods_comment_id:id}).then(res=>{
               if(res.status===200){
                 this.$message.success('删除成功')
                 this.getList()

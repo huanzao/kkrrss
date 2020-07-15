@@ -34,7 +34,7 @@ export default {
     }
   },
   created(){
-    this.AxiosReturn('api/auth_group/method/get.auth.group.list',{page_size:100,page_no:1}).then(res=>{
+    this.AxiosReturn('auth_group/method/get.auth.group.list',{page_size:100,page_no:1}).then(res=>{
           this.RoleArr=res.data.items
           console.log('--------',this.RoleArr)
       })
@@ -42,7 +42,7 @@ export default {
   methods: {
     AxiosReturn,
     load(tree, treeNode, resolve){  
-      this.AxiosReturn('api/menu/method/get.parent.item',{module:this.tobMadel,parent_id:tree.menu_id},true).then(res=>{
+      this.AxiosReturn('menu/method/get.parent.item',{module:this.tobMadel,parent_id:tree.menu_id},true).then(res=>{
           if(res.data){
             resolve(res.data.map(itm=>{
               itm.status=itm.status.toString()
@@ -55,7 +55,7 @@ export default {
       })
     },
     roleChange(){
-        this.AxiosReturn('api/menu/method/get.menu.auth.list',{module:this.tobMadel}).then(res=>{
+        this.AxiosReturn('menu/method/get.menu.auth.list',{module:this.tobMadel}).then(res=>{
           console.log(res)
           this.tableData=res.data.map(item=>{
             if(item.children_total==0){

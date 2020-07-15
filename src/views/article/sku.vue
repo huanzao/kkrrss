@@ -154,7 +154,7 @@ export default {
             page_no:this.pagenum,
           }
         }
-        this.AxiosReturn('api/productSku/method/get.sku.list',myparams).then(res=>{
+        this.AxiosReturn('productSku/method/get.sku.list',myparams).then(res=>{
             console.log(res)
             if (res.status === 200) {
               let result = res.data.items;
@@ -192,8 +192,7 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           let that = this;
-          this.axios
-            .post("api/productSku/method/add.product.sku.item", {
+          this.AxiosReturn("productSku/method/add.product.sku.item", {
               product_id: this.ruleForm.proid,
               product_name: this.ruleForm.proname,
               product_sku: this.ruleForm.prosku,
@@ -206,18 +205,18 @@ export default {
             })
             .then(function(res) {
               // console.log(res);
-              if (res.data.status === 200) {
+              if (res.status === 200) {
                 that.$message({
-                  message: res.data.message,
+                  message: res.message,
                   type: "success",
                   duration: 3000
                 });
                 that.centerDialogVisible = false;
                 that.getTableList();
               } else {
-                if (res.data.status != 200) {
+                if (res.status != 200) {
                   that.$message({
-                    message: res.data.message,
+                    message: res.message,
                     type: "warning",
                     duration: 3000
                   });
@@ -240,16 +239,15 @@ export default {
     //  检验输入的SKU是否唯一
     isOnly() {
       let that = this;
-      this.axios
-        .post("api/productSku/method/unique.product.sku/", {
+      this.AxiosReturn("productSku/method/unique.product.sku/", {
           product_sku: that.ruleForm.prosku
         })
         .then(function(res) {
           console.log(res);
-          if (res.data.status === 200) {
-          } else if (res.data.status === 500) {
+          if (res.status === 200) {
+          } else if (res.status === 500) {
             that.$message({
-              message: res.data.message,
+              message: res.message,
               type: "warning",
               duration: 3000
             });

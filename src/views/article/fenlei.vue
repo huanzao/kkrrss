@@ -6,7 +6,7 @@
             <el-option v-for="item in typeNameListSearch" :key="item.goods_type_id" :label="item.type_name" :value="item.goods_type_id"></el-option>
           </el-select>
           <el-button type="info" icon="el-icon-refresh" size="mini"  v-if='isSearch' @click="resetFun"></el-button>
-          <el-button type="success " size="mini" @click="AddListRow()">新增产品分类</el-button>
+          <el-button type="success " size="mini" @click="AddListRow">新增产品分类</el-button>
       </div>
       <el-table :data="tableData"  border=""   style="width:100%;margin-top: 15px;"  stripe  class="tb-edit"  highlight-current-row size="mini">
         <el-table-column width="40" type="index"></el-table-column>
@@ -218,15 +218,15 @@ export default {
     // 获取所有列表
     getList() {
       let that = this;
-      this.axios.post("api/spec/method/get.goods.spec.page/", {
+      this.AxiosReturn("spec/method/get.goods.spec.page/", {
           page_size: this.pagesize, //每页条数
           page_no: this.pagenum //翻页页数
         }).then(function(res) {
           // console.log(res)
-          if (res.data.status === 200) {
-            console.log(res.data.data);
-            that.tableData = res.data.data.items;
-            that.total = res.data.data.total_result;
+          if (res.status === 200) {
+            console.log(res.data);
+            that.tableData = res.data.items;
+            that.total = res.data.total_result;
             // console.log(that.tableData);
             for (var l = 0; l < that.tableData.length; l++) {
               that.spec_item = that.tableData[l].spec_item;
@@ -244,15 +244,15 @@ export default {
     search() {
       this.isSearch=true
       let that = this;
-      this.axios.post("api/spec/method/get.goods.spec.page/", {
+      this.AxiosReturn("spec/method/get.goods.spec.page/", {
           page_size: that.pagesize, //每页条数
           page_no: that.pagenum, //翻页页数
           goods_type_id: that.goodsTypeId
         }).then(function(res) {
-          if (res.data.status === 200) {
+          if (res.status === 200) {
             console.log(res);
-            that.tableData = res.data.data.items;
-            that.total = res.data.data.total_result;
+            that.tableData = res.data.items;
+            that.total = res.data.total_result;
           }
           for (var l = 0; l < that.tableData.length; l++) {
             that.spec_item = that.tableData[l].spec_item;
@@ -288,12 +288,10 @@ export default {
     },
     getSelect() {
       let that = this;
-      this.axios
-        .post("api/goods_type/method/get.goods.type.select", {})
-        .then(function(res) {
-          if (res.data.status === 200) {
-            // console.log(res);
-            that.typeNameListSearch = res.data.data;
+      this.AxiosReturn("goods_type/method/get.goods.type.select", {}).then(function(res) {
+          if (res.status === 200) {
+            console.log('---------------',res);
+            that.typeNameListSearch = res.data;
           }
         })
         .catch(function(error) {
@@ -325,12 +323,11 @@ export default {
     AddListRow() {
       this.centerDialogVisible = true;
       let that = this;
-      this.axios
-        .post("api/goods_type/method/get.goods.type.select", {})
+      this.AxiosReturn("goods_type/method/get.goods.type.select", {})
         .then(function(res) {
-          if (res.data.status === 200) {
+          if (res.status === 200) {
             // console.log(res);
-            that.typeNameList = res.data.data;
+            that.typeNameList = res.data;
           }
         })
         .catch(function(error) {
@@ -342,17 +339,16 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           let that = this;
-          this.axios
-            .post("spec/method/add.goods.spec.item/", {
+          this.AxiosReturn("spec/method/add.goods.spec.item/", {
               goods_type_id: that.ruleForm.type_name,
               name: that.ruleForm.category,
               spec_item: that.dynamicTags
             })
             .then(function(res) {
-              if (res.data.status === 200) {
+              if (res.status === 200) {
                 // console.log(res);
                 that.$message({
-                  message: res.data.message,
+                  message: res.message,
                   type: "success"
                 });
                 that.getList();
@@ -380,7 +376,7 @@ export default {
         type: "warning"
       })
         .then(() => {
-          this.AxiosReturn("api/spec/method/del.goods.spec.list/", {
+          this.AxiosReturn("spec/method/del.goods.spec.list/", {
             spec_id: index.spec_id
           }).then(res => {
             // console.log(res,1111111111111)
@@ -415,11 +411,10 @@ export default {
       this.spec_id = row.spec_id;
       this.goods_type_id = row.goods_type_id;
       let that = this;
-      this.axios
-        .post("api/goods_type/method/get.goods.type.select", {})
+      this.AxiosReturn("goods_type/method/get.goods.type.select", {})
         .then(function(res) {
           if (res.data.status === 200) {
-            that.typeNameListEdit = res.data.data;
+            that.typeNameListEdit = res.data;
           }
         })
         .catch(function(error) {
@@ -450,18 +445,16 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           let that = this;
-          this.axios
-            .post("api/spec/method/set.goods.spec.item/", {
+          this.AxiosReturn("spec/method/set.goods.spec.item/", {
               goods_type_id: that.goods_type_id,
               name: that.ruleFormEdit.category,
               spec_item: that.dynamicTagsEdit,
               spec_id: that.spec_id
-            })
-            .then(function(res) {
-              if (res.data.status === 200) {
+            }).then(function(res) {
+              if (res.status === 200) {
                 console.log(res);
                 that.$message({
-                  message: res.data.message,
+                  message: res.message,
                   type: "success"
                 });
                 that.dialogVisibleEdit = false;

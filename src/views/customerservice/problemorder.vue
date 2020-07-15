@@ -92,8 +92,8 @@
           <!-- 分页 -->
           <el-pagination
             style="margin-top:15px;"
-            @size-change="pageSizeChange($event,'api/order/method/get.order.list/',{page_size:pagesize,page_no:pagenum,status:audit_status},'items')"
-            @current-change="pageNumberChange($event,'api/order/method/get.order.list/',{page_size:pagesize,page_no:pagenum,status:audit_status},'items')"
+            @size-change="pageSizeChange"
+            @current-change="pageNumberChange"
             :current-page="pagenum"
             :page-sizes="[10, 30, 50, 100]"
             :page-size="pagesize"
@@ -233,7 +233,7 @@
 </template>
 
 <script>
-import { AxiosReturn ,pageSizeChange,pageNumberChange,myExprotExcel,orderImport} from '../../assets/axios/index'
+import { AxiosReturn ,myExprotExcel,orderImport} from '../../assets/axios/index'
 import MyDatePicker from '../../components/Child/MyDatePicker'
 import tiwanCity from "../../assets/axios/taiwna.js"
 const cityOptions=['订单号','商品信息','网址','产品ID','地区','商品名称','单价','代收金额','件数','规格','订单状态','姓名','手机','地址','邮箱','留言','选品人','设计','优化师','下单日期','是否改派订单', '改派单号','运单号', '物流公司',   '运费','采购费',  '汇款金额', '最新状态时间','风险评估', '订单备注']
@@ -470,8 +470,14 @@ export default {
     tiwanCity,
     myExprotExcel,
     // 分页
-    pageSizeChange,
-    pageNumberChange,
+    pageSizeChange(value){
+        this.pagesize=value
+        this.getList()
+    },
+    pageNumberChange(value){
+        this.pagenum=value
+        this.getList()
+    },
     orderImport,
     // 搜索
     orderSearch() {
@@ -512,7 +518,7 @@ export default {
               status:this.audit_status
           }
       }
-      this.AxiosReturn('api/order/method/get.order.list/',myParams).then(res=>{
+      this.AxiosReturn('order/method/get.order.list/',myParams).then(res=>{
         that.tableData=res.data.items
         that.total=res.data.total_result
         console.log(res)
@@ -585,7 +591,7 @@ export default {
       console.log(this.form.formOrderNo);
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.AxiosReturn("api/order/method/set.order.item/", {
+          this.AxiosReturn("order/method/set.order.item/", {
             order_no: this.form.formOrderNo,
             consignee: this.form.name,
             mobile: this.form.iphone,
@@ -622,7 +628,7 @@ export default {
     },
     //待审核--更改订单状态
     setExamine() {
-      this.AxiosReturn("api/order/method/audit.order.item/", {
+      this.AxiosReturn("order/method/audit.order.item/", {
         order_no: this.setOrderStatusNo,
         trade_status: 0
       }).then(res => {
@@ -644,7 +650,7 @@ export default {
     },
     //待发货--更改订单状态
     setToBeDelivered() {
-      this.AxiosReturn("api/order/method/audit.order.item/", {
+      this.AxiosReturn("order/method/audit.order.item/", {
         order_no: this.setOrderStatusNo,
         trade_status: 1
       }).then(res => {
@@ -677,7 +683,7 @@ export default {
       }
     },
     setPrice() {
-      this.AxiosReturn("api/order/method/change.price.order.item/", {
+      this.AxiosReturn("order/method/change.price.order.item/", {
         order_no: this.form.formOrderNo,
         total_amount: this.form.total_amount
       }).then(res => {
@@ -711,7 +717,7 @@ export default {
         type: "warning"
       })
         .then(() => {
-          this.AxiosReturn("api/order/method/recycle.order.item/", {
+          this.AxiosReturn("order/method/recycle.order.item/", {
             order_no: orderNo,
             is_recycle: 1
           }).then(res => {

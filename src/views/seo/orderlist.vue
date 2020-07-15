@@ -114,8 +114,8 @@
           <!-- 分页 -->
           <el-pagination
             style="margin-top:15px;"
-            @size-change="pageSizeChange($event,'api/order/method/get.order.list/',{page_size:pagesize,page_no:pagenum,status:audit_status},'items')"
-            @current-change="pageNumberChange($event,'api/order/method/get.order.list/',{page_size:pagesize,page_no:pagenum,status:audit_status},'items')"
+            @size-change="pageSizeChange"
+            @current-change="pageNumberChange"
             :current-page="pagenum"
             :page-sizes="[10, 30, 50, 100]"
             :page-size="pagesize"
@@ -219,7 +219,7 @@
 </template>
 
 <script>
-import { AxiosReturn ,pageSizeChange,pageNumberChange,myExprotExcel,orderImport} from '../../assets/axios/index'
+import { AxiosReturn,myExprotExcel,orderImport} from '../../assets/axios/index'
 import MyDatePicker from '../../components/Child/MyDatePicker'
 const cityOptions=['订单号','商品信息','网址','产品ID','地区','商品名称','单价','代收金额','件数','规格','SKU','姓名','手机','地址','邮箱','留言','选品人','设计','优化师','下单日期','是否改派订单', '改派单号','运单号', '物流公司',   '运费','采购费',  '汇款金额', '最新状态时间', '订单状态','风险评估', '订单备注']
 export default {
@@ -440,9 +440,23 @@ export default {
   methods: {
     AxiosReturn,
     myExprotExcel,
-    // 分页
-    pageSizeChange,
-    pageNumberChange,
+    // 分页---页面大小变化的函数
+    pageSizeChange(value){
+        console.log(value)
+        this.pagesize=value
+        this.AxiosReturn('order/method/get.order.list/',{page_size:this.pagesize,page_no:this.pagenum,status:this.audit_status}).then(res=>{
+            console.log(res)
+            this.tableData=res.data.items
+        })
+    },
+    pageNumberChange(value){
+        console.log(value)
+        this.pagenum=value
+        this.AxiosReturn('order/method/get.order.list/',{page_size:this.pagesize,page_no:this.pagenum,status:this.audit_status}).then(res=>{
+            console.log(res)
+            this.tableData=res.data.items
+        })
+    },
     orderImport,
     handleClick(tab, event) {
       let st = tab.name
@@ -475,7 +489,6 @@ export default {
     getList(){
       let that = this
       let myParams={}
-
       if(this.isSearch){
           myParams=this.searchForm
           if(this.searchForm.time!=""&&this.searchForm.time!=null){
@@ -494,7 +507,7 @@ export default {
               status:this.audit_status
           }
       }
-      this.AxiosReturn('api/order/method/get.order.list/',myParams).then(res=>{
+      this.AxiosReturn('order/method/get.order.list/',myParams).then(res=>{
         that.tableData=res.data.items
         that.total=res.data.total_result
         console.log(res)

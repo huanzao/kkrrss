@@ -179,7 +179,7 @@ export default {
     AxiosReturn,
      // 设置配置数据
     getFormData() {
-      this.AxiosReturn("api/setting/method/get.setting.list/",{module:'upload'}).then(res=>{
+      this.AxiosReturn("setting/method/get.setting.list/",{module:'upload'}).then(res=>{
             console.log('请求数据',res) 
             this.form.default = res.data.default.value;
             this.form.oss = res.data.oss.value;
@@ -219,7 +219,7 @@ export default {
         this.form.file_ext = this.dynamicTagsTag.join(",")
         
         // console.log(this.form.image_ext)
-        this.AxiosReturn("api/setting/method/set.upload.list/",this.form).then(res=>{
+        this.AxiosReturn("setting/method/set.upload.list/",this.form).then(res=>{
              console.log(res)
              if(res.status==200){
                this.$message.success('上传成功')

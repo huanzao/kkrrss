@@ -3,7 +3,7 @@
     <el-card>
       <!-- header -->
       <div id='myHeaderBox' >
-          <el-input placeholder="产品关键词搜索"  v-model="queryinfo.keywords"  @keyup.enter.native="search" size="mini" clearable></el-input>
+          <el-input placeholder="请输入产品名称"  v-model="queryinfo.keywords"  @keyup.enter.native="search" size="mini" clearable></el-input>
           <el-select placeholder="审核状态" size="mini" v-model="queryinfo.audit_status" clearable>
             <el-option v-for="items in stateOption" :key="items.value" :label="items.label" :value="items.value" ></el-option>
           </el-select>
@@ -352,12 +352,11 @@ export default {
     },
     getSelect() {
       let that = this;
-      this.axios
-        .post("api/goods_type/method/get.goods.type.select", {})
+      this.AxiosReturn("goods_type/method/get.goods.type.select", {})
         .then(function(res) {
-          if (res.data.status === 200) {
+          if (res.status === 200) {
             console.log(res);
-            that.selectOptions=res.data.data
+            that.selectOptions=res.data
           }
         })
         .catch(function(error) {
@@ -400,12 +399,12 @@ export default {
       }
       console.log(myParams)
       let that = this;
-      this.axios.post("api/product/method/get.product.admin.list",myParams).then(function(res) {
+      this.AxiosReturn("product/method/get.product.admin.list",myParams).then(function(res) {
           // console.log(res);
-          if (res.data.status === 200) {
-            console.log(res.data.data);
-            that.tableData = res.data.data.items;
-            that.total = res.data.data.total_result;
+          if (res.status === 200) {
+            console.log(res.data);
+            that.tableData = res.data.items;
+            that.total = res.data.total_result;
           }
         })
         .catch(function(error) {
@@ -447,7 +446,7 @@ export default {
       this.shenheForm.keywords=row.keywords
       this.shenheForm.audit_opinion=row.audit_opinion
       this.shenheForm.product_id=row.product_id
-      this.AxiosReturn("api/product/method/get.products.item",{product_id:row.product_id}).then(res=>{
+      this.AxiosReturn("product/method/get.products.item",{product_id:row.product_id}).then(res=>{
         that.skutabledata=res.data.getspec_goods
         console.log(that.skutabledata)
         that.shenheedit = true; 
@@ -472,13 +471,12 @@ export default {
     ShenHe(status){
       this.shenheForm.audit_status=status
       let _this=this
-      this.axios
-        .post("api/product/method/set.product.item/",_this.shenheForm)
+      this.AxiosReturn("product/method/set.product.item/",_this.shenheForm)
         .then(function(res) {
           console.log(res);
-          if (res.data.status === 200) {
-            console.log(res.data.data);
-            _this.tableData[_this.globelIndex].audit_status=res.data.data.audit_status
+          if (res.status === 200) {
+            console.log(res.data);
+            _this.tableData[_this.globelIndex].audit_status=res.data.audit_status
             _this.shenheedit=false
           }
         })

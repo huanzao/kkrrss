@@ -1037,11 +1037,11 @@ export default {
               audit_status : this.queryinfo.audit_status=1
           }
       }
-      this.axios.post("api/goods/method/get.goods.admin.list",myParams).then(function(res) {
-          if (res.data.status === 200) {
-            console.log(res.data.data);
-            that.tableData = res.data.data.items;
-            that.total = res.data.data.total_result;
+      this.AxiosReturn("goods/method/get.goods.admin.list",myParams).then(function(res) {
+          if (res.status === 200) {
+            console.log(res.data);
+            that.tableData = res.data.items;
+            that.total = res.data.total_result;
           }
         }).catch(function(error) {
           console.log(error);
@@ -1056,13 +1056,11 @@ export default {
     isShelf(row, index) {
       console.log(row, index);
       //e表示el-switch的状态（true，false）
-      this.axios
-        .post("api/goods/method/set.shelves.goods.list", {
+      this.AxiosReturn("goods/method/set.shelves.goods.list", {
           goods_id: row.goods_id,
           status: row.status
-        })
-        .then(res => {
-          if (res.data.status == 200) {
+        }).then(res => {
+          if (res.status == 200) {
             this.$message({
               message: "设置成功",
               type: "success",
@@ -1076,15 +1074,6 @@ export default {
             });
           }
         })
-        .catch(err => {
-          this.$message({
-            type: "info",
-            message: res.data.message
-          });
-          // console.log("切换状态失败");e
-          let newData = e;
-          newData = newData === 1 ? 0 : 1; //恢复 原状态
-        });
     },
     // 认领
     claimClick(index, row) {
@@ -1100,7 +1089,7 @@ export default {
             cancelButtonText: "取消",
             type: "warning"
           }).then(() => {
-            this.AxiosReturn("api/goods/method/set.goods.itemop/", RenlingObj).then(res => {
+            this.AxiosReturn("goods/method/set.goods.itemop/", RenlingObj).then(res => {
                 if (res.status == 200) {
                   this.$message.success("认领成功");
                   this.getList();
@@ -1159,8 +1148,7 @@ export default {
         if (valid) {
           console.log(this.commentRuleForm);
 
-          this.AxiosReturn(
-            "api/goods_comment/method/add.goods.comment.item/",
+          this.AxiosReturn("goods_comment/method/add.goods.comment.item/",
             this.commentRuleForm
           ).then(res => {
             console.log(res);
@@ -1262,8 +1250,7 @@ export default {
     },
     submitEdit() {
       let that = this;
-      this.axios
-        .post("api/goods/method/set.goods.item/", {
+      this.AxiosReturn("goods/method/set.goods.item/", {
           goods_id: that.ruleForm.goods_id, //商品ID
           name: that.ruleForm.name, //商品名称
           domain: that.ruleForm.domains, //域名
@@ -1286,17 +1273,17 @@ export default {
         })
         .then(function(res) {
           console.log(res);
-          if (res.data.status === 200) {
+          if (res.status === 200) {
             that.$message({
-              message: res.data.message,
+              message: res.message,
               type: "success",
               center: true
             });
             that.isShowEdtiPro = false;
             that.getList();
-          } else if (res.data.status === 500) {
+          } else if (res.status === 500) {
             that.$message({
-              message: res.data.message,
+              message: res.message,
               type: "warning",
               center: true
             });

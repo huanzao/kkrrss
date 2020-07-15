@@ -122,11 +122,11 @@ export default {
       }
       
       let that = this;
-      this.axios.post("api/action_log?method=get.action.log.list",myParams).then(function(res) {
-          if (res.data.status === 200) {
-            let result = res.data.data.items;
+      this.AxiosReturn("action_log?method=get.action.log.list",myParams).then(function(res) {
+          if (res.status === 200) {
+            let result = res.data.items;
             that.dataList = result;
-            that.total = res.data.data.total_result;
+            that.total = res.data.total_result;
           }else{
             this.$message.warning(res.message)
           }

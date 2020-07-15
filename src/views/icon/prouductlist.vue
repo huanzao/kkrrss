@@ -2,7 +2,7 @@
   <div>
     <el-card>
       <div id='myHeaderBox'>
-            <el-input size="mini" placeholder="请输入商品关键词" v-model="queryinfo.keywords"  @keyup.enter.native="search"  clearable />
+            <el-input size="mini" placeholder="请输入商品名称" v-model="queryinfo.keywords"  @keyup.enter.native="search"  clearable />
             <el-select size="mini" clearable v-model="queryinfo.status" placeholder="请选择商品状态" >
                 <el-option label="下架" value="0"></el-option>
                 <el-option label="上架" value="1"></el-option>
@@ -712,10 +712,11 @@ export default {
       }
 
       let that = this;
-      this.axios.post("api/goods/method/get.goods.admin.list",myParams).then(function(res) {
-          if (res.data.status === 200) {
-            that.tableData = res.data.data.items;
-            that.total = res.data.data.total_result;
+      this.AxiosReturn("goods/method/get.goods.admin.list",myParams).then(function(res) {
+          console.log(res)
+          if (res.status === 200) {
+            that.tableData = res.data.items;
+            that.total = res.data.total_result;
           }
         })
         .catch(function(error) {
@@ -740,20 +741,17 @@ export default {
     // 搜索
     serachrenling() {},
     isShelf(e, row, index) {
-      this.axios
-        .post("api/goods/method/set.shelves.goods.list", {
+      this.AxiosReturn("goods/method/set.shelves.goods.list", {
           goods_id: row.goods_id,
           status: e ? 1 : 0
         })
         .then(res => {
-          if (res.data.status == 200) {
-
+          if (res.status == 200) {
             if(e){
                 this.$message.success('商品上架成功');
             }else{
                 this.$message('商品下架成功');
             }
-            
             this.getList();
           }
         })
@@ -783,8 +781,7 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.AxiosReturn(
-            "api/goods_comment/method/add.goods.comment.item/",
+          this.AxiosReturn("goods_comment/method/add.goods.comment.item/",
             this.commentRuleForm
           ).then(res => {
             // console.log(res);
@@ -829,8 +826,7 @@ export default {
     },
     submitEdit() {
       let that = this;
-      this.axios
-        .post("api/goods/method/set.goods.item/", {
+      this.AxiosReturn("goods/method/set.goods.item/", {
           goods_id: that.ruleForm.goods_id, //商品ID
           name: that.ruleForm.name, //商品名称
           domain: that.ruleForm.domains, //域名
@@ -852,17 +848,17 @@ export default {
           goods_remarks: that.ruleForm.goods_remarks //备注
         })
         .then(function(res) {
-          if (res.data.status === 200) {
+          if (res.status === 200) {
             that.$message({
-              message: res.data.message,
+              message: res.message,
               type: "success",
               center: true
             });
             that.isShowEdtiPro = false;
             that.getList();
-          } else if (res.data.status === 500) {
+          } else if (res.status === 500) {
             that.$message({
-              message: res.data.message,
+              message: res.message,
               type: "warning",
               center: true
             });
@@ -879,23 +875,22 @@ export default {
     },
     submitCopy(){
       let that = this;
-      this.axios
-        .post("api/goods/method/copy.goods.item/", {
+      this.AxiosReturn("goods/method/copy.goods.item/", {
           goods_id: that.ruleForm.goods_id, //商品ID
           domain: that.ruleForm.domains, //域名
         })
         .then(function(res) {
-          if (res.data.status === 200) {
+          if (res.status === 200) {
             that.$message({
-              message: res.data.message,
+              message: res.message,
               type: "success",
               center: true
             });
             that.isShowEdtiPro = false;
             that.getList();
-          } else if (res.data.status === 500) {
+          } else if (res.status === 500) {
             that.$message({
-              message: res.data.message,
+              message: res.message,
               type: "warning",
               center: true
             });

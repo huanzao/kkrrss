@@ -152,7 +152,7 @@ export default {
   },
   created(){
     this.getUserList();
-    this.AxiosReturn('api/auth_group/method/get.auth.group.list',{page_size:10000,page_no: 1}).then(res=>this.roleArr=res.data.items)
+    this.AxiosReturn('auth_group/method/get.auth.group.list',{page_size:10000,page_no: 1}).then(res=>this.roleArr=res.data.items)
   },
   methods: {
     AxiosReturn,
@@ -179,7 +179,7 @@ export default {
       }
       params.page_no=this.pagenum
       params.page_size=this.pagesize
-      this.AxiosReturn("api/admin/method/get.admin.list",params).then(res=>{
+      this.AxiosReturn("admin/method/get.admin.list",params).then(res=>{
             console.log(res)
             if(!res.data.items){
               this.$message('暂无数据')
@@ -238,13 +238,13 @@ export default {
               let api=""
               let msg=""
               if(this.dialogTitle==='编辑用户'){
-                  api="api/admin/method/set.admin.item"
+                  api="admin/method/set.admin.item"
                   msg='编辑成功'
               }else if(this.dialogTitle==='添加用户'){
-                  api="api/admin/method/add.admin.item"
+                  api="admin/method/add.admin.item"
                   msg='添加成功'
               }else if(this.dialogTitle==='修改密码'){
-                  api="api/admin/method/reset.admin.item/"
+                  api="admin/method/reset.admin.item/"
                   msg='修改密码成功'
               }
               this.AxiosReturn(api,that.addUserForm).then(res=>{
@@ -271,7 +271,7 @@ export default {
         }).then(() => {
           let delArr=[]
           delArr.push(id)
-          this.AxiosReturn('api/admin/method/del.admin.list',{client_id:delArr}).then(res=>{
+          this.AxiosReturn('admin/method/del.admin.list',{client_id:delArr}).then(res=>{
             console.log(res)
             if(res.status===200){
                 this.$message.success('删除成功!');
@@ -293,7 +293,7 @@ export default {
       arrs.push(row.admin_id)
       // console.log(arrs,'arrs数组')
       this.axios
-        .post("api/admin/method/set.admin.status/", {
+        .post("admin/method/set.admin.status/", {
           client_id: arrs,
           status: e 
         })

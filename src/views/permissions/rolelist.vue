@@ -179,7 +179,7 @@ export default {
   methods: {
     AxiosReturn,
     getList(){
-      this.AxiosReturn('api/auth_group/method/get.auth.group.list',{page_size: this.pagesize,page_no:this.pagenum}).then(res=>{
+      this.AxiosReturn('auth_group/method/get.auth.group.list',{page_size: this.pagesize,page_no:this.pagenum}).then(res=>{
           this.tableData=res.data.items.map(res=>{
             res.status=res.status.toString()
             return res
@@ -193,7 +193,7 @@ export default {
       }
       if (node.level > 1) return resolve([])
       if(node.data.hasChildren){
-          this.AxiosReturn('api/menu/method/get.parent.item',{module:'admin',parent_id:node.data.menu_id},true).then(res=>{
+          this.AxiosReturn('menu/method/get.parent.item',{module:'admin',parent_id:node.data.menu_id},true).then(res=>{
               resolve(res.data)
           })
       }else{
@@ -205,12 +205,12 @@ export default {
         return resolve(this.authArr);
       }
       if (node.level > 1) return resolve([]);
-      this.AxiosReturn('api/menu/method/get.parent.item',{module:'api',parent_id:node.data.menu_id},true).then(res=>{
+      this.AxiosReturn('menu/method/get.parent.item',{module:'api',parent_id:node.data.menu_id},true).then(res=>{
           resolve(res.data)
       })
     },
     getArrs(modules){
-      this.AxiosReturn('api/menu/method/get.parent.item',{module:modules,parent_id:0}).then(res=>{
+      this.AxiosReturn('menu/method/get.parent.item',{module:modules,parent_id:0}).then(res=>{
         console.log('aaaaaaaaaaaaaa',res)
         let result= res.data.map(item=>{
           item.status=item.status.toString()
@@ -253,7 +253,7 @@ export default {
             group_id:row.group_id,
             status:e
         }
-        this.AxiosReturn('api/auth_group/method/set.auth.group.item/',par).then(res=>{
+        this.AxiosReturn('auth_group/method/set.auth.group.item/',par).then(res=>{
             console.log(res)
             if(res.status==200){
                 if(e==1){
@@ -282,12 +282,12 @@ export default {
       this.$refs.RoleFormRef.validate(async valid => {
           if (!valid) return
           if(this.roleDialogTitle=="添加角色"){
-              this.AxiosReturn('api/auth_group/method/add.auth.group.item/',this.RoleForm).then(res=>{
+              this.AxiosReturn('auth_group/method/add.auth.group.item/',this.RoleForm).then(res=>{
                   this.$message.success('添加成功')
                   this.getList()
               })
           }else{
-              this.AxiosReturn('api/auth_group/method/set.auth.group.item/',this.RoleForm).then(res=>{
+              this.AxiosReturn('auth_group/method/set.auth.group.item/',this.RoleForm).then(res=>{
                   this.$message.success('修改成功')
                   this.getList()
               })
@@ -302,7 +302,7 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-            this.AxiosReturn('api/auth_group/method/del.auth.group.item/',{group_id:id}).then(res=>{
+            this.AxiosReturn('auth_group/method/del.auth.group.item/',{group_id:id}).then(res=>{
               console.log(res)
               if(res.status==200){
                   this.$message.success('删除成功!')
@@ -325,7 +325,7 @@ export default {
       let that=this
       console.log(index,role)
       this.auth_form.module='admin'
-      this.AxiosReturn('api/auth_rule/method/get.auth.rule.list',{group_id:role.group_id }).then(res=>{
+      this.AxiosReturn('auth_rule/method/get.auth.rule.list',{group_id:role.group_id }).then(res=>{
         that.Allquanxian=res.data
         console.log('有没有设置过权限啊',res)
         if(res.data){
@@ -413,9 +413,9 @@ export default {
       let that=this
       let api=""
       if(this.isAdd_auth){
-          api='api/auth_rule/method/set.auth.rule.item'  //编辑
+          api='auth_rule/method/set.auth.rule.item'  //编辑
       }else{
-          api='api/auth_rule/method/add.auth.rule.item'  //添加
+          api='auth_rule/method/add.auth.rule.item'  //添加
       }
       this.AxiosReturn(api,this.auth_form).then(res=>{
         console.log(res)

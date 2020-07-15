@@ -81,7 +81,7 @@ export default {
   },
   methods: {
     selectmenu(key) {
-      console.log('aaaaaa',key)
+      // console.log('aaaaaa',key)
       sessionStorage.defActive=key
     },
   }

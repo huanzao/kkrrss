@@ -630,13 +630,13 @@ export default {
           }
       }
       let that = this;
-      this.axios.post("api/product/method/get.product.admin.list/",myParams).then(function(res) {
+      this.AxiosReturn("product/method/get.product.admin.list/",myParams).then(function(res) {
           // console.log(res);
-          if (res.data.status === 200) {
-            console.log(res.data.data);
-            let result = res.data.data.items;
+          if (res.status === 200) {
+            console.log(res.data);
+            let result = res.data.items;
             that.claimtableData = result;
-            that.total = res.data.data.total_result;
+            that.total = res.total_result;
           }
         }).catch(function(error) {
           console.log(error);
@@ -644,11 +644,10 @@ export default {
     },
     getSelect() {
       let that = this;
-      this.axios
-        .post("api/goods_type/method/get.goods.type.select", {})
+      this.AxiosReturn("goods_type/method/get.goods.type.select", {})
         .then(function(res) {
-          if (res.data.status === 200) {
-            that.addRuleFormExamine.typeNameListSearch = res.data.data;
+          if (res.status === 200) {
+            that.addRuleFormExamine.typeNameListSearch = res.data;
           }
         })
         .catch(function(error) {
@@ -658,19 +657,17 @@ export default {
     // 获取选品下拉数据
     getSelectionList() {
       let that = this;
-      this.axios
-        .post("api/admin/method/get.admin.list/", {
+      this.AxiosReturn("admin/method/get.admin.list/", {
           group_id: 13,
           status: 1
         })
         .then(function(res) {
-          if (res.data.status === 200) {
-            that.claimcheckpersonlist = res.data.data.items;
+          if (res.status === 200) {
+            that.claimcheckpersonlist = res.data.items;
+          }else{
+            this.$message(res.message)
           }
         })
-        .catch(function(error) {
-          console.log(error);
-        });
     },
     // 分页
     handleSizeChange(newSize) {
@@ -704,7 +701,7 @@ export default {
       this.addRuleFormExamine.materialgroup = val.material;
       this.addRuleFormExamine.shelltextarea = val.keywords;
       //shelltextarea
-      this.AxiosReturn("api/product/method/get.products.item", {
+      this.AxiosReturn("product/method/get.products.item", {
         product_id: val.product_id
       }).then(res => {
         this.addRuleFormExamine.spec_combo = res.data.getspec_goods;
@@ -735,7 +732,7 @@ export default {
         type: "warning"
       })
         .then(() => {
-          this.AxiosReturn("api/product/method/set.products.item", RenlingObj).then(
+          this.AxiosReturn("product/method/set.products.item", RenlingObj).then(
             res => {
               if (res.status == 200) {
                 this.$message.success("认领成功");

@@ -1,17 +1,20 @@
 //返回值的函数
+import axios from 'axios'
 export function AxiosReturn(url,params){
-    let that=this
-    return this.axios.post(url, params).then(function(res) {
-      if (res.data.status === 200) {
-        return res.data
-      }else{
-        that.$message.warning(res.data.message)
-        console.log('err',res)
-      }
-    })
-    .catch(function(error) {
-      console.log(error);
-    });
+  const api='http://www.mmkashop.com/api/v1/'
+  let that=this
+  var myUrl=api+url
+  return axios.post(myUrl, params).then(function(res) {
+    if (res.data.status === 200) {
+      return res.data
+    }else{
+      that.$message.warning(res.data.message)
+      console.log('err',res)
+    }
+  })
+  .catch(function(error) {
+    console.log(error);
+  });
 }
 
 //全局分页操作--页面大小变化的函数 select
@@ -38,7 +41,7 @@ export function pageSizeChange(val,url,prop,arrName) { //分页
   mypage.page_size=this.pagesize
   mypage.page_no=this.pagenum
 
-  this.axios({
+  axios({
     method: 'post',
     url: _url,
     data:mypage
