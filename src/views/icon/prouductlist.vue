@@ -141,7 +141,7 @@
             </el-col>
             <el-col :span="6">
               <el-form-item label="商品名称" prop="name">
-                <el-input v-model="ruleForm.name" clearable :disabled="sh_Look=='复制'"></el-input>
+                <el-input v-model="ruleForm.name" clearable ></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="6">
@@ -168,23 +168,23 @@
           <el-row :gutter="24">
             <el-col :span="6">
               <el-form-item label="FB像素代码" prop="fb">
-                <el-input v-model="ruleForm.fb" :disabled="sh_Look=='复制'"></el-input>
+                <el-input v-model="ruleForm.fb"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="6">
               <el-form-item label="谷歌代码" prop="google">
-                <el-input v-model="ruleForm.google" :disabled="sh_Look=='复制'"></el-input>
+                <el-input v-model="ruleForm.google" ></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="6">
               <el-form-item>
-                <el-button @click="addbeiyongcode" type="primary" plain :disabled="sh_Look=='复制'">新增备用代码</el-button>
+                <el-button @click="addbeiyongcode" type="primary" plain >新增备用代码</el-button>
               </el-form-item>
             </el-col>
           </el-row>
           <el-form-item  v-for="(b, index) in ruleForm.fb1" :label="'备用代码~' + index" :key="b.key" :prop="'fb1.' + index + '.v'">
-            <el-input class="dynamic-platform-value" v-model="b.v" :disabled="sh_Look=='复制'"></el-input>
-            <el-button @click.prevent="removebeiyong(b)" size="mini" :disabled="sh_Look=='复制'" type="text">删除</el-button>
+            <el-input class="dynamic-platform-value" v-model="b.v" ></el-input>
+            <el-button @click.prevent="removebeiyong(b)" size="mini"  type="text">删除</el-button>
           </el-form-item>
           <!-- 轮播图 -->
           <el-row :gutter="24">
@@ -201,7 +201,7 @@
                   :limit="5"
                   :file-list="fileImgListEdit"
                   class="uploadimg"
-                  :disabled="sh_Look=='复制'"
+                  
                 >
                   <i class="el-icon-plus"></i>
                 </el-upload>
@@ -216,7 +216,7 @@
           <el-row>
             <el-col>
               <el-form-item label="商品标题" prop="short_name">
-                <el-input v-model="ruleForm.short_name" clearable :disabled="sh_Look=='复制'"></el-input>
+                <el-input v-model="ruleForm.short_name" clearable ></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -224,24 +224,24 @@
           <el-row>
             <el-col :span="6">
               <el-form-item label="原价" prop="market_price">
-                <el-input v-model="ruleForm.market_price" :disabled="sh_Look=='复制'"></el-input>
+                <el-input v-model="ruleForm.market_price" ></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="6">
               <el-form-item label="现价" prop="shop_price">
-                <el-input v-model="ruleForm.shop_price" :disabled="sh_Look=='复制'"></el-input>
+                <el-input v-model="ruleForm.shop_price" ></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="6">
               <el-form-item label="地区" prop="region">
-                <el-select v-model="ruleForm.region" filterable clearable placeholder="请选择地区" :disabled="sh_Look=='复制'">
+                <el-select v-model="ruleForm.region" filterable clearable placeholder="请选择地区" >
                   <el-option v-for="r in info.addregion" :key="r.value" :label="r.label" :value="r.value"></el-option>
                 </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="6">
               <el-form-item label="渠道" prop="channel">
-                <el-select v-model="ruleForm.channel" filterable clearable placeholder="请选择渠道" :disabled="sh_Look=='复制'">
+                <el-select v-model="ruleForm.channel" filterable clearable placeholder="请选择渠道" >
                   <el-option v-for="c in info.addchannel" :key="c.value" :label="c.label" :value="c.value"></el-option>
                 </el-select>
               </el-form-item>
@@ -257,7 +257,7 @@
                   clearable
                   placeholder="请选择价格组"
                   @change="changePrice(ruleForm.price_group_id,priceGroupTableData)"
-                  :disabled="sh_Look=='复制'"
+                  
                 >
                   <el-option v-for="p in info.checkpricegroup" :key="p.value" :label="p.label" :value="p.value"></el-option>
                 </el-select>
@@ -269,7 +269,7 @@
               <el-row>
                 <el-col :span="2">
                   <el-form-item label="新增">
-                    <el-button icon="el-icon-circle-plus-outline"  type="success"  circle @click="addPriceGroup()"  plain size="mini" :disabled="sh_Look=='复制'"></el-button>
+                    <el-button icon="el-icon-circle-plus-outline"  type="success"  circle @click="addPriceGroup()"  plain size="mini" ></el-button>
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -278,22 +278,22 @@
                   <el-row>
                     <el-col :span="6">
                       <el-form-item label="按钮描述">
-                        <el-input v-model="price.des" size="mini" clearable :disabled="sh_Look=='复制'">{{price.des}}</el-input>
+                        <el-input v-model="price.des" size="mini" clearable >{{price.des}}</el-input>
                       </el-form-item>
                     </el-col>
                     <el-col :span="5">
                       <el-form-item label="价格">
-                        <el-input v-model="price.price" size="mini" clearable :disabled="sh_Look=='复制'">{{price.price}}</el-input>
+                        <el-input v-model="price.price" size="mini" clearable >{{price.price}}</el-input>
                       </el-form-item>
                     </el-col>
                     <el-col :span="5">
                       <el-form-item label="件数">
-                        <el-input size="mini" v-model="price.num" clearable :disabled="sh_Look=='复制'">{{price.num}}</el-input>
+                        <el-input size="mini" v-model="price.num" clearable >{{price.num}}</el-input>
                       </el-form-item>
                     </el-col>
                     <el-col :span="2">
                       <el-form-item label="删除">
-                        <el-button icon="el-icon-delete" type="danger" circle  @click="bindPriceDelete(p)" plain size="mini" :disabled="sh_Look=='复制'"></el-button>
+                        <el-button icon="el-icon-delete" type="danger" circle  @click="bindPriceDelete(p)" plain size="mini" ></el-button>
                       </el-form-item>
                     </el-col>
                   </el-row>
@@ -305,7 +305,7 @@
           <el-row>
             <el-col :span="6">
               <el-form-item label="是否有赠品" prop="addendum_status">
-                <el-select v-model="ruleForm.addendum_status"  clearable @change="ischoice" placeholder="请选择" :disabled="sh_Look=='复制'">
+                <el-select v-model="ruleForm.addendum_status"  clearable @change="ischoice" placeholder="请选择" >
                   <el-option v-for="s in isgroups" :key="s.value" :label="s.label" :value="s.value"></el-option>
                 </el-select>
               </el-form-item>
@@ -313,12 +313,12 @@
             <div v-if="ruleForm.addendum_status== 1">
               <el-col :span="6">
                 <el-form-item label="SKU">
-                  <el-input clearable v-model="ruleForm.addendum.isnumvalue" size="mini" :disabled="sh_Look=='复制'"></el-input>
+                  <el-input clearable v-model="ruleForm.addendum.isnumvalue" size="mini" ></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="6">
                 <el-form-item label="数量">
-                  <el-input clearable v-model="ruleForm.addendum.isvalue" size="mini" :disabled="sh_Look=='复制'"></el-input>
+                  <el-input clearable v-model="ruleForm.addendum.isvalue" size="mini" ></el-input>
                 </el-form-item>
               </el-col>
             </div>
@@ -327,7 +327,7 @@
           <el-row>
             <el-col>
               <el-form-item label="商品描述" prop="description">
-                <el-input type="textarea" :autosize="{ minRows: 3, maxRows: 5}" placeholder="请输入商品描述" v-model="ruleForm.description" :disabled="sh_Look=='复制'"></el-input>
+                <el-input type="textarea" :autosize="{ minRows: 3, maxRows: 5}" placeholder="请输入商品描述" v-model="ruleForm.description" ></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -335,7 +335,7 @@
           <el-row>
             <el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23">
               <el-form-item label="商品介绍">
-                <editor-bar v-model="ruleForm.content" :isClear="isClear" :disabled="sh_Look=='复制'"></editor-bar>
+                <editor-bar v-model="ruleForm.content" :isClear="isClear" ></editor-bar>
               </el-form-item>
             </el-col>
           </el-row>
@@ -343,7 +343,7 @@
           <el-row>
             <el-col>
               <el-form-item label="备注" prop="goods_remarks">
-                <el-input type="textarea" :autosize="{ minRows:2, maxRows:4}" v-model="ruleForm.goods_remarks" :disabled="sh_Look=='复制'"></el-input>
+                <el-input type="textarea" :autosize="{ minRows:2, maxRows:4}" v-model="ruleForm.goods_remarks" ></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -437,7 +437,6 @@
             </el-form-item>
             <el-form-item style="text-align: center;margin-right: 100px !important;">
               <el-button type="primary" @click="submitForm('commentRuleForm')">立即创建</el-button>
-              <el-button @click="resetForm('commentRuleForm')">重置</el-button>
             </el-form-item>
           </el-form>
         </el-card>
@@ -841,13 +840,9 @@ export default {
         })
         .then(function(res) {
           if (res.status === 200) {
-            that.$message({
-              message: res.message,
-              type: "success",
-              center: true
-            });
+            that.$message.success(res.message);
             that.isShowEdtiPro = false;
-            that.getList();
+            // that.getList();
           }else{
             this.$message.warning(res.message)
           }
@@ -1001,9 +996,6 @@ export default {
       for (var img of fileList) {
         this.commentRuleForm.image.push(img.response.data[0].url);
       }
-    },
-    resetForm(formName) {
-      this.$refs[formName].resetFields();
     },
     //上传图片评论
     handlePictureCardPreview(file) {

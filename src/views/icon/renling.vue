@@ -634,7 +634,7 @@ export default {
           if (res.status === 200) {
             let result = res.data.items;
             that.claimtableData = result;
-            that.total = res.total_result;
+            that.total = res.data.total_result;
           }else{
             this.$message.warning(res.message)
           }
@@ -778,8 +778,7 @@ export default {
         if (valid) {
           // alert("submit!");
           let that = this;
-          this.axios
-            .post("goods/method/add.goods.item/", {
+          this.AxiosReturn("goods/method/add.goods.item/", {
               product_id: that.ruleForm.addproid, //产品ID
               name: that.ruleForm.addcomname, //商品名称
               domain: that.ruleForm.domains, //产品域名
@@ -801,12 +800,8 @@ export default {
               goods_remarks: that.addremarks //备注
             })
             .then(function(res) {
-              if (res.data.status === 200) {
-                that.$message({
-                  message: res.data.message,
-                  type: "success",
-                  center: true
-                });
+              if (res.status === 200) {
+                that.$message.success(res.message)
                 that.newaddcommdity = false;
               }else{
                   this.$message.warning(res.message)

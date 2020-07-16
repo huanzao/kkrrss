@@ -393,10 +393,10 @@ export default {
       let that = this;
       this.AxiosReturn("goods_type/method/get.goods.type.select", {})
         .then(function(res) {
-          if (res.data.status === 200) {
+          if (res.status === 200) {
             that.typeNameListEdit = res.data;
           }else{
-            this.$message.warning(res.message)
+            that.$message.warning(res.message)
           }
         })
     },

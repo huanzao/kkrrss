@@ -463,8 +463,11 @@ export default {
       this.AxiosReturn("product/method/set.product.item/",_this.shenheForm)
         .then(function(res) {
           if (res.status === 200) {
-            _this.tableData[_this.globelIndex].audit_status=res.data.audit_status
+            _this.$message.success(res.message)
+            // _this.tableData[_this.globelIndex].audit_status=res.data.audit_status
             _this.shenheedit=false
+            _this.getList()
+
           }else{
             this.$message.warning(res.message)
           }

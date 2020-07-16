@@ -1,19 +1,22 @@
 //返回值的函数
 import axios from 'axios'
+import { Loading } from 'element-ui';
 export function AxiosReturn(url,params){
   const api='http://www.mmkashop.com/api/v1/'
   let that=this
   var myUrl=api+url
   return axios.post(myUrl, params).then(function(res) {
-    if (res.data.status === 200) {
-      return res.data
-    }else{
-      that.$message.warning(res.data.message)
-      console.log('err',res)
-    }
+    return res.data
+
+      // if (res.data.status === 200) {
+        
+      // }else{
+      //   that.$message.warning(res.data.message)
+      // }
   })
   .catch(function(error) {
     console.log(error);
+    
   });
 }
 
@@ -47,12 +50,11 @@ export function pageSizeChange(val,url,prop,arrName) { //分页
     data:mypage
   }).then((res)=>{
     if(res.data.status === 200){
-        console.log('页面大小改变',res.data.data)
         let result=res.data.data[arrName]
         _this.tableData=result
     }else{
       console.log(res)
-      this.$message.warning('查看输出')
+      _this.$message.warning('查看输出')
     }
 })
 .catch((error)=>{

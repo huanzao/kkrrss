@@ -72,7 +72,6 @@ export default {
           }
         }
         this.AxiosReturn('productSku/method/get.sku.list',myparams).then(res=>{
-            console.log(res)
             if (res.status === 200) {
               let result = res.data.items;
               that.skudataList = result;

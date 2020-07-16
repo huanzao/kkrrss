@@ -161,22 +161,11 @@ export default {
                   logoData.admin.group_id
                 );
                 window.sessionStorage.token_expires = ("token_expires",logoData.token.token_expires)
-              
                 that.$router.push({ path: "/main" })
-
               })
-
-              
-            } else if (res.status === 401) {
+            } else{
               loading.close()
-              that.$router.push({ path: "/login" });
-            } else if (res.status === 500) {
-              loading.close()
-              that.$message({
-                showClose: true,
-                message: res.message,
-                type: "error"
-              });
+              that.$message.warning(res.message)
             }
           })
       }

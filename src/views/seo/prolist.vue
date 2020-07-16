@@ -2,7 +2,7 @@
   <div>
     <el-card>
       <div id='myHeaderBox'>
-            <el-input size="mini" placeholder="请输入商品关键词" v-model="queryinfo.keywords"  @keyup.enter.native="search"  clearable />
+            <el-input size="mini" placeholder="请输入商品名称" v-model="queryinfo.keywords"  @keyup.enter.native="search"  clearable />
             <el-select size="mini" clearable v-model="queryinfo.status" placeholder="请选择商品状态" >
                 <el-option label="下架" value="0"></el-option>
                 <el-option label="上架" value="1"></el-option>
@@ -530,7 +530,6 @@
             </el-form-item>
             <el-form-item style="text-align: center;margin-right: 100px !important;">
               <el-button type="primary" @click="submitForm('commentRuleForm')">立即创建</el-button>
-              <el-button @click="resetForm('commentRuleForm')">重置</el-button>
             </el-form-item>
           </el-form>
         </el-card>
@@ -1114,6 +1113,7 @@ export default {
       this.fileImgListComment = [];
       this.commentRuleForm.goods_id = row.goods_id;
       this.commentRuleForm.goods_name = row.name;
+      this.commentRuleForm.goods_code = row.goods_code;
       this.isShowEvaluate = true;
     },
     submitForm(formName) {
@@ -1262,7 +1262,7 @@ export default {
     // 上传成功
     handsuccess(response, file, fileList) {
       this.fileImgListEdit = fileList;
-
+      console.log('提交图片的返回数据',response)
       this.editformimg = [];
       for (var img of fileList) {
         if (img.response) {
@@ -1321,16 +1321,14 @@ export default {
     handsuccessComment(response, file, fileList) {
       this.fileImgListComment = fileList;
       this.commentRuleForm.image = [];
+      console.log('提交图片的返回数据qqqq',response)
       for (var img of fileList) {
         this.commentRuleForm.image.push(img.response.data[0].url);
       }
     },
-    resetForm(formName) {
-      this.$refs[formName].resetFields();
-    },
     
     // 评价编辑
-    pingLuneditBtn(rowedit) {
+    pingLuneditBtn(rowedit){
       this.isShowPingLunEdit = true;
     },
     //上传图片评论

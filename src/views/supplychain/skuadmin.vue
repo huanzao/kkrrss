@@ -99,7 +99,6 @@ export default {
         };
       }
       this.AxiosReturn("productSku/method/get.sku.list", myparams).then(res => {
-        console.log(res);
         if (res.status === 200) {
           let result = res.data.items;
           that.skudataList = result;
@@ -140,17 +139,14 @@ export default {
       }
       let headArr = [];
       let keyArr = [];
-      console.log(this.skudataListsku)
       for (var i of this.skudataListsku) {
         headArr.push(i.label);
         keyArr.push(i.prop);
       }
-      console.log(headArr, keyArr, )
       this.myExprotExcel(headArr, keyArr, "sku", "multipleSelection");
     },
     //table中checkbox函数
     handleSelectionChange(val) {
-      console.log(val)
       this.multipleSelection = val;
     }
   },

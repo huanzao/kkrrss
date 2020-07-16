@@ -543,7 +543,7 @@ export default {
     },
     //table中checkbox函数
     handleSelectionChange(val) {
-        this.multipleSelection = val;
+        this.multipleSelection = JSON.stringify(val);
     },
     //展示详情
     showDetail(index,row){

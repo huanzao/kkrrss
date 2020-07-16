@@ -37,7 +37,7 @@
 
            <el-divider>本地上传</el-divider>
            <el-form-item label="资源绑定域名别名">
-                <el-input v-model="form.careyshop_url" clearable placeholder="资源绑定域名别名"></el-input>
+                <el-input v-model='form.careyshop_url' clearable placeholder="资源绑定域名别名"></el-input>
                 <div class="help-block">(本地上传)绑定资源目录域名后，Host路径将变为该值，不必添加地址前缀</div>
            </el-form-item>
 
@@ -123,6 +123,7 @@ export default {
          aliyun_url:'',
          aliyun_endpoint:'',
          aliyun_rolearn:'',
+         careyshop_url:"",
       },
        help_text:null,
        AKhelp_text:null,
@@ -207,6 +208,7 @@ export default {
             this.aLiendpoint_text = res.data.aliyun_endpoint.help_text;
             this.form.aliyun_rolearn = res.data.aliyun_rolearn.value;
             this.aLirolearn_text = res.data.aliyun_rolearn.help_text;
+            this.form.careyshop_url = res.data.careyshop_url.value;
       })
     },
     handleChange(value) {
