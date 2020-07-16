@@ -108,7 +108,8 @@ export default {
     };
   },
   mounted() {
-    sessionStorage.token='f33ff2af33dfa9f7dc32b458c55f3aef'
+    sessionStorage.defActive=null
+    // sessionStorage.token='f33ff2af33dfa9f7dc32b458c55f3aef'
   },
   methods: {
     AxiosReturn,
@@ -135,11 +136,9 @@ export default {
             password: that.loginForm.password,
             platform: 1
           }).then(function(res) {
-            console.log('登录数据',res);
             let logoData=res.data
             if (res.status === 200) {
               that.AxiosReturn('menu/method/get.menu.auth.list',{module:'admin',status:1}).then(res=>{
-                console.log('登录完请求过来的侧边栏的数据',res.data)
                 sessionStorage.SideArr=JSON.stringify(res.data)
                 loading.close()
                 that.$notify({
@@ -180,9 +179,6 @@ export default {
               });
             }
           })
-          .catch(function(error) {
-            console.log(error);
-          });
       }
     }
   },

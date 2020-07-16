@@ -713,26 +713,22 @@ export default {
 
       let that = this;
       this.AxiosReturn("goods/method/get.goods.admin.list",myParams).then(function(res) {
-          console.log(res)
           if (res.status === 200) {
             that.tableData = res.data.items;
             that.total = res.data.total_result;
+          }else{
+            this.$message.warning(res.message)
           }
         })
-        .catch(function(error) {
-          console.log(error);
-        });
     },
      // 分页
     handleSizeChange(val) {
       this.queryinfo.page_size= val;
       this.getList();
-      // console.log(`每页 ${val} 条`);
     },
     handleCurrentChange(val) {
       this.queryinfo.page_no = val;
       this.getList();
-      // console.log(`当前页: ${val}`);
     },
     // 解决遍历的域名值不出来问题
     fn(d) {
@@ -760,14 +756,12 @@ export default {
             type: "info",
             message: res.data.message
           });
-          // console.log("切换状态失败");e
           let newData = e;
           newData = newData === 1 ? 0 : 1; //恢复 原状态
         });
     },
     // 认领
     claimClick(row) {
-      // console.log(row);
     },
     // 评论
     commentClick(index, row) {
@@ -784,7 +778,6 @@ export default {
           this.AxiosReturn("goods_comment/method/add.goods.comment.item/",
             this.commentRuleForm
           ).then(res => {
-            // console.log(res);
             if (res.status == 200) {
               this.$message.success("评论添加成功");
               this.isShowEvaluate = false;
@@ -793,7 +786,6 @@ export default {
             }
           });
         } else {
-          console.log("error submit!!");
           return false;
         }
       });
@@ -856,22 +848,10 @@ export default {
             });
             that.isShowEdtiPro = false;
             that.getList();
-          } else if (res.status === 500) {
-            that.$message({
-              message: res.message,
-              type: "warning",
-              center: true
-            });
-          } else {
-            that.$message({
-              message: "提交失败",
-              type: "error"
-            });
+          }else{
+            this.$message.warning(res.message)
           }
         })
-        .catch(function(error) {
-          console.log(error);
-        });
     },
     submitCopy(){
       let that = this;
@@ -888,22 +868,10 @@ export default {
             });
             that.isShowEdtiPro = false;
             that.getList();
-          } else if (res.status === 500) {
-            that.$message({
-              message: res.message,
-              type: "warning",
-              center: true
-            });
-          } else {
-            that.$message({
-              message: "复制失败",
-              type: "error"
-            });
+          }else{
+            this.$message.warning(res.message)
           }
         })
-        .catch(function(error) {
-          console.log(error);
-        });
 
     },
     //编辑关闭
@@ -942,7 +910,6 @@ export default {
     },
     //删除备用代码
     removebeiyong(info) {
-      // console.log(info);
       var index = this.ruleForm.beiyongs.indexOf(info);
       if (index !== -1) {
         this.ruleForm.beiyongs.splice(index, 1);
@@ -955,8 +922,6 @@ export default {
     },
     // 文件列表移除文件时的钩子
     handleRemoveEdit(file, fileList) {
-      // console.log(file, fileList);
-
       this.editformimg = [];
       for (var img of fileList) {
         if (img.response) {
@@ -968,12 +933,10 @@ export default {
     },
     //文件超出个数限制时的钩子
     chooseImg(files, fileList) {
-      // console.log("文件超出个数限制时的钩子");
       this.$message.warning(`最多可上传五张`);
     },
     // 上传成功
     handsuccess(response, file, fileList) {
-      // console.log(file, fileList);
       this.fileImgListEdit = fileList;
 
       this.editformimg = [];
@@ -1003,15 +966,12 @@ export default {
       if (val == this.priceGroupsChange.index) {
         this.priceGroupTableData = this.priceGroupsChange.arr;
       } else {
-        // this.isShow = true;
         this.priceGroupTableData = [];
-        // console.log(val, arr);
       }
     },
 
     // 当前页是否有赠品
     ischoice(isc) {
-      // console.log(isc);
       if (isc === 0) {
         this.isValueShow = false;
         this.ruleForm.addendum = "";
@@ -1028,16 +988,13 @@ export default {
     },
     // 文件列表移除文件时的钩子
     handleRemoveComment(file, fileList) {
-      // console.log(file, fileList);
     },
     //文件超出个数限制时的钩子
     chooseImgComment(files, fileList) {
-      // console.log("文件超出个数限制时的钩子");
       this.$message.warning(`最多可上传四张`);
     },
     // 上传成功
     handsuccessComment(response, file, fileList) {
-      // console.log('上传成功',file, fileList);
       this.fileImgListComment = fileList;
       this.commentRuleForm.image = [];
 

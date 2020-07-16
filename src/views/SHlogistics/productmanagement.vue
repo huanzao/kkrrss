@@ -349,7 +349,6 @@ export default {
       }
 
       this.AxiosReturn("product/method/get.product.admin.list/",myParams).then(function(res) {
-          // console.log(res);
           if (res.status === 200) {
             let result = res.data.items;
             that.dataList = result;
@@ -413,7 +412,6 @@ export default {
         product_id: row.product_id
       }).then(res => {
         that.addRuleForm.spec_combo = res.data.getspec_goods;
-        // console.log("///SKU--JSOn ", that.addRuleForm.spec_combo);
         that.centerDialogVisible = true;
       });
     },
@@ -448,9 +446,7 @@ export default {
           if (res.status === 200) {
             that.skuTitle = [];
             that.UpLoadqaq = [];
-            // console.log("--------", res.data);
             that.specTypeName = res.data.spec_config;
-            // console.log("--- 循环数据 ----", that.specTypeName);
             if (that.specTypeName.length == 0) {
               that.$message("该分类下暂无，规格，如果需要请去产品分类中添加");
             }
@@ -473,16 +469,15 @@ export default {
               that.$set(item, "checkedAll", false);
               that.$set(item, "checkedBox", []);
             });
+          }else{
+            this.$message.warning(res.message)
           }
         })
-        .catch(function(error) {
-          console.log(error);
-        });
+        
     },
     // 单选
     handleCheckedCitiesChange(value) {
       if (this.isCreated) {
-        // console.log("qwqsaas", JSON.parse(localStorage.sku));
         this.UpLoadqaq = JSON.parse(localStorage.sku);
       }
       this.isCreated = false;
@@ -519,7 +514,6 @@ export default {
         ZZARR[0].map(item => {
           var q = new Array();
           q[0] = item;
-          console.log(item, q);
           this.mySKUTable.push(q);
         });
       }

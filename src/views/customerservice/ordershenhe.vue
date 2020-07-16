@@ -551,13 +551,11 @@ export default {
       this.AxiosReturn('order/method/get.order.list/',myParams).then(res=>{
         that.tableData=res.data.items
         that.total=res.data.total_result
-        console.log(res)
       })
     },
     //物流公司
     getCompany() {
       this.AxiosReturn("delivery_item/method/get.delivery.company.select/",{}).then(res => {
-        // console.log(res.data);
         this.sendForm.options = res.data; 
       });
     },
@@ -612,7 +610,6 @@ export default {
     },
      // 修改
     modifyClick(row) {
-      console.log(row);
       this.dialogEdit = true;
       this.form.name = row.consignee;
       this.form.iphone = row.mobile;
@@ -631,7 +628,6 @@ export default {
     },
     // 修改提交
     modifySubmit(formName) {
-      console.log(this.form.formOrderNo);
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.AxiosReturn("order/method/set.order.item/", {
@@ -652,25 +648,21 @@ export default {
               type: "success"
             });
             this.dialogEdit = false;
-            // console.log(res);
             this.tableData = res.items;
             this.getList(this.pagesize, this.pagenum);
             // this.total = res.total_result;
           });
         } else {
-          console.log("error submit!!");
           return false;
         }
       });
     },
      //城市选择
     changeProvince(val) {
-      // console.log(val);
       for (var i = 0; i < this.form.citys.length; i++) {
         for (var c = 0; c < this.form.citys[i].children.length; c++) {
           if (val == c) {
             return (this.form.children = this.form.citys[c].children);
-            // console.log(this.form.children);
           }
         }
       }
@@ -681,7 +673,6 @@ export default {
         order_no: this.form.formOrderNo,
         total_amount: this.form.total_amount
       }).then(res => {
-        // console.log(res.data);
         if (res.status === 200) {
           this.$message({
             message: res.message,
@@ -704,20 +695,16 @@ export default {
     },
      // 审核
     examineClick(row) {
-      console.log(row);
       this.toExamineVisible = true;
-      // console.log(row.order_no);
       this.toBeExamineNo = row.order_no;
       this.tradeStatus = row.trade_status;
     },
     // 待审核
     toBeDelivered() {
-      console.log(this.toBeExamineNo, "待审核");
-      this.AxiosReturn("api/order/method/audit.order.item/", {
+      this.AxiosReturn("order/method/audit.order.item/", {
         order_no: this.toBeExamineNo,
         trade_status: 1
       }).then(res => {
-        // console.log(res);
         if (res.status == 200) {
           this.$message({
             message: res.message,
@@ -735,12 +722,10 @@ export default {
     },
     // 问题订单
     problemOrder() {
-      // console.log(this.toBeExamineNo, "problemOrder");
-      this.AxiosReturn("api/order/method/audit.order.item/", {
+      this.AxiosReturn("order/method/audit.order.item/", {
         order_no: this.toBeExamineNo,
         trade_status: 5
       }).then(res => {
-        // console.log(res);
         if (res.status == 200) {
           this.$message({
             message: res.message,
@@ -762,11 +747,10 @@ export default {
     },
      // 待审核
     setExamine() {
-      this.AxiosReturn("api/order/method/audit.order.item/", {
+      this.AxiosReturn("order/method/audit.order.item/", {
         order_no: this.toBeExamineNo,
         trade_status: 0
       }).then(res => {
-        // console.log(res);
         if(res.status == 200){
           this.$message({
             message: res.message,
@@ -784,7 +768,7 @@ export default {
     },
      // 待发货
     setToBeDelivered() {
-      this.AxiosReturn("api/order/method/audit.order.item/", {
+      this.AxiosReturn("order/method/audit.order.item/", {
         order_no: this.toBeExamineNo,
         trade_status: 1
       }).then(res => {
@@ -809,7 +793,6 @@ export default {
       this.deliveryStatus = val.delivery_status;
       this.orderTradeStatus = val.trade_status;
       this.deliveryOrderNo = val.order_no;
-      // console.log(val)
       this.z_fahuo=val
 
       // if (val.get_order_goods.length >= 0 &&val.delivery_status == 0 &&val.trade_status == 1){
@@ -836,18 +819,15 @@ export default {
     },
     // 将订单放入回收站
     recycleBinClick(orderNo) {
-      // console.log(orderNo)
       this.$confirm("此操作将订单放入回收站中, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
-      })
-        .then(() => {
-          this.AxiosReturn("api/order/method/recycle.order.item/", {
+      }).then(() => {
+          this.AxiosReturn("order/method/recycle.order.item/", {
             order_no: orderNo,
             is_recycle: 1
           }).then(res => {
-            // console.log(res);
             if (res.status == 200) {
               this.$message({
                 type: "success",
@@ -868,13 +848,10 @@ export default {
     sendSubmit(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          // console.log(formName);
-          
           if(this.z_fahuo.get_order_goods.length==0){
             this.$message.warning('订单中没有商品 无法发货')
             return
           }
-          console.log('----',this.z_fahuo)
           let faHuo={
             order_no:this.z_fahuo.order_no,
             order_goods_id:[],
@@ -883,8 +860,7 @@ export default {
           for(var goods of this.z_fahuo.get_order_goods){
               faHuo.order_goods_id.push(goods.order_goods_id)
           }
-          // console.log('滴滴滴，发货啦',faHuo)
-          this.AxiosReturn("api/order/method/delivery.order.item",faHuo).then(res => {
+          this.AxiosReturn("order/method/delivery.order.item",faHuo).then(res => {
             if (res.status === 200) {
               this.$message({
                 message: res.message,
@@ -899,11 +875,9 @@ export default {
                 type: "warning"
               });
             }
-            // console.log(res);
           });
           
         } else {
-          // console.log("error submit!!");
           return false;
         }
       });

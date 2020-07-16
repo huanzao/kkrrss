@@ -351,16 +351,12 @@ export default {
       this.AxiosReturn('order/method/get.order.list/',myParams).then(res=>{
         that.tableData=res.data.items
         that.total=res.data.total_result
-        console.log(res)
       })
     },
     //物流公司
     getCompany() {
-      this.AxiosReturn("delivery_item/method/get.delivery.company.select/",
-        {}
-      ).then(res => {
-        // console.log(res.data);
-        this.sendForm.options = res.data;
+      this.AxiosReturn("delivery_item/method/get.delivery.company.select/",{}).then(res => {
+        this.sendForm.options = res.data
       });
     },
     //全选函数---显示全部列
@@ -396,7 +392,6 @@ export default {
         trade_status: 5,
         is_delete:0,
       }).then(res => {
-        // console.log(res);
         if (res.status == 200) {
           this.$message({
             message: res.message,
@@ -429,7 +424,6 @@ export default {
     },
     // 发货
     deliverClick(val) {
-      console.log(val);
       this.sendVisible = true;
       this.z_fahuo=val
     },
@@ -437,13 +431,10 @@ export default {
     sendSubmit(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          // console.log(formName);
-          
           if(this.z_fahuo.get_order_goods.length==0){
             this.$message.warning('订单中没有商品 无法发货')
             return
           }
-          // console.log('----',this.z_fahuo)
           let faHuo={
             order_no:this.z_fahuo.order_no,
             order_goods_id:[],
@@ -452,7 +443,6 @@ export default {
           for(var goods of this.z_fahuo.get_order_goods){
               faHuo.order_goods_id.push(goods.order_goods_id)
           }
-          // console.log('滴滴滴，发货啦',faHuo)
           this.AxiosReturn("order/method/delivery.order.item",faHuo).then(res => {
             if (res.status === 200) {
               this.$message({
@@ -468,11 +458,9 @@ export default {
                 type: "warning"
               });
             }
-            // console.log(res);
           });
           
         } else {
-          // console.log("error submit!!");
           return false;
         }
       });
@@ -489,7 +477,6 @@ export default {
             order_no: orderNo,
             is_recycle: 1
           }).then(res => {
-            // console.log(res);
             if (res.status == 200) {
               this.$message({
                 type: "success",

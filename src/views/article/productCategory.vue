@@ -130,16 +130,14 @@ export default {
       }
       let that = this;
       this.AxiosReturn("goods_type/method/get.goods.type.list/",params).then(function(res) {
-          console.log(res);
           if (res.status === 200) {
-            // console.log(res.data.data.items);
             let result = res.data.items;
             that.categoryData = result;
             that.total = res.data.total_result;
+          }else{
+            this.$message.warning(res.message)
           }
-        }).catch(function(error) {
-          console.log(error);
-        });
+        })
     },
 
     submitForm(formName) {
@@ -151,17 +149,15 @@ export default {
               type_code: that.ruleForm.type_code
             })
             .then(function(res) {
-              if (res.data.status === 200) {
-                // console.log(res);
+              if (res.status === 200) {
                 that.centerDialogVisible = false;
                 that.getCompanyList();
                 that.ruleForm.type_name = "";
                 that.ruleForm.type_code = "";
+              }else{
+                this.$message.warning(res.message)
               }
             })
-            .catch(function(error) {
-              console.log(error);
-            });
         } else {
           return false;
         }
@@ -178,7 +174,6 @@ export default {
           this.AxiosReturn("goods_type/method/del.goods.type.list", {
             goods_type_id: index.goods_type_id
           }).then(res => {
-            // console.log(res,1111111111111)
             if (res.status === 200) {
               this.$message({
                 type: "success",
@@ -202,7 +197,6 @@ export default {
     },
     // 编辑弹框
     confirmEdit(row) {
-      // console.log(row);
       this.dialogVisibleEdit = true;
       this.ruleFormEdit.type_name = row.type_name;
       this.ruleFormEdit.category = row.type_code;
@@ -220,18 +214,16 @@ export default {
             })
             .then(function(res) {
               if (res.status === 200) {
-                // console.log(res);
                 that.$message({
                   message: res.message,
                   type: "success"
                 });
                 that.dialogVisibleEdit = false;
                 that.getCompanyList();
+              }else{
+                this.$message.warning(res.message)
               }
             })
-            .catch(function(error) {
-              console.log(error);
-            });
         } else {
           return false;
         }

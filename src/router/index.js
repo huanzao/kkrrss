@@ -269,7 +269,7 @@ const router = new Router({
             title:"商品评论",
             alone:false,
             iconCls:'el-icon-setting',
-            component: ()=>import('@/views/customerservice/comment'),
+            component: ()=>import('@/views/icon/pinglunguanli'),
           },
           {
             path: 'buygoods',

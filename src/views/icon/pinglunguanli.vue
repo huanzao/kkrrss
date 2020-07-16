@@ -230,7 +230,6 @@ export default {
       let myParams={}
       if(this.isSearch){
           myParams=this.queryinfo
-          console.log(myParams)
       }else{
           myParams={
               page_size : this.queryinfo.page_size, //每页条数
@@ -239,7 +238,6 @@ export default {
       }
       let that = this;
       this.AxiosReturn("goods_comment/method/get.goods.comment.list",myParams).then(function(res) {
-          console.log(res)
           if (res.status === 200) {
             that.total = res.data.total_result;
             if(res.data.items){
@@ -360,8 +358,7 @@ export default {
         if (isLt2M) {
           resolve(file)
         }
-        console.log(file) // 压缩到400KB,这里的400就是要压缩的大小,可自定义
-        imageConversion.compressAccurately(file, 400).then(res => { // console.log(res)
+        imageConversion.compressAccurately(file, 400).then(res => { 
          resolve(res)
         })
       })

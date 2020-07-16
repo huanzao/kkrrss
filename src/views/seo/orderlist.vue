@@ -442,18 +442,14 @@ export default {
     myExprotExcel,
     // 分页---页面大小变化的函数
     pageSizeChange(value){
-        console.log(value)
         this.pagesize=value
         this.AxiosReturn('order/method/get.order.list/',{page_size:this.pagesize,page_no:this.pagenum,status:this.audit_status}).then(res=>{
-            console.log(res)
             this.tableData=res.data.items
         })
     },
     pageNumberChange(value){
-        console.log(value)
         this.pagenum=value
         this.AxiosReturn('order/method/get.order.list/',{page_size:this.pagesize,page_no:this.pagenum,status:this.audit_status}).then(res=>{
-            console.log(res)
             this.tableData=res.data.items
         })
     },
@@ -463,7 +459,6 @@ export default {
       if (st === this.audit_status) {
         return;
       } else {
-        console.log("bianle");
         this.audit_status = st;
       }
       this.pagesize = 10;
@@ -510,17 +505,14 @@ export default {
       this.AxiosReturn('order/method/get.order.list/',myParams).then(res=>{
         that.tableData=res.data.items
         that.total=res.data.total_result
-        console.log(res)
       })
     },
      //城市选择
     changeProvince(val) {
-      // console.log(val);
       for (var i = 0; i < this.form.citys.length; i++) {
         for (var c = 0; c < this.form.citys[i].children.length; c++) {
           if (val == c) {
             return (this.form.children = this.form.citys[c].children);
-            // console.log(this.form.children);
           }
         }
       }
@@ -555,7 +547,6 @@ export default {
     },
     //展示详情
     showDetail(index,row){
-        console.log(index,row)
         this.drawer_showDetail=true
         this.form.name = row.consignee;
         this.form.iphone = row.mobile;

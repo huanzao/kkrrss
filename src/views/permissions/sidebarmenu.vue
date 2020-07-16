@@ -35,9 +35,8 @@ export default {
   },
   created(){
     this.AxiosReturn('auth_group/method/get.auth.group.list',{page_size:100,page_no:1}).then(res=>{
-          this.RoleArr=res.data.items
-          console.log('--------',this.RoleArr)
-      })
+        this.RoleArr=res.data.items
+    })
   },
   methods: {
     AxiosReturn,
@@ -56,7 +55,6 @@ export default {
     },
     roleChange(){
         this.AxiosReturn('menu/method/get.menu.auth.list',{module:this.tobMadel}).then(res=>{
-          console.log(res)
           this.tableData=res.data.map(item=>{
             if(item.children_total==0){
                 item.hasChildren=false
@@ -65,7 +63,6 @@ export default {
             }
             return item
           })
-          console.log(this.tableData)
         })
     }
   }

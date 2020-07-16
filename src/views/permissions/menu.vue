@@ -135,13 +135,10 @@ export default {
   methods: {
     AxiosReturn,
     switchChange(e,index,row){
-        console.log(row)
         if(row.parent_id==0){
             this.isTodo=false
         }
-        console.log(e,index,row)
         this.AxiosReturn('menu/method/set.menu.status',{menu_id:row.menu_id,status:e}).then(res=>{
-            console.log(res)
             if(res.status==200){
                 if(e==1){
                   this.$message.success('启用成功')
@@ -184,7 +181,6 @@ export default {
         this.form.module=this.tobMadel
         if(row){
             this.dialogTitle='添加子菜单'
-            console.log(row)
             this.form.parent_id=row.menu_id
         }else{
             this.dialogTitle='添加一级菜单'
@@ -193,8 +189,6 @@ export default {
         this.dialogMenuShow=true
     },
     EditMenu(index,row){
-      console.log('表格数据',this.tableData)
-        console.log(index,row)
         if(row.parent_id==0){
             this.dialogTitle='编辑一级菜单'
         }else{
@@ -219,7 +213,6 @@ export default {
     },
     DelMenu(index,row){
         if(row.parent_id==0){
-            console.log('第一個')
             this.$confirm(`此操作将刪除${row.name}及其子菜单, 是否继续?`, '提示', {
               confirmButtonText: '确定',
               cancelButtonText: '取消',
@@ -242,7 +235,6 @@ export default {
         }else{
             this.isTodo=false
             this.AxiosReturn('menu/method/del.menu.item/',{menu_id:row.menu_id}).then(res=>{
-              console.log(res)
               if(res.status==200){
                 this.$message.success('删除成功')
               }else{
@@ -257,7 +249,6 @@ export default {
     },
     getList(){
       this.AxiosReturn('menu/method/get.parent.item',{module:this.tobMadel,parent_id:0}).then(res=>{
-        console.log(res)
         this.MenuSelectArr=res.data
         this.tableData=res.data.map(item=>{
           item.status=item.status.toString()
@@ -268,7 +259,6 @@ export default {
           }
           return item
         })
-        console.log(this.tableData)
       })
     },
     submitForm(formName) {
@@ -278,7 +268,6 @@ export default {
           this.isTodo=false
           if(this.dialogTitle=='添加子菜单'||this.dialogTitle=='添加一级菜单'){
               this.AxiosReturn('menu/method/add.menu.item',this.form).then(res=>{
-                console.log(res)
                 if(res.status==200){
                   this.$message.success('添加成功')
                   this.dialogMenuShow=false
@@ -291,7 +280,6 @@ export default {
               })
           }else{
               this.AxiosReturn('menu/method/set.menu.item',this.form).then(res=>{
-                console.log(res)
                 if(res.status==200){
                   this.$message.success('修改成功')
                   this.dialogMenuShow=false

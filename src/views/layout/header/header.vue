@@ -135,7 +135,6 @@ export default {
       }
       if (command === "reloadMenu") {
         this.AxiosReturn('menu/method/get.menu.auth.list',{module:'admin'}).then(res=>{
-          // console.log(res)
           if(res.status == 200){
             this.$message.success('重载菜单成功')
           }else{
@@ -145,7 +144,6 @@ export default {
       }
       if (command === "clear") {
         this.AxiosReturn('index/method/clear.cache.all').then(res=>{
-          // console.log(res)
           if(res.status == 200){
             this.$message.success('清除缓存成功')
           }else{
@@ -164,7 +162,6 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.AxiosReturn('admin/method/set.admin.password',this.ruleForm2).then(res=>{
-            console.log(res)
             if(res.status==200){
               this.visible=false
               this.$message.success('密码修改成功，即将返回登页面')
@@ -174,8 +171,6 @@ export default {
               },1500)
             }
           })
-          
-          // console.log("send");
         } else {
           return false;
         }

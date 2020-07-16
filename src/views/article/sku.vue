@@ -155,7 +155,6 @@ export default {
           }
         }
         this.AxiosReturn('productSku/method/get.sku.list',myparams).then(res=>{
-            console.log(res)
             if (res.status === 200) {
               let result = res.data.items;
               that.skudataList = result;
@@ -202,9 +201,7 @@ export default {
               product_unit: this.ruleForm.productUnit,
               store_qty: this.ruleForm.storeQty,
               product_remarks: this.ruleForm.remarks
-            })
-            .then(function(res) {
-              // console.log(res);
+            }).then(function(res) {
               if (res.status === 200) {
                 that.$message({
                   message: res.message,
@@ -223,11 +220,7 @@ export default {
                 }
               }
             })
-            .catch(function(error) {
-              console.log(error);
-            });
         } else {
-          console.log("error submit!!");
           return false;
         }
       });
@@ -239,12 +232,9 @@ export default {
     //  检验输入的SKU是否唯一
     isOnly() {
       let that = this;
-      this.AxiosReturn("productSku/method/unique.product.sku/", {
-          product_sku: that.ruleForm.prosku
-        })
-        .then(function(res) {
-          console.log(res);
+      this.AxiosReturn("productSku/method/unique.product.sku/", {product_sku: that.ruleForm.prosku}).then(function(res) {
           if (res.status === 200) {
+            this.$message.success(res.message)
           } else if (res.status === 500) {
             that.$message({
               message: res.message,
@@ -253,13 +243,8 @@ export default {
             });
           }
         })
-        .catch(function(error) {
-          console.log(error);
-        });
     }
   },
-
-  mounted() {}
 };
 </script>
 

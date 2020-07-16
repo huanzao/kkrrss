@@ -183,7 +183,6 @@ export default {
           this.sh_Look="查看"
       }
       this.dialogFormVisible = true;
-      // console.log(index+ '---index',val+'---val',title+'---title')
       this.form =val;
       this.buyDialogTableData = val.product_sku;
       this.form.supplier_no = val.supplier_no;
@@ -193,7 +192,6 @@ export default {
     },
     getSummaries(param) {
       const { columns, data } = param;
-      // console.log(param);
       let caigouNum=0
       let caigouPrice=0
       this.form.warehousing_qty=0

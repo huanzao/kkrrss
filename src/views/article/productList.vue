@@ -456,7 +456,6 @@ export default {
       
       let that = this;
       this.AxiosReturn("product/method/get.product.admin.list",myParams).then(function(res) {
-          console.log(res)
           if (res.status === 200) {
             let result = res.data.items;
             that.dataList = result;
@@ -464,9 +463,7 @@ export default {
           }else{
             this.$message.warning(res.message)
           }
-        }).catch(function(error) {
-          console.log(error);
-        });
+        })
     },
     // 监听pagesize改变的事件
     handleSizeChange: function(newSize) {
@@ -488,25 +485,22 @@ export default {
           if (res.status === 200) {
             that.xuanpindata = res.data.items;
             that.selectionpersondata = res.data.items;
+          }else{
+            this.$message.warning(res.message)
           }
-        }).catch(function(error) {
-          console.log(error);
         })
     },
     // 获取类别
     getSelect() {
       let that = this;
-      this.AxiosReturn("goods_type/method/get.goods.type.select", {})
-        .then(function(res) {
+      this.AxiosReturn("goods_type/method/get.goods.type.select", {}).then(function(res) {
           if (res.status === 200) {
-            // console.log(res);
             that.typeNameListSearch = res.data;
             that.typeNameListSearchEdit = res.data;
+          }else{
+            this.$message.warning(res.message)
           }
         })
-        .catch(function(error) {
-          console.log(error);
-        });
     },
     // 监听 添加用户对话框的关闭事件 ---清空form表单
     aDialogClosed() {
@@ -531,7 +525,6 @@ export default {
     showAreasCateDialog(row) {
       let that=this
       this.dailogTitle = "编辑产品";
-      console.log(row, 111111);
       this.edit = true;
       this.addRuleForm.product_id = row.product_id;
       this.addRuleForm.name = row.name;
@@ -547,7 +540,7 @@ export default {
       //获取分类选择的数据
       // this.getSpecList(row.goods_type_id)
       // this.AxiosReturn("spec?method=get.goods.spec.list",{goods_type_id:row.goods_type_id}).then(res=>{
-      //   console.log(res)
+      //   
       // })
       //获取 一条数据 cao
       this.AxiosReturn("product/method/get.products.item",{product_id:row.product_id}).then(res=>{
@@ -590,9 +583,7 @@ export default {
           if (res.status === 200) {
             that.skuTitle = [];
             that.UpLoadqaq = [];
-            console.log("--------", res.data);
             that.specTypeName = res.data.spec_config;
-            console.log("--- 循环数据 ----", that.specTypeName);
             if(that.specTypeName.length==0){
                 that.$message('该分类下暂无，规格，如果需要请去产品分类中添加')
             }
@@ -615,11 +606,11 @@ export default {
               that.$set(item, "checkedAll", false);
               that.$set(item, "checkedBox", []);
             });
+          }else{
+            this.$message.warning(res.message)
           }
         })
-        .catch(function(error) {
-          console.log(error);
-        });
+        
     },
     // 单选
     handleCheckedCitiesChange(value){

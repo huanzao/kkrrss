@@ -225,7 +225,7 @@
           <el-button size="mini" type="warning" @click="auditwating "  v-if="globelType=='sh'">待修改</el-button>
           <el-button size="mini" type="danger" @click="auditdelete " v-if="globelType=='sh'" >删除</el-button>
           <el-button size="mini" type="info" @click="aduitcancel" v-if="globelType=='sh'">取 消</el-button>
-          <el-button size="mini" type="info" @click="aduitcancel" style="width:150px" v-if="globelType=='ck'">取 消</el-button>
+          <el-button size="mini" type="info" @click="aduitcancel" style="width:150px" v-if="globelType=='ck'">关闭</el-button>
         </span>
       </el-dialog>
     </el-card>
@@ -352,16 +352,14 @@ export default {
     },
     getSelect() {
       let that = this;
-      this.AxiosReturn("goods_type/method/get.goods.type.select", {})
-        .then(function(res) {
+      this.AxiosReturn("goods_type/method/get.goods.type.select", {}).then(function(res) {
           if (res.status === 200) {
-            console.log(res);
             that.selectOptions=res.data
+          }else{
+            this.$message.warning(res.message)
           }
         })
-        .catch(function(error) {
-          console.log(error);
-        });
+        
     },
     resetFun(){
         this.isSearch=false
@@ -381,7 +379,6 @@ export default {
     },
     getList() {
       let myParams={}
-      console.log('this.isSearch---',this.isSearch)
       if(this.isSearch){
           myParams=this.queryinfo
           if(this.queryinfo.createtime!=""&&this.queryinfo.createtime!=null){
@@ -397,35 +394,28 @@ export default {
               page_no: this.queryinfo.page_no //翻页页数
           }
       }
-      console.log(myParams)
       let that = this;
       this.AxiosReturn("product/method/get.product.admin.list",myParams).then(function(res) {
-          // console.log(res);
           if (res.status === 200) {
-            console.log(res.data);
             that.tableData = res.data.items;
             that.total = res.data.total_result;
+          }else{
+            this.$message.warning(res.message)
           }
         })
-        .catch(function(error) {
-          console.log(error);
-        });
     },
     //分页
     handleSizeChange(val) {
       this.queryinfo.page_size= val;
-      // console.log(`每页 ${val} 条`);
       this.getList();
     },
     handleCurrentChange(val) {
       this.queryinfo.page_no= val;
       this.getList();
-      // console.log(`当前页: ${val}`);
     },
     // 审核
     handleEdit(index, row,val) {
       let that=this
-      console.log(val)
       if(val=='sh'){
           this.sh_Look="审核"
       }else{
@@ -448,7 +438,6 @@ export default {
       this.shenheForm.product_id=row.product_id
       this.AxiosReturn("product/method/get.products.item",{product_id:row.product_id}).then(res=>{
         that.skutabledata=res.data.getspec_goods
-        console.log(that.skutabledata)
         that.shenheedit = true; 
       })
     },
@@ -473,16 +462,13 @@ export default {
       let _this=this
       this.AxiosReturn("product/method/set.product.item/",_this.shenheForm)
         .then(function(res) {
-          console.log(res);
           if (res.status === 200) {
-            console.log(res.data);
             _this.tableData[_this.globelIndex].audit_status=res.data.audit_status
             _this.shenheedit=false
+          }else{
+            this.$message.warning(res.message)
           }
         })
-        .catch(function(error) {
-          console.log(error);
-        });
     }
   },
 };

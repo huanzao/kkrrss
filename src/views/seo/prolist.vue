@@ -1011,7 +1011,6 @@ export default {
     },
     // 搜索
     search() {
-        console.log("是这里吗")
         this.isSearch=true
         this.queryinfo.page_no=1 
         this.queryinfo.page_size=10
@@ -1039,13 +1038,12 @@ export default {
       }
       this.AxiosReturn("goods/method/get.goods.admin.list",myParams).then(function(res) {
           if (res.status === 200) {
-            console.log(res.data);
             that.tableData = res.data.items;
             that.total = res.data.total_result;
+          }else{
+            this.$message.warning(res.message)
           }
-        }).catch(function(error) {
-          console.log(error);
-        });
+        })
     },
     // 解决遍历的域名值不出来问题
     fn(d) {
@@ -1054,8 +1052,6 @@ export default {
     // 搜索
     serachrenling() {},
     isShelf(row, index) {
-      console.log(row, index);
-      //e表示el-switch的状态（true，false）
       this.AxiosReturn("goods/method/set.shelves.goods.list", {
           goods_id: row.goods_id,
           status: row.status
@@ -1078,7 +1074,6 @@ export default {
     // 认领
     claimClick(index, row) {
       if (row.optimizer_status != 1) {
-        console.log(index, row);
         let RenlingObj = {
           goods_id: row.goods_id,
           goods_code: row.goods_code,
@@ -1113,28 +1108,6 @@ export default {
         return this.UnixDate(row.optimizer_time);
       }
     },
-    // 复制
-    // copyClick(row) {
-    //   // console.log(row);
-    //   //  this.axios
-    //   //   .post("goods/method/copy.goods.item/", {
-
-    //   //   })
-    //   //   .then(function(res) {
-    //   //     // console.log(res);
-    //   //     if (res.data.status === 200) {
-
-    //   //     }
-    //   //   })
-    //   //   .catch(function(error) {
-    //   //     console.log(error);
-    //   //   });
-
-    //   this.$message({
-    //     showClose: true,
-    //     message: "暂时未开通，敬请期待"
-    //   });
-    // },
     // 评论
     commentClick(index, row) {
       this.commentRuleForm.content = "";
@@ -1146,12 +1119,9 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          console.log(this.commentRuleForm);
-
           this.AxiosReturn("goods_comment/method/add.goods.comment.item/",
             this.commentRuleForm
           ).then(res => {
-            console.log(res);
             if (res.status == 200) {
               this.$message.success("评论添加成功");
               this.isShowEvaluate = false;
@@ -1159,9 +1129,6 @@ export default {
               this.$message.warning(res.message);
             }
           });
-        } else {
-          console.log("error submit!!");
-          return false;
         }
       });
     },
@@ -1169,12 +1136,10 @@ export default {
     handleSizeChange(val) {
       this.queryinfo.page_size = val;
       this.getList();
-      // console.log(`每页 ${val} 条`);
     },
     handleCurrentChange(val) {
       this.queryinfo.page_no = val;
       this.getList();
-      // console.log(`当前页: ${val}`);
     },
     // ---------------------------------编辑弹框
     // 编辑
@@ -1184,7 +1149,6 @@ export default {
         arr: row.price_group
       };
       this.priceGroupTableData = row.price_group;
-      console.log(row);
       this.fileImgListEdit = [];
       for (var i in row.attachment) {
         this.fileImgListEdit.push({
@@ -1197,56 +1161,6 @@ export default {
       this.ruleForm.domains = row.domain;
       this.ruleForm.beiyongs = row.fb1;
       this.isGift = row.addendum;
-      // console.log(this.ruleForm.addendum_status)
-      // let that = this;
-      //  console.log(row,i)
-      // that.isShowEdtiPro = true;
-      // this.axios
-      //   .post("goods/method/get.goods.item/", {
-      //     goods_id: i
-      //   })
-      //   .then(function(res) {
-      //     // console.log(res);
-      //     if (res.data.status === 200) {
-      //       // that.isShowEdtiPro = true;
-      //       // console.log(res.data.data);
-      //       let result = res.data.data;
-      //       // that.ruleForm = result;
-      //       // console.log(result);
-      //       that.ruleForm = result;
-      //       // that.ruleForm.goods_id = result.goods_id;
-      //       // that.ruleForm.product_id = result.goods_code;
-      //       // that.ruleForm.product.name = result.product_name;
-      //       // that.ruleForm.addcomname = result.name;
-      //       // that.ruleForm.addcomid = result.goods_code;
-      //       that.ruleForm.domains = result.domain;
-      //       // that.ruleForm.fbcode = result.fb;
-      //       // that.ruleForm.chromecode = result.google;
-      //       // that.ruleForm.beiyongs = result.fb1;
-      //       // that.fileImgListEdit = result.attachment;
-      //       // that.ruleForm.addprotitle = result.short_name;
-      //       // that.ruleForm.addyuanjia = result.market_price;
-      //       // that.ruleForm.addnowprice = result.shop_price;
-      //       // that.ruleForm.regionvalue = result.region;
-      //       // that.ruleForm.channel = result.channel;
-      //       // that.ruleForm.checkpricevalue = result.price_group_id;
-      //       // that.priceGroupTableData = result.price_group;
-      //       // that.is = result.addendum_status;
-      //       // that.addendum = result.addendum;
-      //       // that.ruleForm.description = result.description;
-      //       // that.ruleForm.content = result.content;
-      //       // that.ruleForm.goods_remarks = result.goods_remarks;
-      //     } else if (res.data.status === 500) {
-      //       that.$message({
-      //         message: res.data.message,
-      //         type: "warning",
-      //         center: true
-      //       });
-      //     }
-      //   })
-      //   .catch(function(error) {
-      //     console.log(error);
-      //   });
     },
     submitEdit() {
       let that = this;
@@ -1270,9 +1184,7 @@ export default {
           description: that.ruleForm.description, ///商品描述
           content: that.ruleForm.content, //商品详情描述(介绍)
           goods_remarks: that.ruleForm.goods_remarks //备注
-        })
-        .then(function(res) {
-          console.log(res);
+        }).then(function(res) {
           if (res.status === 200) {
             that.$message({
               message: res.message,
@@ -1281,22 +1193,10 @@ export default {
             });
             that.isShowEdtiPro = false;
             that.getList();
-          } else if (res.status === 500) {
-            that.$message({
-              message: res.message,
-              type: "warning",
-              center: true
-            });
-          } else {
-            that.$message({
-              message: "提交失败",
-              type: "error"
-            });
+          } else{
+            that.$message.warning(res.message);
           }
         })
-        .catch(function(error) {
-          console.log(error);
-        });
     },
     //编辑关闭
     editDialogClosed() {
@@ -1334,7 +1234,6 @@ export default {
     },
     //删除备用代码
     removebeiyong(info) {
-      console.log(info);
       var index = this.ruleForm.beiyongs.indexOf(info);
       if (index !== -1) {
         this.ruleForm.beiyongs.splice(index, 1);
@@ -1347,8 +1246,6 @@ export default {
     },
     // 文件列表移除文件时的钩子
     handleRemoveEdit(file, fileList) {
-      console.log(file, fileList);
-
       this.editformimg = [];
       for (var img of fileList) {
         if (img.response) {
@@ -1360,12 +1257,10 @@ export default {
     },
     //文件超出个数限制时的钩子
     chooseImg(files, fileList) {
-      // console.log("文件超出个数限制时的钩子");
       this.$message.warning(`最多可上传五张`);
     },
     // 上传成功
     handsuccess(response, file, fileList) {
-      console.log(file, fileList);
       this.fileImgListEdit = fileList;
 
       this.editformimg = [];
@@ -1395,15 +1290,12 @@ export default {
       if (val == this.priceGroupsChange.index) {
         this.priceGroupTableData = this.priceGroupsChange.arr;
       } else {
-        // this.isShow = true;
         this.priceGroupTableData = [];
-        console.log(val, arr);
       }
     },
 
     // 当前页是否有赠品
     ischoice(isc) {
-      // console.log(isc);
       if (isc === 0) {
         this.isValueShow = false;
         this.ruleForm.addendum = "";
@@ -1420,16 +1312,13 @@ export default {
     },
     // 文件列表移除文件时的钩子
     handleRemoveComment(file, fileList) {
-      console.log(file, fileList);
     },
     //文件超出个数限制时的钩子
     chooseImgComment(files, fileList) {
-      // console.log("文件超出个数限制时的钩子");
       this.$message.warning(`最多可上传四张`);
     },
     // 上传成功
     handsuccessComment(response, file, fileList) {
-      console.log(file, fileList);
       this.fileImgListComment = fileList;
       this.commentRuleForm.image = [];
       for (var img of fileList) {
@@ -1439,26 +1328,10 @@ export default {
     resetForm(formName) {
       this.$refs[formName].resetFields();
     },
-    // 搜索
-    serachClick(row) {
-      console.log(row);
-    },
-    // 全选
-    evaluteHandleSelectionChange(val) {
-      console.log(val);
-      this.evaluteMultipleSelection = val;
-    },
+    
     // 评价编辑
     pingLuneditBtn(rowedit) {
-      console.log(rowedit);
       this.isShowPingLunEdit = true;
-    },
-    // 评论分页
-    pingLunHandleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
-    },
-    pingLunHandleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
     },
     //上传图片评论
     handlePictureCardPreview(file) {
@@ -1519,22 +1392,22 @@ export default {
       //  this.$refs['upload'].clearFiles();
     },
     celledit(row, column, cell, event) {
-      console.log(row, column, 111);
+      // console.log(row, column, 111);
     },
     handBatchComId(index, row) {
-      console.log(index, row, "商品ID");
+      // console.log(index, row, "商品ID");
     },
     handBatchComName(index, row) {
-      console.log(index, row, "商品名称");
+      // console.log(index, row, "商品名称");
     },
     handBatchCommentator(index, row) {
-      console.log(index, row, "评论人");
+      // console.log(index, row, "评论人");
     },
     handBatchStar(index, row) {
-      console.log(index, row, "满意度");
+      // console.log(index, row, "满意度");
     },
     handBatchMessage(index, row) {
-      console.log(index, row, "留言");
+      // console.log(index, row, "留言");
     },
     //  批量添加评论上传图片
     batchhandlePictureCardPreview(file) {
@@ -1545,7 +1418,6 @@ export default {
     },
 
     batchhandleRemove(file, fileList, index) {
-      console.log(file, fileList, index, "删除");
     },
     // 图片上传
     handleSuccess(file, fileList, index) {
@@ -1553,12 +1425,11 @@ export default {
         showClose: true,
         message: "图片上传成功",
         type: "success"
-      });
-      // console.log( fileList, index,"成功")
-      // console.log(fileList.url,"11")
+      })
+
+
       for (var i = 0; i < this.batchData.length; i++) {
         this.batchData[i].batchimgUrl = fileList.url;
-        console.log(this.batchData[i].batchimgUrl, "成功");
       }
     },
     handleError(file, fileList, index) {

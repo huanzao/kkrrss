@@ -222,23 +222,16 @@ export default {
           page_size: this.pagesize, //每页条数
           page_no: this.pagenum //翻页页数
         }).then(function(res) {
-          // console.log(res)
           if (res.status === 200) {
-            console.log(res.data);
             that.tableData = res.data.items;
             that.total = res.data.total_result;
-            // console.log(that.tableData);
             for (var l = 0; l < that.tableData.length; l++) {
               that.spec_item = that.tableData[l].spec_item;
-              // 逗号分割数组
-              // var str = that.spec_item.join("，");
-              // that.spec_item = str;
-              // console.log(that.spec_item);
             }
+          }else{
+            this.$message.warning(res.message)
           }
-        }).catch(function(error) {
-          console.log(error);
-        });
+        })
     },
      // 搜索
     search() {
@@ -250,16 +243,15 @@ export default {
           goods_type_id: that.goodsTypeId
         }).then(function(res) {
           if (res.status === 200) {
-            console.log(res);
             that.tableData = res.data.items;
             that.total = res.data.total_result;
+          }else{
+            this.$message.warning(res.message)
           }
           for (var l = 0; l < that.tableData.length; l++) {
             that.spec_item = that.tableData[l].spec_item;
           }
-        }).catch(function(error) {
-          console.log(error);
-        });
+        })
     },
     resetFun(){
         this.pagesize=10
@@ -290,13 +282,11 @@ export default {
       let that = this;
       this.AxiosReturn("goods_type/method/get.goods.type.select", {}).then(function(res) {
           if (res.status === 200) {
-            console.log('---------------',res);
             that.typeNameListSearch = res.data;
+          }else{
+            this.$message.warning(res.message)
           }
         })
-        .catch(function(error) {
-          console.log(error);
-        });
     },
     // tag 新增规格类型
     handleClose(tag) {
@@ -314,7 +304,6 @@ export default {
       let inputValue = this.inputValue;
       if (inputValue) {
         this.dynamicTags.push(inputValue);
-        // console.log(this.dynamicTags);
       }
       this.inputVisible = false;
       this.inputValue = "";
@@ -323,16 +312,13 @@ export default {
     AddListRow() {
       this.centerDialogVisible = true;
       let that = this;
-      this.AxiosReturn("goods_type/method/get.goods.type.select", {})
-        .then(function(res) {
+      this.AxiosReturn("goods_type/method/get.goods.type.select", {}).then(function(res) {
           if (res.status === 200) {
-            // console.log(res);
             that.typeNameList = res.data;
+          }else{
+            this.$message.warning(res.message)
           }
         })
-        .catch(function(error) {
-          console.log(error);
-        });
     },
     // 提交新增产品分类
     submitForm(formName) {
@@ -343,10 +329,8 @@ export default {
               goods_type_id: that.ruleForm.type_name,
               name: that.ruleForm.category,
               spec_item: that.dynamicTags
-            })
-            .then(function(res) {
+            }).then(function(res) {
               if (res.status === 200) {
-                // console.log(res);
                 that.$message({
                   message: res.message,
                   type: "success"
@@ -356,11 +340,10 @@ export default {
                 that.ruleForm.type_name = "";
                 that.ruleForm.category = "";
                 that.dynamicTags = [];
+              }else{
+                this.$message.warning(res.message)
               }
             })
-            .catch(function(error) {
-              console.log(error);
-            });
         } else {
           return false;
         }
@@ -369,7 +352,6 @@ export default {
 
     // 删除
     handleDelete(index) {
-      // console.log(index)
       this.$confirm(`确定要删除 ' ${index.get_goods_type.type_name} -- ${index.name} ' 规格类型吗`, "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -379,7 +361,6 @@ export default {
           this.AxiosReturn("spec/method/del.goods.spec.list/", {
             spec_id: index.spec_id
           }).then(res => {
-            // console.log(res,1111111111111)
             if (res.status === 200) {
               this.$message({
                 type: "success",
@@ -403,7 +384,6 @@ export default {
     },
     // 编辑弹框
     confirmEdit(row) {
-      // console.log(row);
       this.dialogVisibleEdit = true;
       this.ruleFormEdit.type_name = row.get_goods_type.type_name;
       this.ruleFormEdit.category = row.name;
@@ -415,11 +395,10 @@ export default {
         .then(function(res) {
           if (res.data.status === 200) {
             that.typeNameListEdit = res.data;
+          }else{
+            this.$message.warning(res.message)
           }
         })
-        .catch(function(error) {
-          console.log(error);
-        });
     },
     
     // 编辑弹框内容
@@ -452,7 +431,6 @@ export default {
               spec_id: that.spec_id
             }).then(function(res) {
               if (res.status === 200) {
-                console.log(res);
                 that.$message({
                   message: res.message,
                   type: "success"
@@ -462,11 +440,10 @@ export default {
                 that.ruleForm.type_name = "";
                 that.ruleForm.category = "";
                 that.dynamicTags = [];
+              }else{
+                this.$message.warning(res.message)
               }
             })
-            .catch(function(error) {
-              console.log(error);
-            });
         } else {
           return false;
         }

@@ -303,7 +303,6 @@ export default {
       this.AxiosReturn('order/method/get.order.list/',myParams).then(res=>{
         that.tableData=res.data.items
         that.total=res.data.total_result
-        console.log(res)
       })
     },
     //全选函数---显示全部列
@@ -339,7 +338,6 @@ export default {
         trade_status: 5,
         is_delete:0,
       }).then(res => {
-        // console.log(res);
         if (res.status == 200) {
           this.$message({
             message: res.message,
@@ -356,7 +354,6 @@ export default {
       });
     },
      handleDelete(val) {
-      // console.log(val);
       this.$confirm("此操作将永久删除订单，不可还原, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -367,7 +364,6 @@ export default {
             order_no: val.order_no,
             is_recycle: 2
           }).then(res => {
-            // console.log(res);
             if (res.status == 200) {
               this.$message({
                 type: "success",

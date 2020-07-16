@@ -521,7 +521,6 @@ export default {
       this.AxiosReturn('order/method/get.order.list/',myParams).then(res=>{
         that.tableData=res.data.items
         that.total=res.data.total_result
-        console.log(res)
       })
     },
   
@@ -569,7 +568,6 @@ export default {
     },
     // 修改
     modifyClick(row) {
-      console.log(row);
       this.form.name = row.consignee;
       this.form.iphone = row.mobile;
       this.form.email = row.email;
@@ -588,7 +586,6 @@ export default {
     },
     // 修改提交
     modifySubmit(formName) {
-      console.log(this.form.formOrderNo);
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.AxiosReturn("order/method/set.order.item/", {
@@ -609,20 +606,16 @@ export default {
               type: "success"
             });
             this.dialogEdit = false;
-            // console.log(res);
             this.tableData = res.items;
             this.getList(this.pagesize, this.pagenum, 6);
-            // this.total = res.total_result;
           });
         } else {
-          console.log("error submit!!");
           return false;
         }
       });
     },
     // 更改订单状态
     setStatus(row) {
-      console.log(row);
       this.toSetStatusVisible = true;
       this.setOrderStatusNo = row.order_no;
     },
@@ -632,7 +625,6 @@ export default {
         order_no: this.setOrderStatusNo,
         trade_status: 0
       }).then(res => {
-        // console.log(res);
         if (res.status == 200) {
           this.$message({
             message: res.message,
@@ -654,7 +646,6 @@ export default {
         order_no: this.setOrderStatusNo,
         trade_status: 1
       }).then(res => {
-        // console.log(res);
         if (res.status == 200) {
           this.$message({
             message: res.message,
@@ -672,12 +663,10 @@ export default {
     },
     //城市选择
     changeProvince(val) {
-      // console.log(val);
       for (var i = 0; i < this.form.citys.length; i++) {
         for (var c = 0; c < this.form.citys[i].children.length; c++) {
           if (val == c) {
             return (this.form.children = this.form.citys[c].children);
-            // console.log(this.form.children);
           }
         }
       }
@@ -687,7 +676,6 @@ export default {
         order_no: this.form.formOrderNo,
         total_amount: this.form.total_amount
       }).then(res => {
-        // console.log(res.data);
         if (res.status === 200) {
           this.$message({
             message: res.message,
@@ -710,7 +698,6 @@ export default {
     },
     // 将订单放入回收站
     recycleBinClick(orderNo) {
-      // console.log(orderNo)
       this.$confirm("此操作将订单放入回收站中, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -721,7 +708,6 @@ export default {
             order_no: orderNo,
             is_recycle: 1
           }).then(res => {
-            // console.log(res);
             if (res.status == 200) {
               this.$message({
                 type: "success",

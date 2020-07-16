@@ -180,13 +180,11 @@ export default {
       params.page_no=this.pagenum
       params.page_size=this.pagesize
       this.AxiosReturn("admin/method/get.admin.list",params).then(res=>{
-            console.log(res)
             if(!res.data.items){
               this.$message('暂无数据')
               that.tableData=[]
             }else{
               that.tableData = res.data.items.map(it=>{
-                  console.log(it.status)
                   it.status=it.status.toString()
                   return it
               })
@@ -248,7 +246,6 @@ export default {
                   msg='修改密码成功'
               }
               this.AxiosReturn(api,that.addUserForm).then(res=>{
-                  console.log(res)
                   if(res.status==200){
                       that.$message.success(res.message)
                       this.addDialogVisible = false;
@@ -272,7 +269,6 @@ export default {
           let delArr=[]
           delArr.push(id)
           this.AxiosReturn('admin/method/del.admin.list',{client_id:delArr}).then(res=>{
-            console.log(res)
             if(res.status===200){
                 this.$message.success('删除成功!');
                 this.tableData.splice(index,1)
@@ -288,10 +284,8 @@ export default {
         });
     },
     isShelf(e, row, index) {
-      // console.log(e,'e***************', row, index)
       let arrs = [];
       arrs.push(row.admin_id)
-      // console.log(arrs,'arrs数组')
       this.axios
         .post("admin/method/set.admin.status/", {
           client_id: arrs,

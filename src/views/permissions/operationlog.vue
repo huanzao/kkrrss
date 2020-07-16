@@ -130,9 +130,7 @@ export default {
           }else{
             this.$message.warning(res.message)
           }
-        }).catch(function(error) {
-          console.log(error);
-        });
+        })
     },
     // 监听pagesize改变的事件
     handleSizeChange: function(newSize) {
@@ -145,7 +143,6 @@ export default {
       this.getList();
     },
     handleClick(tab, event) {
-      // console.log(tab,'----tab',event ,'*****event' );
     },
    
   }

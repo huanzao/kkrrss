@@ -211,7 +211,6 @@ export default {
     },
     getArrs(modules){
       this.AxiosReturn('menu/method/get.parent.item',{module:modules,parent_id:0}).then(res=>{
-        console.log('aaaaaaaaaaaaaa',res)
         let result= res.data.map(item=>{
           item.status=item.status.toString()
           if(item.children_total==0){
@@ -223,7 +222,6 @@ export default {
         })
         if(modules=='admin'){
           this.menuArr=result
-          console.log('菜单数据',this.menuArr)
         }else if(modules=='api'){
           this.authArr=result
         }
@@ -254,7 +252,6 @@ export default {
             status:e
         }
         this.AxiosReturn('auth_group/method/set.auth.group.item/',par).then(res=>{
-            console.log(res)
             if(res.status==200){
                 if(e==1){
                   this.$message.success('启用成功')
@@ -269,7 +266,6 @@ export default {
     // 编辑角色
     showEditDialog(index,row) {
       this.globelIdex=index
-      console.log(index,row)
         this.RoleForm.name=row.name
         this.RoleForm.description=row.description
         this.RoleForm.sort=row.sort
@@ -303,33 +299,22 @@ export default {
           type: 'warning'
         }).then(() => {
             this.AxiosReturn('auth_group/method/del.auth.group.item/',{group_id:id}).then(res=>{
-              console.log(res)
               if(res.status==200){
                   this.$message.success('删除成功!')
                   this.tableData.splice(index,1)
               }else{
                   this.$message.warning(res.message)
               }
-              
             })
-          
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消删除'
-          });          
-        });
+        })
     },
     // 获取角色权限
     showSetRightDialog(index,role) {
       let that=this
-      console.log(index,role)
       this.auth_form.module='admin'
       this.AxiosReturn('auth_rule/method/get.auth.rule.list',{group_id:role.group_id }).then(res=>{
         that.Allquanxian=res.data
-        console.log('有没有设置过权限啊',res)
         if(res.data){
-          console.log('在获取权限角色所对应的权限',res)
           let my_whitch=""
           for(var m in res.data){
             if(res.data[m].module=='admin'){
@@ -368,7 +353,6 @@ export default {
     },
     //模块切换
     ModeChange(v){
-        console.log(v)
         let my_whitch=""
         for(var m in this.Allquanxian){
           if(this.Allquanxian[m].module==v){
@@ -418,7 +402,6 @@ export default {
           api='auth_rule/method/add.auth.rule.item'  //添加
       }
       this.AxiosReturn(api,this.auth_form).then(res=>{
-        console.log(res)
         if(res.status===200){
             that.$message.success('设置成功')
             that.setRightDialogVisible=false

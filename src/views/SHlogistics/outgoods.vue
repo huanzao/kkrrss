@@ -141,12 +141,10 @@ export default {
       this.AxiosReturn('order/method/get.order.list/',myParams).then(res=>{
         that.tableData=res.data.items
         that.total=res.data.total_result
-        console.log(res)
       })
     },
     look(val){
       this.dialogFormVisible=true;
-       console.log(val)
     },
     //table中checkbox函数
     handleSelectionChange(val) {

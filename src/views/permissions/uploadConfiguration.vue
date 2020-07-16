@@ -180,7 +180,6 @@ export default {
      // 设置配置数据
     getFormData() {
       this.AxiosReturn("setting/method/get.setting.list/",{module:'upload'}).then(res=>{
-            console.log('请求数据',res) 
             this.form.default = res.data.default.value;
             this.form.oss = res.data.oss.value;
             this.help_text = res.data.image_ext.help_text;
@@ -208,58 +207,22 @@ export default {
             this.aLiendpoint_text = res.data.aliyun_endpoint.help_text;
             this.form.aliyun_rolearn = res.data.aliyun_rolearn.value;
             this.aLirolearn_text = res.data.aliyun_rolearn.help_text;
-            // console.log(this.token_expires,'this.token_expires')
       })
     },
     handleChange(value) {
-        console.log(value);
     },
     handleFormSubmit(){
         this.form.image_ext = this.dynamicTags.join(",")
         this.form.file_ext = this.dynamicTagsTag.join(",")
         
-        // console.log(this.form.image_ext)
         this.AxiosReturn("setting/method/set.upload.list/",this.form).then(res=>{
-             console.log(res)
              if(res.status==200){
                this.$message.success('上传成功')
              }else{
                this.$message.warning(res.message)
              }
         })
-
-        // var obj={
-        //   aliyun_access_key:["LTAIiZASEnhdoDWO1111111111111111111"],
-        //   aliyun_bucket:"careyshop",
-        //   aliyun_endpoint: "oss-cn-hangzhou.aliyuncs.com",
-        //   aliyun_rolearn: "acs:ram::1763866338345155:role/aliyunosstokengeneratorrole",
-        //   aliyun_secret_key: "wpEQBBZRHVRgTy87AAYy7bFTKBWgXA",
-        //   aliyun_url: "aliyun.oss.careyshop.cn",
-        //   careyshop_url: "",
-        //   default: "careyshop",
-        //   file_ext: "doc,docx,xls,xlsx,ppt,pptx,pdf,wps,txt,rar,zip,gz,bz2,7z,pem,mp4,ogg,webm,ico",
-        //   file_size: "1M",
-        //   image_ext: "jpg,png,svg,gif,bmp,tiff,webp",
-        //   oss: "careyshop.cn/oss?url=",
-        //   qiniu_access_key: "-eibVM1dkuOQU9vbF9oMRbiMtw4t_-QUMQJgPPDJ",
-        //   qiniu_bucket: "careyshop",
-        //   qiniu_secret_key: "pcDGWPh8eOvnvcWBKbBhAod0R6MiC3_OU-V4hayZ",
-        //   qiniu_url: "poask1ml1.bkt.clouddn.com",
-        //   token_expires: 300,
-        // }
-
-        // // axios.post('http://www.mmkashop.com/api/v1/setting/method/set.upload.list',obj).then(res=>{
-        // //   console.log(res)
-        // // })
-
-        // this.AxiosReturn("setting/method/set.upload.list/",obj).then(res=>{
-        //      console.log(res)
-        // })
-
-
-
     },
-    
     // 允许上传的图片后缀
     handleClose(tag) {
       this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);

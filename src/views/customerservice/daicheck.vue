@@ -420,7 +420,6 @@ export default {
       this.AxiosReturn('order/method/get.order.list/',myParams).then(res=>{
         that.tableData=res.data.items
         that.total=res.data.total_result
-        console.log(res)
       })
     },
    
@@ -466,7 +465,6 @@ export default {
         }
     },
     recycleBinClickList(val) {
-      // console.log(val)
       this.$confirm("此操作将订单放入回收站中, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -477,7 +475,6 @@ export default {
             order_no: val,
             is_recycle: 1
           }).then(res => {
-            // console.log(res);
             if (res.status == 200) {
               this.$message({
                 type: "success",
@@ -502,7 +499,6 @@ export default {
     },
     // 审核
     handleClick(row) {
-      console.log(row);
       this.dialogFormVisible = true;
       this.form.orderNum = row.order_no;
       this.form.comId = row.get_order_goods;
@@ -527,7 +523,6 @@ export default {
         order_no: this.form.orderNum,
         trade_status: 1
       }).then(res => {
-        // console.log(res);
         if (res.status == 200) {
           this.$message({
             message: res.message,
@@ -549,7 +544,6 @@ export default {
         order_no: this.form.orderNum,
         trade_status: 5
       }).then(res => {
-        // console.log(res);
         if (res.status == 200) {
           this.$message({
             message: res.message,
@@ -567,7 +561,6 @@ export default {
     },
     // 将订单放入回收站
     recycleBinClick() {
-      // console.log(this.form.orderNum)
       this.$confirm("此操作将订单放入回收站中, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -577,7 +570,6 @@ export default {
             order_no: this.form.orderNum,
             is_recycle: 1
           }).then(res => {
-            // console.log(res);
             if (res.status == 200) {
               this.$message({
                 type: "success",

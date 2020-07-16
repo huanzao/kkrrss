@@ -411,7 +411,6 @@ export default {
     },
     getSummaries(param) {
       const { columns, data } = param;
-      console.log(param);
       const sums = [];
       columns.forEach((column, index) => {
         if (index === 0) {
@@ -442,7 +441,6 @@ export default {
     },
     getSum(param) {
       const { columns, data } = param;
-      console.log(param);
       const sums = [];
       columns.forEach((column, index) => {
         if (index === 0) {
@@ -470,10 +468,8 @@ export default {
     },
     // 分页
     handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
     },
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
     }
   },
   mounted() {}

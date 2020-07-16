@@ -201,7 +201,6 @@ export default {
       }
       let that = this;
       this.AxiosReturn("delivery_item/method/get.delivery.company.list/",params).then(function(res) {
-          console.log(res);
           if (res.status === 200) {
             let result = res.data.items;
             that.categoryData = result;
@@ -224,7 +223,6 @@ export default {
             })
             .then(function(res) {
               if (res.status === 200) {
-                // console.log(res);
                 that.centerDialogVisible = false;
                 that.getCompanyList();
                 that.ruleForm.name = "";
@@ -253,7 +251,6 @@ export default {
           this.AxiosReturn("delivery_item/method/del.delivery.company.list/", {
             delivery_item_id :arr
           }).then(res => {
-              console.log(res)
             if (res.status === 200) {
                 this.$message({
                     type: "success",
@@ -283,7 +280,6 @@ export default {
     },
     // 编辑弹框
     confirmEdit(row) {
-      console.log(row);
       this.dialogVisibleEdit = true;
       this.ruleFormEdit.name = row.name;
       this.ruleFormEdit.code = row.code;
@@ -304,7 +300,6 @@ export default {
               type :that.ruleFormEdit.type ,
             }).then(function(res) {
               if (res.status === 200) {
-                // console.log(res);
                 that.$message({
                   message: res.message,
                   type: "success"

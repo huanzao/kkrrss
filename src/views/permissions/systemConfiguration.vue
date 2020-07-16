@@ -169,7 +169,6 @@ export default {
      // 设置配置数据
     getFormData(val) {  
       this.AxiosReturn("setting/method/get.setting.list/",{module:'system_info'}).then(res=>{
-        console.log(res)
             let result = res.data;
             this.form.allow_origin=result.allow_origin.value
             this.form.beian=result.beian.value
@@ -212,8 +211,6 @@ export default {
         this.form.square_logo=[]
         this.form.logo.push(this.shopLogoImg[0].url)
         this.form.square_logo.push(this.ShopSquare_logo[0].url)
-        console.log('logo',this.shopLogoImg[0].url)
-        console.log('square_logo',this.ShopSquare_logo[0].url)
 
         const loading = this.$loading({
           lock: true,
@@ -224,7 +221,6 @@ export default {
 
         this.AxiosReturn('setting/method/set.system.list',this.form).then(res=>{
           loading.close()
-          console.log(res)
           if(res.status==200){
             this.$message.success("设置成功")
           }else{
@@ -236,7 +232,6 @@ export default {
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;
-      console.log(file);
     },
     // 文件列表移除文件时的钩子
     handleRemove(file, fileList) {
@@ -249,7 +244,6 @@ export default {
     },
     // 上传成功
     handsuccess(response, file, fileList) {
-      console.log(response, file, fileList);
       for (var img of fileList) {
          this.shopLogoImg[0].url=img.response.data[0].url
       }
@@ -259,7 +253,6 @@ export default {
     handlePictureCardPreview_zz(file) {
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;
-      console.log(file);
     },
     // 文件列表移除文件时的钩子
     handleRemove_zz(file, fileList) {
@@ -272,7 +265,6 @@ export default {
     },
     // 上传成功
     Squresuccess_zz(response, file, fileList) {
-      console.log(response, file, fileList);
       for (var img of fileList) {
          this.ShopSquare_logo[0].url=img.response.data[0].url
       }

@@ -631,16 +631,14 @@ export default {
       }
       let that = this;
       this.AxiosReturn("product/method/get.product.admin.list/",myParams).then(function(res) {
-          // console.log(res);
           if (res.status === 200) {
-            console.log(res.data);
             let result = res.data.items;
             that.claimtableData = result;
             that.total = res.total_result;
+          }else{
+            this.$message.warning(res.message)
           }
-        }).catch(function(error) {
-          console.log(error);
-        });
+        })
     },
     getSelect() {
       let that = this;
@@ -648,20 +646,16 @@ export default {
         .then(function(res) {
           if (res.status === 200) {
             that.addRuleFormExamine.typeNameListSearch = res.data;
+          }else{
+            this.$message.warning(res.message)
           }
         })
-        .catch(function(error) {
-          console.log(error);
-        });
+        
     },
     // 获取选品下拉数据
     getSelectionList() {
       let that = this;
-      this.AxiosReturn("admin/method/get.admin.list/", {
-          group_id: 13,
-          status: 1
-        })
-        .then(function(res) {
+      this.AxiosReturn("admin/method/get.admin.list/", {group_id: 13,status: 1}).then(function(res){
           if (res.status === 200) {
             that.claimcheckpersonlist = res.data.items;
           }else{
@@ -686,13 +680,11 @@ export default {
     // 新建商品
     addcommodity(item, value) {
       this.newaddcommdity = true;
-      console.log(item, value);
       this.ruleForm.addproid = value.product_id;
       this.ruleForm.addproname = value.name;
     },
     // 查看产品
     claimlook(index, val) {
-      console.log(index, val);
       this.addRuleFormExamine.examineproname = val.name;
       this.addRuleFormExamine.examineproename = val.ename;
       this.addRuleFormExamine.examineproid = val.product_id; //supplier
@@ -718,7 +710,6 @@ export default {
         this.$message.warning("订单只又审核之后才能认领");
         return;
       }
-      console.log(index, row);
       let RenlingObj = {
         product_id: row.product_id,
         goods_code: row.goods_code,
@@ -754,7 +745,7 @@ export default {
       let that = this;
       this.$refs[formName].validate(valid => {
         if (valid) {
-          console.log(formName);
+          alert('....')
         }
       });
     },
@@ -765,20 +756,16 @@ export default {
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;
-      console.log(file);
     },
     // 文件列表移除文件时的钩子
     handleRemove(file, fileList) {
-      // console.log(file, fileList);
     },
     //文件超出个数限制时的钩子
     chooseImg(files, fileList) {
-      // console.log("文件超出个数限制时的钩子");
       this.$message.warning(`最多可上传五张`);
     },
     // 上传成功
     handsuccess(response, file, fileList) {
-      console.log(response, file, fileList);
       this.fileImgList = fileList;
       this.formImg = [];
       for (var img of fileList) {
@@ -815,27 +802,18 @@ export default {
             })
             .then(function(res) {
               if (res.data.status === 200) {
-                console.log(res, 111111);
                 that.$message({
                   message: res.data.message,
                   type: "success",
                   center: true
                 });
                 that.newaddcommdity = false;
-              }
-              if (res.data.status === 500) {
-                that.$message({
-                  message: res.data.message,
-                  type: "error",
-                  center: true
-                });
+              }else{
+                  this.$message.warning(res.message)
               }
             })
-            .catch(function(error) {
-              console.log(error);
-            });
-        } else {
-          console.log("error submit!!");
+            
+        }else{
           return false;
         }
       });
@@ -922,7 +900,6 @@ export default {
     // --------------------------------------
     // 新建商品是否有赠品
     ischoice(isc) {
-      // console.log(isc);
       if (isc == 0) {
         this.isValueShow = false;
       } else if (isc == 1) {
