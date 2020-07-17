@@ -139,6 +139,7 @@ export default {
             let logoData=res.data
             if (res.status === 200) {
               that.AxiosReturn('menu/method/get.menu.auth.list',{module:'admin',status:1}).then(res=>{
+                console.log('111212312',res.data)
                 sessionStorage.SideArr=JSON.stringify(res.data)
                 loading.close()
                 that.$notify({

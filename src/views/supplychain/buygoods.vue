@@ -73,7 +73,6 @@
           <el-form-item label="预警值" :label-width="formLabelWidth">
             <el-input v-model="form.warning"></el-input>
           </el-form-item>
-
           <el-form-item label="产品SKU" :label-width="formLabelWidth">
             <el-table :data="form.product_sku" border height="200" :summary-method="getSummaries" show-summary @cell-dblclick="celledit" >
               <el-table-column prop="sku_value" label="规格" width="180"></el-table-column>
@@ -96,15 +95,12 @@
                   <!-- <el-input size="mini" v-if="scope.row.isEdit" v-model="scope.row.purchase_total" @change="handldStock(scope.$index, scope.row)" @blur="blurBtn"></el-input> -->
                   <span>{{scope.row.purchase_total}}</span>
                 </template>
-
               </el-table-column>
             </el-table>           
           </el-form-item>
-
           <el-form-item label="备注" style="margin-top:15px" :label-width="formLabelWidth">
             <el-input style="display:inline" type="textarea" :autosize="{ minRows: 2, maxRows: 4}"  placeholder="请输入备注"  v-model="form.warehousing_remarks"></el-input>
           </el-form-item>
-     
         </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button type="primary" @click="buygoodsSend" size="mini">提交</el-button>

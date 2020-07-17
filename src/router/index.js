@@ -282,8 +282,8 @@ const router = new Router({
             component: ()=>import('@/views/supplychain/buygoods'),
           },
           {
-            path: 'purchaseDetails',
-            name: 'purchaseDetails',
+            path: 'purchasedetails',
+            name: 'purchasedetails',
             chinise:'供应链',
             items:'supplychain',
             title:"采购明细",
