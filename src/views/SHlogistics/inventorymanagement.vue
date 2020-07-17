@@ -28,7 +28,7 @@
           <el-button @click="resetVal" size="mini" type="primary" plain>重置</el-button>
         </el-col>
         <el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">
-          <el-button type="primary" size="mini" @click="myExprotExcel(ExcelHeaderArr,ExcelKeyArr,'库存管理')">导出</el-button>
+          <el-button type="primary" size="mini" @click="myExprotExcel(ExcelHeaderArr,ExcelKeyArr,'库存管理','tableData')">导出</el-button>
         </el-col>
       </el-row>
       <!-- table -->

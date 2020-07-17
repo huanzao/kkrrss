@@ -22,8 +22,10 @@
           <el-table-column prop="supplier_no" label="运单号" show-overflow-tooltip width="210"></el-table-column>
           <el-table-column prop="supplier_name" label="物流公司" show-overflow-tooltip width="200"></el-table-column>
           <el-table-column prop="operator_name" label="采购人" width="120"></el-table-column>
-          <el-table-column prop="create_time" label="采购时间" show-overflow-tooltip width="130"></el-table-column>
+          <el-table-column prop="create_time" label="采购时间" show-overflow-tooltip width="160"></el-table-column>
           <el-table-column prop="warehousing_remarks" show-overflow-tooltip label="备注"></el-table-column>
+
+          
           <el-table-column  label="上传状态">
             <template slot-scope="scope">
               <div v-if="scope.row.warehousing_status == 0">
@@ -34,6 +36,7 @@
               </div>
             </template>
           </el-table-column>
+          <el-table-column prop="warehousing_time" label="入库时间" show-overflow-tooltip width="160" :formatter="UnixFun"></el-table-column>
           <el-table-column  label="采购状态">
             <template slot-scope="scope">
               <div v-if="scope.row.procurement_status == 0">
@@ -68,23 +71,25 @@
       <!-- 采购明细修改 -->
       <el-dialog :title="sh_Look" center :visible.sync="dialogFormVisible" @close="addDialogClosed">
         <el-form :model="form"  ref="form" :rules="rules" size="mini">
- 
+
           <el-form-item label="产品ID"  :label-width="formLabelWidth">
             <el-input v-model="form.product_id" disabled></el-input>
           </el-form-item>
-  
+
           <el-form-item label="产品名称" :label-width="formLabelWidth">
             <el-input v-model="form.product_name" disabled></el-input>
           </el-form-item>
-      
-          <el-form-item label="运单号" prop="supplier_no" :label-width="formLabelWidth">
+
+          <el-form-item :label-width="formLabelWidth">
+            <span slot="label" ><span style="color:red">*</span> 运单号</span>
             <el-input v-model="form.supplier_no" clearable :disabled="sh_Look=='查看'"></el-input>
-          </el-form-item> 
-    
-          <el-form-item label="物流公司" prop="supplier_name" :label-width="formLabelWidth">
+          </el-form-item>
+
+          <el-form-item :label-width="formLabelWidth">
+            <span slot="label" ><span style="color:red">*</span> 物流公司</span>
             <el-input  v-model="form.supplier_name" clearable :disabled="sh_Look=='查看'"></el-input>
           </el-form-item>
-  
+
           <el-form-item label="采购订单号" :label-width="formLabelWidth">
             <el-input v-model="form.purchase_order_no" disabled></el-input>
           </el-form-item>
@@ -92,12 +97,12 @@
           <el-form-item label="采购单号" :label-width="formLabelWidth">
             <el-input v-model="form.po_no" disabled></el-input>
           </el-form-item>
-      
+
 
           <el-form-item label="预警值" :label-width="formLabelWidth">
             <el-input v-model="form.warning" disabled></el-input>
           </el-form-item>
-   
+
           <el-form-item label='产品信息' :label-width="formLabelWidth">
             <el-table :data="form.product_sku" border height="200"  :summary-method="getSummaries"  show-summary  >
               <el-table-column prop="sku_value" label="规格" width="180"></el-table-column>
@@ -112,7 +117,7 @@
           <el-form-item label="备注"  :label-width="formLabelWidth">
             <el-input style="display:inline" type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入备注" v-model="form.warehousing_remarks" :disabled="sh_Look=='查看'"></el-input>
           </el-form-item>
-     
+
         </el-form>
         <div slot="footer" class="dialog-footer" v-if="sh_Look=='采购明细修改'">
           <!-- <el-button type="primary" @click="uploadInfo" size="mini">上传信息</el-button> -->
@@ -126,7 +131,7 @@
 </template>
 
 <script>
-import { AxiosReturn,  myExprotExcel} from "../../assets/axios/index";
+import { AxiosReturn,UnixDate,  myExprotExcel} from "../../assets/axios/index";
 export default {
   name: "stock",
   data() {
@@ -140,10 +145,10 @@ export default {
       form: {},
       rules: {
         supplier_no: [
-          { required: true, message: "请输入运单号", trigger: "blur" }
+          { required: true,}
         ],
         supplier_name: [
-          { required: true, message: "请输入物流公司", trigger: "blur" }
+          { required: true,}
         ],
 
       },
@@ -162,6 +167,12 @@ export default {
   methods: {
     AxiosReturn,
     myExprotExcel,
+    UnixDate,
+    UnixFun(row) {
+      if (row.warehousing_time) {
+        return this.UnixDate(row.warehousing_time);
+      }
+    },
     resetFun(){
       this.pagesize=10
       this.pagenum=1
@@ -182,7 +193,7 @@ export default {
       }
       let that = this
       this.AxiosReturn("warehousing/method/get.warehousing.admin.list", params).then(res => {
-        // console.log(res, 9999999);
+        console.log(res, 9999999);
         that.detailsTableData = res.data.items;
         that.total = res.data.total_result;
       });
@@ -197,10 +208,9 @@ export default {
     },
     // 导出
     toExport() {
-      this.$message({
-        showClose: true,
-        message: "暂时未开通，敬请期待"
-      });
+      const headerArr=['采购单号','产品ID','产品名称','采购金额','采购数量','运单号','物流公司','采购人','采购时间','备注',]
+      const keyArr=['po_no','product_id','product_name','total_purchase_amount','warehousing_qty','supplier_no','supplier_name','operator_name','create_time','warehousing_remarks',]
+      this.myExprotExcel(headerArr,keyArr,'采购明细','detailsTableData')
     },
     // 全选
     handleSelectionChange(val) {
@@ -214,14 +224,28 @@ export default {
           this.sh_Look="查看"
       }
 
-      console.log(val);
-      this.dialogFormVisible = true;
+     
       this.form =val;
-      this.buyDialogTableData = val.product_sku;
+      
+      try {
+        console.log(val.product_sku.length)
+      } catch (error) {
+        console.log(error)
+        if(error){
+          console.log('shi--null')
+          this.form.product_sku=[]
+        }else{
+          console.log('bushishi--null')
+          this.form.product_sku=val.product_sku;
+        }
+      }
+      
+      console.log('this.form.product_sku',this.form.product_sku,val.product_sku)
       this.form.supplier_no = val.supplier_no;
       this.form.supplier_name = val.supplier_name;
       this.form.warehousing_remarks = val.warehousing_remarks;
       this.form.warehousing_id = val.warehousing_id;
+      this.dialogFormVisible = true;
     },
      // 修改提交
     subBtn() {
@@ -232,8 +256,16 @@ export default {
         warehousing_id:null,
         warehousing_status:1,
       }
+      if(this.form.supplier_no==""||this.form.supplier_no=="null"){
+          this.$message.warning('运单号不能为空')
+          return
+      }else if(this.form.supplier_name==""||this.form.supplier_name=="null"){
+          this.$message.warning('物流公司不能为空')
+          return
+      }
+
       params.supplier_no = this.form.supplier_no;
-      params.supplier_name = this.form.supplier_no;
+      params.supplier_name = this.form.supplier_name;
       params.warehousing_remarks = this.form.warehousing_remarks;
       params.warehousing_id = this.form.warehousing_id;
       this.AxiosReturn("warehousing/method/set.warehousing.item",params).then(res=>{
@@ -331,7 +363,7 @@ export default {
       this.dialogFormVisible = false;
     },
     addDialogClosed() {
-      this.$refs.form.resetFields();
+      // this.$refs.form.resetFields();
     },
     // 分页
     handleSizeChange(newSize) {

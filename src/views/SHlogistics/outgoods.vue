@@ -3,7 +3,7 @@
       <el-card>
         <div id="myHeaderBox">
           <el-input clearable placeholder="请输商品名称货订单号"  @keyup.enter.native="orderSearch"   v-model="searchForm.keywords " size="mini"  ></el-input>
-          <el-input clearable placeholder="请输收货人姓名" @keyup.enter.native="orderSearch"  v-model="searchForm.consignee" size="mini"  ></el-input>
+          <!-- <el-input clearable placeholder="请输收货人姓名" @keyup.enter.native="orderSearch"  v-model="searchForm.consignee" size="mini"  ></el-input> -->
           <MyDatePicker v-model="searchForm.time"></MyDatePicker>
           <el-button type="primary" size="mini" icon="el-icon-search" @click="orderSearch">搜索</el-button>
           <el-button type="info" icon="el-icon-refresh" size="mini" v-if='isSearch' @click="resetFun"></el-button>

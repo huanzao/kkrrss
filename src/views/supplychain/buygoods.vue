@@ -19,7 +19,7 @@
       <!-- table -->
       <el-row :gutter="0" style="margin-top:15px;">
         <el-table  ref="multipleTable"  :data="buyTableData" tooltip-effect="dark"  style="width: 100%;"  @selection-change="handleSelectionChange"  border :fit="true">
-          <el-table-column type="selection" width="40"></el-table-column>
+          <!-- <el-table-column type="selection" width="40"></el-table-column> -->
           <el-table-column prop="order_no" label="订单号"  width="220"></el-table-column>
           <el-table-column prop="product_id" label="产品ID" show-overflow-tooltip></el-table-column>
           <el-table-column prop="product_name" label="产品名称" show-overflow-tooltip></el-table-column>
@@ -35,7 +35,6 @@
                <el-tag type="success" v-if="scope.row.stock_purchase_status == 1" size="mini" style="padding:0px 8px;">已采购</el-tag>
                <el-tag type="danger" v-if="scope.row.stock_purchase_status == 0" size="mini" style="padding:0px 8px;">未采购</el-tag>
             </template>
-
           </el-table-column>
           <el-table-column fixed="right" label="操作" width="120">
             <template slot-scope="scope">
@@ -165,7 +164,7 @@
 </template>
 
 <script>
-import { AxiosReturn } from "../../assets/axios/index";
+import { AxiosReturn,myExprotExcel } from "../../assets/axios/index";
 export default {
   name: "buygoods",
   data() {
@@ -193,32 +192,6 @@ export default {
         product_sku:[],
       },
       formLabelWidth: "120px",
-      buyDialogTableData: [
-        {
-          specifications: "黑色M",
-          sku: "TX000000",
-          stock: "10",
-          unitPrice: "3.11",
-          inNumber: "9",
-          inPrice: "1"
-        },
-        {
-          specifications: "黑色M",
-          sku: "TX000000",
-          stock: "10",
-          unitPrice: "3.11",
-          inNumber: "6",
-          inPrice: "3"
-        },
-        {
-          specifications: "黑色M",
-          sku: "TX000000",
-          stock: "10",
-          unitPrice: "3.11",
-          inNumber: "10",
-          inPrice: "6"
-        }
-      ],
       modifyForm: {
         product_id:null,
         product_name:"",
@@ -246,6 +219,7 @@ export default {
   },
   methods: {
     AxiosReturn,
+    myExprotExcel,
     resetFun(){
         this.isSearch=false
         for(var qkey in this.queryinfo){
@@ -294,16 +268,16 @@ export default {
     },
     // 导出
     toExport() {
-      this.$message({
-        showClose: true,
-        message: "暂时未开通，敬请期待"
-      });
+      const headerArr=['订单号','产品ID','产品名称','采购网址','规格','SKU','总数量','总金额','预警值','累计修正',]
+      const keyArr=['order_no','product_id','product_name','product_url','sku_value','product_sku','total_qty','total_amount','warning','cumulative',]
+      this.myExprotExcel(headerArr,keyArr,'货物采购','buyTableData')
     },
     // 采购
     purchaseBtn(val) {
+      console.log(val)
       this.dialogFormVisible = true;
       this.AxiosReturn("stock_purchase/method/get.stock.item",{product_id:val.product_id}).then(res=>{
-        // console.log(res,'res*********')
+        console.log(res,'res*********')
         this.form.product_id = res.data.product_id;
         this.form.product_name = res.data.product_name;
         this.form.purchase_order_no = res.data.order_no;

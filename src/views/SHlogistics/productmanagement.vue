@@ -6,10 +6,10 @@
           <el-select placeholder="审核状态" size="mini" v-model="queryinfo.audit_status" clearable>
             <el-option v-for="items in stateOption" :key="items.value" :label="items.label" :value="items.value" ></el-option>
           </el-select>
-          <el-select placeholder="上下架状态" size="mini" v-model="queryinfo.status" clearable  >
+          <!-- <el-select placeholder="上下架状态" size="mini" v-model="queryinfo.status" clearable  >
             <el-option label="下架" value="0"></el-option>
             <el-option label="上架" value="1"></el-option>
-          </el-select>
+          </el-select> -->
           <MyDatePicker v-model="queryinfo.createtime" ></MyDatePicker>
           <el-button type="primary" size="mini" icon="el-icon-search" @click="search">搜索</el-button>
           <el-button type="info" icon="el-icon-refresh" size="mini" v-if='isSearch' @click="resetFun"></el-button>

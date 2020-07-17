@@ -166,12 +166,11 @@ export default {
       this.isSearch=true
       this.getAllList()
     },
-    // 导出
+    // 导出****
     toExport() {
-      this.$message({
-        showClose: true,
-        message: "暂时未开通，敬请期待"
-      });
+      const headerArr=['采购单号','产品ID','产品名称','采购金额','采购数量','运单号','物流公司']
+      const keyArr=['po_no','product_id','product_name','total_purchase_amount','warehousing_qty','supplier_no','supplier_name']
+      this.myExprotExcel(headerArr,keyArr,'入库管理','detailsTableData')
     },
     // 全选
     handleSelectionChange(val) {

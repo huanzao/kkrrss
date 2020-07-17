@@ -201,16 +201,15 @@ export default {
       }
       let that = this;
       this.AxiosReturn("delivery_item/method/get.delivery.company.list/",params).then(function(res) {
-          if (res.status === 200) {
-            let result = res.data.items;
-            that.categoryData = result;
-            that.total = res.data.total_result;
-          }else{
-            this.$message.warning(res.message)
-          }
-        })
+        if (res.status === 200) {
+          let result = res.data.items;
+          that.categoryData = result;
+          that.total = res.data.total_result;
+        }else{
+          this.$message.warning(res.message)
+        }
+      })
     },
-
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
